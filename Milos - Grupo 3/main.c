@@ -21,10 +21,10 @@ int main() {
 
 	if (!window) return -1; // Verifica se criou uma janela
 
-	al_init_primitives_addon(); // inicializa os addons adicionais como ret‚ngulo, circulo, etc
+	al_init_primitives_addon(); // inicializa os addons adicionais como ret√¢ngulo, circulo, etc
 	al_install_keyboard(); // inicializa o teclado
 
-	bool done = false, draw = true; // Verifica se o jogo est· rodando e declara se pode desenhar na tela
+	bool done = false, draw = true; // Verifica se o jogo est√° rodando e declara se pode desenhar na tela
 
 	//int dir = -1;
 
@@ -33,10 +33,11 @@ int main() {
 	bool ground, jumping = false, get_ob = false;
 	
 
-	quad player = quad_create((sizeWindow[0]/2)-32, 400, 5, 32, al_map_rgb(0, 0, 255)); // Cria o Jogador
-	quad flor = quad_create(0, sizeWindow[1]-100, 0, sizeWindow[0], al_map_rgb(0, 255,0)); // Cria o Ch„o
 
-	quad door = quad_create(600, 400, 10, 100, al_map_rgb(150, 50, 0)); // Cria o Ch„o
+	quad player = quad_create((sizeWindow[0]/2)-32, 400, 5, 32, al_map_rgb(0, 0, 255)); // Cria o Jogador
+	quad flor = quad_create(0, sizeWindow[1]-100, 0, sizeWindow[0], al_map_rgb(0, 255,0)); // Cria o Ch√£o
+
+	quad door = quad_create(600, 400, 10, 100, al_map_rgb(150, 50, 0)); // Cria o Ch√£o
 	quad ob = quad_create(100, 484, 0, 16, al_map_rgb(255, 255, 0));
 
 	ALLEGRO_KEYBOARD_STATE keyState;
@@ -56,6 +57,7 @@ int main() {
 			if (ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE) done = true; // O Loop Acaba quando pressiona o ESC
 			
 		}
+
 
 
 		if(ev.type == ALLEGRO_EVENT_TIMER){
@@ -88,12 +90,8 @@ int main() {
 			else {
 				ground = true;
 			}
-		
-
-			
 		        
 			draw = true;
-
 			
 		}
 		if (draw) {
@@ -105,13 +103,6 @@ int main() {
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0, 0, 0));
 		}
-
-
-
-		
-
-		
-		
 	}
 
 	al_destroy_display(window);
