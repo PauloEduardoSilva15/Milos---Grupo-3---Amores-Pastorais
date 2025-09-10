@@ -19,9 +19,10 @@ int main() {
 
 	int dir = -1;
 
-	quad player = quad_create(100, 100, 10, 32); // Cria o Jogador
-	quad flor = quad_create(0, sizeWindow[1]-100, 0, sizeWindow[0]); // Cria o Chão
+	quad player = quad_create(100, 100, 10, 32, al_map_rgb(0, 0, 255)); // Cria o Jogador
+	quad flor = quad_create(0, sizeWindow[1]-100, 0, sizeWindow[0], al_map_rgb(0, 255,0)); // Cria o Chão
 
+	ALLEGRO_KEYBOARD_STATE keyState;
 	ALLEGRO_TIMER* timer = al_create_timer(1.0 / 60);
 	ALLEGRO_EVENT_QUEUE* events = al_create_event_queue(); // Evento Principal
 	al_register_event_source(events, al_get_keyboard_event_source());
@@ -39,18 +40,15 @@ int main() {
 			
 		}
 
-		switch (ev.keyboard.keycode) {
-		case ALLEGRO_KEY_A: // Move para esquerda
-			mov_quad(&player, 0);
-			break;
-		case ALLEGRO_KEY_D: // Move para direita
-			mov_quad(&player, 1);
-			break;
-		}
 
 		if(ev.type == ALLEGRO_EVENT_TIMER){
 			
-			
+			al_get_keyboard_state(&keyState);
+
+			if (al_key_down(&keyState, ALLEGRO_KEY_A))
+				mov_quad(&player, 0);
+			if (al_key_down(&keyState, ALLEGRO_KEY_D))
+				mov_quad(&player, 1);
 
 			if (player.y + player.size < flor.y)
 				player.y += 10;
@@ -75,6 +73,7 @@ int main() {
 	}
 
 	al_destroy_display(window);
+	al_destroy_timer(timer);
 	al_destroy_event_queue(events);
 
 	return 0;

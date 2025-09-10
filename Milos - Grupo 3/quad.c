@@ -2,13 +2,14 @@
 #include <allegro5/allegro_primitives.h>
 #include "quad.h"
 
-// Fix: Add return type 'quad' to match the return value
-quad quad_create(int x, int y, int vel, int size) {
+
+quad quad_create(int x, int y, int vel, int size, ALLEGRO_COLOR color) {
     quad p;
     p.x = x;
     p.y = y;
     p.vel = vel;
     p.size = size;
+    p.color = color;
     return p;
 }
 
@@ -28,5 +29,5 @@ void mov_quad(quad* p, int dir) {
 }
 
 void draw_quad(quad* p) {
-    al_draw_filled_rectangle(p->x, p->y, p->x + p->size, p->y + p->size, al_map_rgb(255,255, 255));
+    al_draw_filled_rectangle(p->x, p->y, p->x + p->size, p->y + p->size, p->color);
 }
