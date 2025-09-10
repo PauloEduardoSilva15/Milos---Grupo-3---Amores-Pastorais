@@ -3,6 +3,15 @@
 #include "quad.h"
 #include <stdio.h>
 
+
+int aabb_collision(quad* a, quad* b) {
+	return (a->x < b->x + b->size &&
+		a->x + a->size > b->x &&
+		a->y < b->y + b->size &&
+		a->y + a->size > b->y);
+}
+
+
 int main() {
 
 	if (!al_init()) return -1;
@@ -17,10 +26,18 @@ int main() {
 
 	bool done = false, draw = true; // Verifica se o jogo está rodando e declara se pode desenhar na tela
 
-	int dir = -1;
+	//int dir = -1;
 
-	quad player = quad_create(100, 100, 10, 32, al_map_rgb(0, 0, 255)); // Cria o Jogador
+	int gravidade = 10;
+
+	bool ground, jumping = false, get_ob = false;
+	
+
+	quad player = quad_create((sizeWindow[0]/2)-32, 400, 5, 32, al_map_rgb(0, 0, 255)); // Cria o Jogador
 	quad flor = quad_create(0, sizeWindow[1]-100, 0, sizeWindow[0], al_map_rgb(0, 255,0)); // Cria o Chão
+
+	quad door = quad_create(600, 400, 10, 100, al_map_rgb(150, 50, 0)); // Cria o Chão
+	quad ob = quad_create(100, 484, 0, 16, al_map_rgb(255, 255, 0));
 
 	ALLEGRO_KEYBOARD_STATE keyState;
 	ALLEGRO_TIMER* timer = al_create_timer(1.0 / 60);
@@ -45,21 +62,46 @@ int main() {
 			
 			al_get_keyboard_state(&keyState);
 
-			if (al_key_down(&keyState, ALLEGRO_KEY_A))
+			if (al_key_down(&keyState, ALLEGRO_KEY_A) && player.x > 0)
 				mov_quad(&player, 0);
-			if (al_key_down(&keyState, ALLEGRO_KEY_D))
+			if (al_key_down(&keyState, ALLEGRO_KEY_D) && player.x + player.size < sizeWindow[0] && !aabb_collision(&player, &door))
 				mov_quad(&player, 1);
 
-			if (player.y + player.size < flor.y)
-				player.y += 10;
+			if (al_key_down(&keyState, ALLEGRO_KEY_W) && aabb_collision(&player, &flor)) {
+				player.y -= gravidade;
+				
+			}
+			if (aabb_collision(&player, &ob)) {
+				ob.y = 100;
+				ob.x = 100;
+				get_ob = true;
+			}
+
+			if (aabb_collision(&player, &door) && get_ob && door.y < 600)
+				door.y += 10;
+
+
+			if (!aabb_collision(&player, &flor)) {
+				player.y += gravidade;
+				ground = false;
+			}
+			else {
+				ground = true;
+			}
+		
+
+			
+		        
 			draw = true;
 
 			
 		}
 		if (draw) {
 			draw = false;
+			draw_quad(&ob);
 			draw_quad(&player);
 			draw_quad(&flor);
+			draw_quad(&door);
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0, 0, 0));
 		}
