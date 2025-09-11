@@ -34,7 +34,7 @@ int main() {
 	
 
 
-	quad player = quad_create((sizeWindow[0]/2)-32, 400, 5, 32, al_map_rgb(0, 0, 255)); // Cria o Jogador
+	quad player = quad_create((sizeWindow[0]/2)-32, 300, 5, 32, al_map_rgb(0, 0, 255)); // Cria o Jogador
 	quad flor = quad_create(0, sizeWindow[1]-100, 0, sizeWindow[0], al_map_rgb(0, 255,0)); // Cria o Chão
 
 	quad door = quad_create(600, 400, 10, 100, al_map_rgb(150, 50, 0)); // Cria o Chão
