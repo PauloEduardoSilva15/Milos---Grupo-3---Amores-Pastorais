@@ -5,10 +5,10 @@
 
 
 int aabb_collision(quad* a, quad* b) {
-	return (a->x < b->x + b->size &&
-		a->x + a->size > b->x &&
-		a->y < b->y + b->size &&
-		a->y + a->size > b->y);
+	return (a->x < b->x + b->w &&
+		a->x + a->w > b->x &&
+		a->y < b->y + b->h &&
+		a->y + a->h > b->y);
 }
 
 
@@ -32,13 +32,17 @@ int main() {
 
 	bool ground, jumping = false, get_ob = false;
 	
+	int modoAtaque = false, modoDefesa = false;
 
 
-	quad player = quad_create((sizeWindow[0]/2)-32, 300, 5, 32, al_map_rgb(0, 0, 255)); // Cria o Jogador
-	quad flor = quad_create(0, sizeWindow[1]-100, 0, sizeWindow[0], al_map_rgb(0, 255,0)); // Cria o Chão
+	quad player = quad_create((sizeWindow[0]/2)-32, 300, 5, 32, 32, 100, al_map_rgb(0, 0, 255)); // Cria o Jogador
+	quad flor = quad_create(0, sizeWindow[1]-100, 0, sizeWindow[0], 300, 0, al_map_rgb(0, 255,0)); // Cria o Chão
+	quad enemy = quad_create(770 - 32, 300, 5, 32, 32, 100, al_map_rgb(255, 0, 0));
+	quad door = quad_create(600, 400, 10, 32, 100, 0, al_map_rgb(150, 50, 0)); // Cria o Chão
+	quad ob = quad_create(100, 484, 0, 16, 16, 0, al_map_rgb(255, 255, 0));
 
-	quad door = quad_create(600, 400, 10, 100, al_map_rgb(150, 50, 0)); // Cria o Chão
-	quad ob = quad_create(100, 484, 0, 16, al_map_rgb(255, 255, 0));
+	quad life_player = quad_create(600, 100, 0, player.life, 32, 0, al_map_rgb(0, 255, 0));
+	quad life_enemy = quad_create(600, 200, 0, enemy.life, 32, 0, al_map_rgb(0, 255, 0));
 
 	ALLEGRO_KEYBOARD_STATE keyState;
 	ALLEGRO_TIMER* timer = al_create_timer(1.0 / 60);
@@ -64,15 +68,25 @@ int main() {
 			
 			al_get_keyboard_state(&keyState);
 
-			if (al_key_down(&keyState, ALLEGRO_KEY_A) && player.x > 0)
+			if (al_key_down(&keyState, ALLEGRO_KEY_A) && player.x > 0 && !aabb_collision(&player, &enemy))
 				mov_quad(&player, 0);
-			if (al_key_down(&keyState, ALLEGRO_KEY_D) && player.x + player.size < sizeWindow[0] && !aabb_collision(&player, &door))
+			if (al_key_down(&keyState, ALLEGRO_KEY_D) && player.x + player.w < sizeWindow[0] && !aabb_collision(&player, &door) && !aabb_collision(&player, &enemy))
 				mov_quad(&player, 1);
 
 			if (al_key_down(&keyState, ALLEGRO_KEY_W) && aabb_collision(&player, &flor)) {
 				player.y -= gravidade;
 				
 			}
+
+			if (al_key_down(&keyState, ALLEGRO_KEY_J)) {
+				modoAtaque = true;
+				player.color = al_map_rgb(100, 0, 200);
+			}
+			else {
+				modoAtaque = false;
+				player.color = al_map_rgb(0 , 0, 255);
+			}
+
 			if (aabb_collision(&player, &ob)) {
 				ob.y = 100;
 				ob.x = 100;
@@ -90,7 +104,47 @@ int main() {
 			else {
 				ground = true;
 			}
-		        
+
+			if (!aabb_collision(&enemy, &flor)) {
+				enemy.y += gravidade;
+				ground = false;
+			}
+
+			if (!aabb_collision(&enemy, &player)) {
+				if ((enemy.x > player.x) && (!aabb_collision(&enemy, &door))) {
+					mov_quad(&enemy, 0);
+				}
+				else{
+					if(!aabb_collision(&enemy, &door))
+						mov_quad(&enemy, 1);
+				}
+			}
+
+
+			if (aabb_collision(&player, &enemy) && player.life > 0) {
+				if (!modoAtaque) {
+					player.life -= 5 / 5;
+					life_player.w = player.life;
+				}
+				else {
+					if (enemy.life > 0) {
+						enemy.life -= 5 / 5;
+						life_enemy.w = enemy.life;
+					}
+					
+				}
+				
+			}
+
+
+
+			if (player.life <= 0) {
+				done = true;
+			}
+
+			if (enemy.life <= 0 && enemy.y > -200) enemy.x -= 100*enemy.vel;
+				
+
 			draw = true;
 			
 		}
@@ -98,7 +152,10 @@ int main() {
 			draw = false;
 			draw_quad(&ob);
 			draw_quad(&player);
+			draw_quad(&enemy);
 			draw_quad(&flor);
+			draw_quad(&life_player);
+			draw_quad(&life_enemy);
 			draw_quad(&door);
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0, 0, 0));
