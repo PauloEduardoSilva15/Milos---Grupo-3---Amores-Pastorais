@@ -32,7 +32,7 @@ int main() {
 
 	bool ground, jumping = false, get_ob = false;
 	
-	int modoAtaque = false, modoDefesa = false;
+	bool modoAtaque = false, modoDefesa = false;
 
 
 	quad player = quad_create((sizeWindow[0]/2)-32, 300, 5, 32, 32, 100, al_map_rgb(0, 0, 255)); // Cria o Jogador
@@ -80,12 +80,28 @@ int main() {
 
 			if (al_key_down(&keyState, ALLEGRO_KEY_J)) {
 				modoAtaque = true;
-				player.color = al_map_rgb(100, 0, 200);
+				
 			}
 			else {
 				modoAtaque = false;
-				player.color = al_map_rgb(0 , 0, 255);
 			}
+
+
+			if (al_key_down(&keyState, ALLEGRO_KEY_K)) {
+				modoDefesa = true;
+				
+			}
+			else {
+				modoDefesa = false;
+				
+			}
+
+
+			if (modoAtaque) player.color = al_map_rgb(100, 0, 200);
+			if (modoDefesa) player.color = al_map_rgb(180, 0, 200);
+
+			if(!modoAtaque && !modoDefesa)player.color = al_map_rgb(0, 0, 255);
+
 
 			if (aabb_collision(&player, &ob)) {
 				ob.y = 100;
@@ -123,15 +139,19 @@ int main() {
 
 			if (aabb_collision(&player, &enemy) && player.life > 0) {
 				if (!modoAtaque) {
-					player.life -= 5 / 5;
-					life_player.w = player.life;
+					if (!modoDefesa) {
+						player.life -= 5 / 5;
+						life_player.w = player.life;
+					}
 				}
 				else {
-					if (enemy.life > 0) {
-						enemy.life -= 5 / 5;
-						life_enemy.w = enemy.life;
+					if (!modoDefesa) {
+						if (enemy.life > 0) {
+							enemy.life -= 5 / 5;
+							life_enemy.w = enemy.life;
+						}
 					}
-					
+				
 				}
 				
 			}
