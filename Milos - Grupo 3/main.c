@@ -14,7 +14,7 @@ int main() {
 
     if (!al_init()) return -1;
 
-    int sizeWindow[2] = { 800, 600 }; 
+    int sizeWindow[2] = { 800, 600 };  
     ALLEGRO_DISPLAY* window = al_create_display(sizeWindow[0], sizeWindow[1]);
 
     if (!window) return -1;
