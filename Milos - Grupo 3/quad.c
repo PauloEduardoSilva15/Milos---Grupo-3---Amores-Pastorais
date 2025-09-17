@@ -3,7 +3,9 @@
 #include "quad.h"
 
 
+
 quad quad_create(int x, int y, int vel, int w, int h, int life, ALLEGRO_COLOR color) {
+
     quad p;
     p.x = x;
     p.y = y;
