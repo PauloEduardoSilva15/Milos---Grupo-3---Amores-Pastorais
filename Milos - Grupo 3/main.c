@@ -121,7 +121,7 @@ int main() {
 				ground = true;
 			}
 
-			if (!aabb_collision(&enemy, &flor)) {
+			if (!aabb_collision(&enemy, &flor) && enemy.life != 0) {
 				enemy.y += gravidade;
 				ground = false;
 			}
@@ -162,7 +162,7 @@ int main() {
 				done = true;
 			}
 
-			if (enemy.life <= 0 && enemy.y > -200) enemy.x -= 100*enemy.vel;
+			if (enemy.life <= 0) enemy.x = 832;
 				
 
 			draw = true;
