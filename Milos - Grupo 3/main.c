@@ -4,10 +4,10 @@
 #include <stdio.h>
 
 int aabb_collision(quad* a, quad* b) {
-    return (a->x < b->x + b->size &&
-        a->x + a->size > b->x &&
-        a->y < b->y + b->size &&
-        a->y + a->size > b->y);
+    return (a->x < b->x + b->w &&
+        a->x + a->w > b->x &&
+        a->y < b->y + b->h &&
+        a->y + a->h > b->y);
 }
 
 int main() {
@@ -32,10 +32,10 @@ int main() {
 
     bool get_ob = false;
 
-    quad player = quad_create((sizeWindow[0] / 2) - 32, 300, 5, 32, al_map_rgb(0, 0, 255));
-    quad flor = quad_create(0, sizeWindow[1] - 100, 0, sizeWindow[0], al_map_rgb(0, 255, 0));
-    quad door = quad_create(600, 400, 10, 100, al_map_rgb(150, 50, 0));
-    quad ob = quad_create(100, 484, 0, 16, al_map_rgb(255, 255, 0));
+    quad player = quad_create((sizeWindow[0] / 2) - 32, 300, 5, 32, 32, al_map_rgb(0, 0, 255));
+    quad flor = quad_create(0, sizeWindow[1] - 100, 0, sizeWindow[0], 200, al_map_rgb(0, 255, 0));
+    quad door = quad_create(600, 300, 10, 32,200, al_map_rgb(150, 50, 0));
+    quad ob = quad_create(100, 484, 0, 16, 16, al_map_rgb(255, 255, 0));
 
     ALLEGRO_KEYBOARD_STATE keyState;
     ALLEGRO_TIMER* timer = al_create_timer(1.0 / 60);
@@ -61,7 +61,7 @@ int main() {
             if (al_key_down(&keyState, ALLEGRO_KEY_A) && player.x > 0)
                 mov_quad(&player, 0);
             if (al_key_down(&keyState, ALLEGRO_KEY_D) &&
-                player.x + player.size < sizeWindow[0] &&
+                player.x + player.w < sizeWindow[0] &&
                 !aabb_collision(&player, &door))
                 mov_quad(&player, 1);
 
@@ -77,7 +77,7 @@ int main() {
 
             // Verifica colisão com o chão
             if (aabb_collision(&player, &flor)) {
-                player.y = flor.y - player.size; // Alinha com o chão
+                player.y = flor.y - player.h; // Alinha com o chão
                 velY = 0;
                 can_jump = true;
             }
