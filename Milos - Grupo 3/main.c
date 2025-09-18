@@ -142,7 +142,6 @@ int main() {
 					if (!modoDefesa) {
 						player.life -= 5 / 5;
 						life_player.w = player.life;
-						player.x -= 100;
 					}
 				}
 				else {
@@ -150,14 +149,10 @@ int main() {
 						if (enemy.life > 0) {
 							enemy.life -= 5 / 5;
 							life_enemy.w = enemy.life;
-							enemy.x += 100;
 						}
 					}
 					
 				
-				}
-				if (modoDefesa) {
-					enemy.x += 100;
 				}
 			}
 
