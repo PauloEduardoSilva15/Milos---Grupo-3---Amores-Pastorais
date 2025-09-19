@@ -137,13 +137,14 @@ int main() {
 				can_jump = true;
 			}
 
-			if (!aabb_collision(&enemy, &player)) {
-				if ((enemy.x > player.x) && (!aabb_collision(&enemy, &door))) {
-					mov_quad(&enemy, 0);
+			if (!aabb_collision(&enemy, &player)&& aabb_collision(&enemy, &flor)) {
+				if ((enemy.x > player.x)) {
+					if(!aabb_collision(&enemy, &door))
+						mov_quad(&enemy, 0);
 				}
 				else {
-					if (!aabb_collision(&enemy, &door))
-						mov_quad(&enemy, 1);
+					
+					mov_quad(&enemy, 1);
 				}
 			}
 
@@ -169,8 +170,40 @@ int main() {
 						}
 					}
 
-
 				}
+
+				if (enemy.x > player.x)
+				{
+					enemy.x += 10;
+					player.x -= 10;
+				}
+				else {
+					if (!(player.y > enemy.y)) {
+						enemy.x -= 10;
+						player.x += 10;
+					}
+					else {
+						player.x += 10;
+					}
+				}
+			}
+
+			if ((player.x + player.h) > sizeWindow[0])
+			{
+				player.x = sizeWindow[0] - player.h;
+			}
+			if ((enemy.x + enemy.h) > sizeWindow[0])
+			{
+				enemy.x = sizeWindow[0] - enemy.h;
+			}
+
+			if ((player.x ) < 0)
+			{
+				player.x = 0;
+			}
+			if ((enemy.x) < 0)
+			{
+				enemy.x = 0;
 			}
 
 
