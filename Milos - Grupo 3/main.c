@@ -188,6 +188,24 @@ int main() {
 				}
 			}
 
+			if ((player.x + player.h) > sizeWindow[0])
+			{
+				player.x = sizeWindow[0] - player.h;
+			}
+			if ((enemy.x + enemy.h) > sizeWindow[0])
+			{
+				enemy.x = sizeWindow[0] - enemy.h;
+			}
+
+			if ((player.x ) < 0)
+			{
+				player.x = 0;
+			}
+			if ((enemy.x) < 0)
+			{
+				enemy.x = 0;
+			}
+
 
 
 			if (player.life <= 0) {
