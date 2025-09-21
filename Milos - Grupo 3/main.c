@@ -86,8 +86,10 @@ int main() {
 			if (al_key_down(&keyState, ALLEGRO_KEY_D) && player.x + player.w < sizeWindow[0] && !aabb_collision(&player, &door) && !aabb_collision(&player, &enemy))
 				mov_quad(&player, 1);
 
-			if (al_key_down(&keyState, ALLEGRO_KEY_W) && aabb_collision(&player, &flor)) {
-				player.y -= gravidade;
+			if (al_key_down(&keyState, ALLEGRO_KEY_W) && aabb_collision(&player, &flor) && can_jump) {
+				player.y -= GRAVITY;
+				velY = JUMP_FORCE;
+				can_jump = false;
 
 			}
 
@@ -98,6 +100,8 @@ int main() {
 			else {
 				modoAtaque = false;
 			}
+			
+
 
 
 			if (al_key_down(&keyState, ALLEGRO_KEY_K)) {
@@ -109,10 +113,6 @@ int main() {
 
 			}
 
-			if (al_key_down(&keyState, ALLEGRO_KEY_W) && can_jump) {
-				velY = JUMP_FORCE;
-				can_jump = false;
-			}
 
 
 			if (modoAtaque) player.color = al_map_rgb(100, 0, 200);
@@ -128,7 +128,8 @@ int main() {
 			}
 
 			if (aabb_collision(&player, &door) && get_ob && door.y < 600)
-				door.y += 50;
+				door.y += 70;
+			;
 
 
 			if (aabb_collision(&player, &flor)) {
@@ -150,7 +151,7 @@ int main() {
 
 
 			if (!aabb_collision(&enemy, &flor)) {
-				mov_quad(&enemy, 3);
+				enemy.y += gravidade;
 			}
 
 
