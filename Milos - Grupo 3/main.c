@@ -36,7 +36,7 @@ int main() {
 	const float JUMP_FORCE = -15.0;  // Força do pulo
 	bool can_jump = false;           // Controle de pulo
 
-	
+
 	bool get_ob = false;
 
 	bool enemyDeath = false;
@@ -48,8 +48,8 @@ int main() {
 	quad flor = quad_create(0, sizeWindow[1] - 100, 0, sizeWindow[0], 300, 0, al_map_rgb(0, 255, 0)); // Cria o Chão
 	quad enemy = quad_create(770 - 32, 300, 5, 32, 32, 100, al_map_rgb(255, 0, 0));
 	quad door = quad_create(600, 300, 10, 32, 200, 0, al_map_rgb(150, 50, 0)); // Cria o Chão
-	
-	int obX = 100, obY =484;
+
+	int obX = 100, obY = 484;
 	quad ob = quad_create(obX, obY, 0, 16, 16, 0, al_map_rgb(255, 255, 0));
 
 	quad life_player = quad_create(100, 50, 0, player.life, 32, 0, al_map_rgb(0, 255, 0));
@@ -105,7 +105,7 @@ int main() {
 			else {
 				modoAtaque = false;
 			}
-			
+
 
 
 
@@ -127,26 +127,26 @@ int main() {
 
 
 			if (aabb_collision(&player, &ob)) {
-				
+
 				get_ob = true;
 			}
 
 			if (get_ob) {
 				ob.x = 100;
 				ob.y = 100;
-				
+
 			}
 			else {
 				ob.x = obX;
 				ob.y = obY;
-				
+
 				door.y = 300;
 			}
 
 			if (aabb_collision(&player, &door) && get_ob && door.y < 600)
 				door.y += 70;
-			
-				
+
+
 
 
 			if (aabb_collision(&player, &flor)) {
@@ -155,13 +155,13 @@ int main() {
 				can_jump = true;
 			}
 
-			if (!aabb_collision(&enemy, &player)&& aabb_collision(&enemy, &flor) && !enemyDeath) {
+			if (!aabb_collision(&enemy, &player) && aabb_collision(&enemy, &flor) && !enemyDeath) {
 				if ((enemy.x > player.x)) {
-					if(!aabb_collision(&enemy, &door))
+					if (!aabb_collision(&enemy, &door))
 						mov_quad(&enemy, 0);
 				}
 				else {
-					
+
 					mov_quad(&enemy, 1);
 				}
 			}
@@ -176,16 +176,16 @@ int main() {
 			if (aabb_collision(&player, &enemy) && player.life > 0) {
 				if (!modoAtaque) {
 					if (!modoDefesa) {
-						if(!enemyDeath)
+						if (!enemyDeath)
 							player.life -= 5 / 5;
-						
+
 					}
 				}
 				else {
 					if (!modoDefesa) {
 						if (enemy.life > 0) {
 							enemy.life -= 5 / 5;
-							
+
 						}
 					}
 
@@ -216,7 +216,7 @@ int main() {
 				enemy.x = sizeWindow[0] - enemy.h;
 			}
 
-			if ((player.x ) < 0)
+			if ((player.x) < 0)
 			{
 				player.x = 0;
 			}

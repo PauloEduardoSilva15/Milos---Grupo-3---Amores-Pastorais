@@ -25,12 +25,6 @@ void mov_quad(quad* p, int dir) {
         break;
     case 1: // D - direita
         p->x += p->vel;
-        break;
-    case 2:
-		p->y -= p->vel;
-        break;
-    case 3:
-        p->y += p->vel;
     }
 }
 
