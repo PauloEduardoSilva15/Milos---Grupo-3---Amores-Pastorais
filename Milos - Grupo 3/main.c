@@ -39,6 +39,8 @@ int main() {
 
 	bool get_ob = false;
 
+	bool enemyDeath = false;
+
 	bool modoAtaque = false, modoDefesa = false;
 
 
@@ -149,7 +151,7 @@ int main() {
 				can_jump = true;
 			}
 
-			if (!aabb_collision(&enemy, &player)&& aabb_collision(&enemy, &flor)) {
+			if (!aabb_collision(&enemy, &player)&& aabb_collision(&enemy, &flor) && !enemyDeath) {
 				if ((enemy.x > player.x)) {
 					if(!aabb_collision(&enemy, &door))
 						mov_quad(&enemy, 0);
@@ -232,7 +234,7 @@ int main() {
 				get_ob = false;
 			}
 
-			if (enemy.life <= 0) enemy.x = 832;
+			if (enemy.life <= 0) enemyDeath = true;
 
 
 			draw = true;
@@ -242,7 +244,8 @@ int main() {
 			draw = false;
 			draw_quad(&ob);
 			draw_quad(&player);
-			draw_quad(&enemy);
+			if (!enemyDeath)
+				draw_quad(&enemy);
 			draw_quad(&flor);
 			draw_quad(&life_player);
 			draw_quad(&life_enemy);
