@@ -36,7 +36,7 @@ int main() {
 	const float JUMP_FORCE = -15.0;  // Força do pulo
 	bool can_jump = false;           // Controle de pulo
 
-
+	
 	bool get_ob = false;
 
 	bool enemyDeath = false;
@@ -48,10 +48,12 @@ int main() {
 	quad flor = quad_create(0, sizeWindow[1] - 100, 0, sizeWindow[0], 300, 0, al_map_rgb(0, 255, 0)); // Cria o Chão
 	quad enemy = quad_create(770 - 32, 300, 5, 32, 32, 100, al_map_rgb(255, 0, 0));
 	quad door = quad_create(600, 300, 10, 32, 200, 0, al_map_rgb(150, 50, 0)); // Cria o Chão
-	quad ob = quad_create(100, 484, 0, 16, 16, 0, al_map_rgb(255, 255, 0));
+	
+	int obX = 100, obY =484;
+	quad ob = quad_create(obX, obY, 0, 16, 16, 0, al_map_rgb(255, 255, 0));
 
-	quad life_player = quad_create(600, 100, 0, player.life, 32, 0, al_map_rgb(0, 255, 0));
-	quad life_enemy = quad_create(600, 200, 0, enemy.life, 32, 0, al_map_rgb(0, 255, 0));
+	quad life_player = quad_create(100, 50, 0, player.life, 32, 0, al_map_rgb(0, 255, 0));
+	quad life_enemy = quad_create(600, 50, 0, enemy.life, 32, 0, al_map_rgb(0, 255, 0));
 
 	ALLEGRO_KEYBOARD_STATE keyState;
 	ALLEGRO_TIMER* timer = al_create_timer(1.0 / fps);
@@ -130,12 +132,14 @@ int main() {
 			}
 
 			if (get_ob) {
-				ob.y = 100;
 				ob.x = 100;
+				ob.y = 100;
+				
 			}
 			else {
-				ob.y = 484;
-				ob.x = 100;
+				ob.x = obX;
+				ob.y = obY;
+				
 				door.y = 300;
 			}
 
@@ -163,7 +167,7 @@ int main() {
 			}
 
 
-			if (!aabb_collision(&enemy, &flor)) {
+			if (!aabb_collision(&enemy, &flor) && !enemyDeath) {
 				enemy.y += gravidade;
 			}
 			life_player.w = player.life;
@@ -172,7 +176,8 @@ int main() {
 			if (aabb_collision(&player, &enemy) && player.life > 0) {
 				if (!modoAtaque) {
 					if (!modoDefesa) {
-						player.life -= 5 / 5;
+						if(!enemyDeath)
+							player.life -= 5 / 5;
 						
 					}
 				}
@@ -206,7 +211,7 @@ int main() {
 			{
 				player.x = sizeWindow[0] - player.h;
 			}
-			if ((enemy.x + enemy.h) > sizeWindow[0])
+			if ((enemy.x + enemy.h) > sizeWindow[0] && !enemyDeath)
 			{
 				enemy.x = sizeWindow[0] - enemy.h;
 			}
@@ -215,7 +220,7 @@ int main() {
 			{
 				player.x = 0;
 			}
-			if ((enemy.x) < 0)
+			if ((enemy.x) < 0 && !enemyDeath)
 			{
 				enemy.x = 0;
 			}
@@ -223,19 +228,25 @@ int main() {
 
 
 			if (player.life <= 0) {
-				player.x = (sizeWindow[0] / 2) - 32;
+				/*player.x = (sizeWindow[0] / 2) - 32;
 				player.y = 300;
 				player.life = 100;
 
 				enemy.x = 770 - 32;
 				enemy.y = 300;
-				enemy.life = 100;
+				enemy.life = 100;*/
 
+				player = quad_create((sizeWindow[0] / 2) - 32, 300, 5, 32, 32, 100, al_map_rgb(0, 0, 255));
+				enemy = quad_create(770 - 32, 300, 5, 32, 32, 100, al_map_rgb(255, 0, 0));
 				get_ob = false;
 			}
 
 			if (enemy.life <= 0) enemyDeath = true;
 
+			if (enemyDeath) {
+				enemy.x = 0;
+				enemy.y = 0;
+			}
 
 			draw = true;
 
@@ -244,8 +255,7 @@ int main() {
 			draw = false;
 			draw_quad(&ob);
 			draw_quad(&player);
-			if (!enemyDeath)
-				draw_quad(&enemy);
+			if (!enemyDeath) draw_quad(&enemy);
 			draw_quad(&flor);
 			draw_quad(&life_player);
 			draw_quad(&life_enemy);
