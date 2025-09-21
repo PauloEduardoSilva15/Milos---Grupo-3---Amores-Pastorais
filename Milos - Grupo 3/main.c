@@ -16,6 +16,7 @@ int main() {
 
 	if (!al_init()) return -1;
 
+	int const fps = 60;
 	int sizeWindow[2] = { 800, 600 }; // sizeWindow[0] -> width(largura)   sizeWindow[1] --> height(altura)
 	ALLEGRO_DISPLAY* window = al_create_display(sizeWindow[0], sizeWindow[1]); // Cria a janela do jogo
 
@@ -51,7 +52,7 @@ int main() {
 	quad life_enemy = quad_create(600, 200, 0, enemy.life, 32, 0, al_map_rgb(0, 255, 0));
 
 	ALLEGRO_KEYBOARD_STATE keyState;
-	ALLEGRO_TIMER* timer = al_create_timer(1.0 / 60);
+	ALLEGRO_TIMER* timer = al_create_timer(1.0 / fps);
 	ALLEGRO_EVENT_QUEUE* events = al_create_event_queue(); // Evento Principal
 	al_register_event_source(events, al_get_keyboard_event_source());
 	al_register_event_source(events, al_get_timer_event_source(timer));
@@ -122,14 +123,24 @@ int main() {
 
 
 			if (aabb_collision(&player, &ob)) {
+				
+				get_ob = true;
+			}
+
+			if (get_ob) {
 				ob.y = 100;
 				ob.x = 100;
-				get_ob = true;
+			}
+			else {
+				ob.y = 484;
+				ob.x = 100;
+				door.y = 300;
 			}
 
 			if (aabb_collision(&player, &door) && get_ob && door.y < 600)
 				door.y += 70;
-			;
+			
+				
 
 
 			if (aabb_collision(&player, &flor)) {
@@ -153,21 +164,21 @@ int main() {
 			if (!aabb_collision(&enemy, &flor)) {
 				enemy.y += gravidade;
 			}
-
-
+			life_player.w = player.life;
+			life_enemy.w = enemy.life;
 
 			if (aabb_collision(&player, &enemy) && player.life > 0) {
 				if (!modoAtaque) {
 					if (!modoDefesa) {
 						player.life -= 5 / 5;
-						life_player.w = player.life;
+						
 					}
 				}
 				else {
 					if (!modoDefesa) {
 						if (enemy.life > 0) {
 							enemy.life -= 5 / 5;
-							life_enemy.w = enemy.life;
+							
 						}
 					}
 
@@ -210,7 +221,15 @@ int main() {
 
 
 			if (player.life <= 0) {
-				done = true;
+				player.x = (sizeWindow[0] / 2) - 32;
+				player.y = 300;
+				player.life = 100;
+
+				enemy.x = 770 - 32;
+				enemy.y = 300;
+				enemy.life = 100;
+
+				get_ob = false;
 			}
 
 			if (enemy.life <= 0) enemy.x = 832;
