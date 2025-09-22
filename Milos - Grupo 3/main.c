@@ -12,6 +12,9 @@ int aabb_collision(quad* a, quad* b) {
 }
 
 
+
+
+
 int main() {
 
 	if (!al_init()) return -1;
@@ -43,7 +46,7 @@ int main() {
 
 	bool modoAtaque = false, modoDefesa = false;
 
-
+	
 	quad player = quad_create((sizeWindow[0] / 2) - 32, 300, 5, 32, 32, 100, al_map_rgb(0, 0, 255)); // Cria o Jogador
 	quad flor = quad_create(0, sizeWindow[1] - 100, 0, sizeWindow[0], 300, 0, al_map_rgb(0, 255, 0)); // Cria o Chão
 	quad enemy = quad_create(770 - 32, 300, 5, 32, 32, 100, al_map_rgb(255, 0, 0));
@@ -53,7 +56,7 @@ int main() {
 	quad ob = quad_create(obX, obY, 0, 16, 16, 0, al_map_rgb(255, 255, 0));
 
 	quad life_player = quad_create(100, 50, 0, player.life, 32, 0, al_map_rgb(0, 255, 0));
-	quad life_enemy = quad_create(600, 50, 0, enemy.life, 32, 0, al_map_rgb(0, 255, 0));
+
 
 	ALLEGRO_KEYBOARD_STATE keyState;
 	ALLEGRO_TIMER* timer = al_create_timer(1.0 / fps);
@@ -171,7 +174,6 @@ int main() {
 				enemy.y += gravidade;
 			}
 			life_player.w = player.life;
-			life_enemy.w = enemy.life;
 
 			if (aabb_collision(&player, &enemy) && player.life > 0) {
 				if (!modoAtaque) {
@@ -258,7 +260,6 @@ int main() {
 			if (!enemyDeath) draw_quad(&enemy);
 			draw_quad(&flor);
 			draw_quad(&life_player);
-			draw_quad(&life_enemy);
 			draw_quad(&door);
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0, 0, 0));
@@ -271,3 +272,4 @@ int main() {
 
 	return 0;
 }
+
