@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="collision.c" />
+    <ClCompile Include="gameConstants.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="quad.c" />
   </ItemGroup>
@@ -26,6 +28,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="collision.h" />
+    <ClInclude Include="gameConstants.h" />
     <ClInclude Include="quad.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

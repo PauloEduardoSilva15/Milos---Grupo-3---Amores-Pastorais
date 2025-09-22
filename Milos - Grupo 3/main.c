@@ -1,15 +1,10 @@
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_primitives.h>
+#include "gameConstants.h"
 #include "quad.h"
+#include "collision.h"
 #include <stdio.h>
 
-
-int aabb_collision(quad* a, quad* b) {
-	return (a->x < b->x + b->w &&
-		a->x + a->w > b->x &&
-		a->y < b->y + b->h &&
-		a->y + a->h > b->y);
-}
 
 
 
@@ -19,9 +14,8 @@ int main() {
 
 	if (!al_init()) return -1;
 
-	int const fps = 60;
-	int sizeWindow[2] = { 800, 600 }; // sizeWindow[0] -> width(largura)   sizeWindow[1] --> height(altura)
-	ALLEGRO_DISPLAY* window = al_create_display(sizeWindow[0], sizeWindow[1]); // Cria a janela do jogo
+	
+	ALLEGRO_DISPLAY* window = al_create_display(SCREEN_WIDTH, SCREEN_HEIGHT); // Cria a janela do jogo
 
 	if (!window) return -1; // Verifica se criou uma janela
 
@@ -30,7 +24,6 @@ int main() {
 
 	bool done = false, draw = true; // Verifica se o jogo está rodando e declara se pode desenhar na tela
 
-	//int dir = -1;
 
 	int gravidade = 10;
 
@@ -47,8 +40,8 @@ int main() {
 	bool modoAtaque = false, modoDefesa = false;
 
 	
-	quad player = quad_create((sizeWindow[0] / 2) - 32, 300, 5, 32, 32, 100, al_map_rgb(0, 0, 255)); // Cria o Jogador
-	quad flor = quad_create(0, sizeWindow[1] - 100, 0, sizeWindow[0], 300, 0, al_map_rgb(0, 255, 0)); // Cria o Chão
+	quad player = quad_create((SCREEN_WIDTH / 2) - 32, 300, 5, 32, 32, 100, al_map_rgb(0, 0, 255)); // Cria o Jogador
+	quad flor = quad_create(0, SCREEN_HEIGHT - 100, 0, SCREEN_WIDTH, 300, 0, al_map_rgb(0, 255, 0)); // Cria o Chão
 	quad enemy = quad_create(770 - 32, 300, 5, 32, 32, 100, al_map_rgb(255, 0, 0));
 	quad door = quad_create(600, 300, 10, 32, 200, 0, al_map_rgb(150, 50, 0)); // Cria o Chão
 
@@ -59,7 +52,7 @@ int main() {
 
 
 	ALLEGRO_KEYBOARD_STATE keyState;
-	ALLEGRO_TIMER* timer = al_create_timer(1.0 / fps);
+	ALLEGRO_TIMER* timer = al_create_timer(1.0 / FPS);
 	ALLEGRO_EVENT_QUEUE* events = al_create_event_queue(); // Evento Principal
 	al_register_event_source(events, al_get_keyboard_event_source());
 	al_register_event_source(events, al_get_timer_event_source(timer));
@@ -91,7 +84,7 @@ int main() {
 
 			if (al_key_down(&keyState, ALLEGRO_KEY_A) && player.x > 0 && !aabb_collision(&player, &enemy))
 				mov_quad(&player, 0);
-			if (al_key_down(&keyState, ALLEGRO_KEY_D) && player.x + player.w < sizeWindow[0] && !aabb_collision(&player, &door) && !aabb_collision(&player, &enemy))
+			if (al_key_down(&keyState, ALLEGRO_KEY_D) && player.x + player.w < SCREEN_WIDTH && !aabb_collision(&player, &door) && !aabb_collision(&player, &enemy))
 				mov_quad(&player, 1);
 
 			if (al_key_down(&keyState, ALLEGRO_KEY_W) && aabb_collision(&player, &flor) && can_jump) {
@@ -209,13 +202,13 @@ int main() {
 				}
 			}
 
-			if ((player.x + player.h) > sizeWindow[0])
+			if ((player.x + player.h) > SCREEN_WIDTH)
 			{
-				player.x = sizeWindow[0] - player.h;
+				player.x = SCREEN_WIDTH - player.h;
 			}
-			if ((enemy.x + enemy.h) > sizeWindow[0] && !enemyDeath)
+			if ((enemy.x + enemy.h) > SCREEN_WIDTH && !enemyDeath)
 			{
-				enemy.x = sizeWindow[0] - enemy.h;
+				enemy.x = SCREEN_WIDTH - enemy.h;
 			}
 
 			if ((player.x) < 0)
@@ -238,7 +231,7 @@ int main() {
 				enemy.y = 300;
 				enemy.life = 100;*/
 
-				player = quad_create((sizeWindow[0] / 2) - 32, 300, 5, 32, 32, 100, al_map_rgb(0, 0, 255));
+				player = quad_create((SCREEN_WIDTH / 2) - 32, 300, 5, 32, 32, 100, al_map_rgb(0, 0, 255));
 				enemy = quad_create(770 - 32, 300, 5, 32, 32, 100, al_map_rgb(255, 0, 0));
 				get_ob = false;
 			}
