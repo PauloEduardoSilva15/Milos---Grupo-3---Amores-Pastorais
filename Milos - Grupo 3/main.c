@@ -14,7 +14,7 @@ int main() {
 
 	if (!al_init()) return -1;
 
-	
+
 	ALLEGRO_DISPLAY* window = al_create_display(SCREEN_WIDTH, SCREEN_HEIGHT); // Cria a janela do jogo
 
 	if (!window) return -1; // Verifica se criou uma janela
@@ -25,8 +25,11 @@ int main() {
 	bool done = false, draw = true; // Verifica se o jogo está rodando e declara se pode desenhar na tela
 
 
+
+
 	int gravidade = 10;
 
+	float velYE = 0;
 	float velY = 0;                  // Velocidade vertical
 	const float GRAVITY = 1.0;       // Gravidade aplicada por frame
 	const float JUMP_FORCE = -15.0;  // Força do pulo
@@ -39,16 +42,19 @@ int main() {
 
 	bool modoAtaque = false, modoDefesa = false;
 
-	
-	quad player = quad_create((SCREEN_WIDTH / 2) - 32, 300, 5, 32, 32, 100, al_map_rgb(0, 0, 255)); // Cria o Jogador
+
+	quad player = quad_create(PLAYER_X_0, PLAYER_Y_0, PLAYER_VELOCITY_0, QUAD_SIZE, QUAD_SIZE, MAXLIFE_0, PLAYER_NORMAL_COLOR); // Cria o Jogador
 	quad flor = quad_create(0, SCREEN_HEIGHT - 100, 0, SCREEN_WIDTH, 300, 0, al_map_rgb(0, 255, 0)); // Cria o Chão
-	quad enemy = quad_create(770 - 32, 300, 5, 32, 32, 100, al_map_rgb(255, 0, 0));
-	quad door = quad_create(600, 300, 10, 32, 200, 0, al_map_rgb(150, 50, 0)); // Cria o Chão
+	quad enemy = quad_create(ENEMY_X_0, ENEMY_Y_0, ENEMY_VELOCITY_0, QUAD_SIZE, QUAD_SIZE, MAXLIFE_0, ENEMY_COLOR);
+	quad door = quad_create(DOR_X, DOR_Y_0, DOR_VELOCITY_0, QUAD_SIZE, DOOR_HEIGHT, 0, DOR_COLOR); // Cria o Chão
 
 	int obX = 100, obY = 484;
-	quad ob = quad_create(obX, obY, 0, 16, 16, 0, al_map_rgb(255, 255, 0));
+	quad ob = quad_create(KEY_ITEM_X_0, KEY_ITEM_Y_0, 0, ITENS_QUAD_SIZE, ITENS_QUAD_SIZE, 0, KEY_ITEM_COLOR);
 
 	quad life_player = quad_create(100, 50, 0, player.life, 32, 0, al_map_rgb(0, 255, 0));
+
+
+
 
 
 	ALLEGRO_KEYBOARD_STATE keyState;
@@ -60,6 +66,7 @@ int main() {
 	al_start_timer(timer);
 
 	while (!done) {
+
 		ALLEGRO_EVENT ev;
 		al_wait_for_event(events, &ev);
 
@@ -116,10 +123,10 @@ int main() {
 
 
 
-			if (modoAtaque) player.color = al_map_rgb(100, 0, 200);
-			if (modoDefesa) player.color = al_map_rgb(180, 0, 200);
+			if (modoAtaque) player.color = PLAYER_ATACK_COLOR;
+			if (modoDefesa) player.color = PLAYER_DEFENSE_COLOR;
 
-			if (!modoAtaque && !modoDefesa)player.color = al_map_rgb(0, 0, 255);
+			if (!modoAtaque && !modoDefesa)player.color = PLAYER_NORMAL_COLOR;
 
 
 			if (aabb_collision(&player, &ob)) {
@@ -128,19 +135,18 @@ int main() {
 			}
 
 			if (get_ob) {
-				ob.x = 100;
 				ob.y = 100;
 
 			}
 			else {
-				ob.x = obX;
-				ob.y = obY;
+				ob.x = KEY_ITEM_X_0;
+				ob.y = KEY_ITEM_Y_0;
 
-				door.y = 300;
+				door.y = DOR_Y_0;
 			}
 
 			if (aabb_collision(&player, &door) && get_ob && door.y < 600)
-				door.y += 70;
+				door.y += 20 * door.vel;
 
 
 
@@ -152,6 +158,7 @@ int main() {
 			}
 
 			if (!aabb_collision(&enemy, &player) && aabb_collision(&enemy, &flor) && !enemyDeath) {
+
 				if ((enemy.x > player.x)) {
 					if (!aabb_collision(&enemy, &door))
 						mov_quad(&enemy, 0);
@@ -164,22 +171,25 @@ int main() {
 
 
 			if (!aabb_collision(&enemy, &flor) && !enemyDeath) {
+
 				enemy.y += gravidade;
 			}
+
+
 			life_player.w = player.life;
 
 			if (aabb_collision(&player, &enemy) && player.life > 0) {
 				if (!modoAtaque) {
 					if (!modoDefesa) {
 						if (!enemyDeath)
-							player.life -= 5 / 5;
+							player.life -= 1;
 
 					}
 				}
 				else {
 					if (!modoDefesa) {
 						if (enemy.life > 0) {
-							enemy.life -= 5 / 5;
+							enemy.life -= 2;
 
 						}
 					}
@@ -223,16 +233,9 @@ int main() {
 
 
 			if (player.life <= 0) {
-				/*player.x = (sizeWindow[0] / 2) - 32;
-				player.y = 300;
-				player.life = 100;
 
-				enemy.x = 770 - 32;
-				enemy.y = 300;
-				enemy.life = 100;*/
-
-				player = quad_create((SCREEN_WIDTH / 2) - 32, 300, 5, 32, 32, 100, al_map_rgb(0, 0, 255));
-				enemy = quad_create(770 - 32, 300, 5, 32, 32, 100, al_map_rgb(255, 0, 0));
+				player = quad_create(PLAYER_X_0, PLAYER_Y_0, PLAYER_VELOCITY_0, QUAD_SIZE, QUAD_SIZE, MAXLIFE_0, PLAYER_NORMAL_COLOR);
+				enemy = quad_create(ENEMY_X_0, ENEMY_Y_0, ENEMY_VELOCITY_0, QUAD_SIZE, QUAD_SIZE, MAXLIFE_0, ENEMY_COLOR);
 				get_ob = false;
 			}
 
@@ -256,6 +259,7 @@ int main() {
 			draw_quad(&door);
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0, 0, 0));
+
 		}
 	}
 
@@ -265,4 +269,3 @@ int main() {
 
 	return 0;
 }
-
