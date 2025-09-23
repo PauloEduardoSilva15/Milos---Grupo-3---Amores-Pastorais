@@ -20,8 +20,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="collision.c" />
+    <ClCompile Include="entity.c" />
     <ClCompile Include="gameConstants.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="player.c" />
     <ClCompile Include="quad.c" />
   </ItemGroup>
   <ItemGroup>
@@ -29,7 +31,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="collision.h" />
+    <ClInclude Include="entity.h" />
     <ClInclude Include="gameConstants.h" />
+    <ClInclude Include="player.h" />
     <ClInclude Include="quad.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
