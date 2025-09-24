@@ -28,7 +28,7 @@ level level_Load() {
 void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState) {
 	al_get_keyboard_state(&keyState);
 	//l->p.can_jump = false;
-	if (!collisionEQ(&l->p, &l->f)) {
+	if (!collisionEQ(&l->p, &l->f)&&!collisionE(&l->e, &l->p)) {
 		l->p.vY += PLAYER_GRAVIDADE;
 		l->p.y += l->p.vY;
 	}
@@ -45,9 +45,9 @@ void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState) {
 	}
 
 
-	if (al_key_down(&keyState, ALLEGRO_KEY_A) && l->p.x > 0)/* && !aabb_collision(&player, &enemy))*/
+	if (al_key_down(&keyState, ALLEGRO_KEY_A) && l->p.x > 0  && !collisionE(&l->p, &l->e))
 		movEntity(&l->p, 0);
-	if (al_key_down(&keyState, ALLEGRO_KEY_D) && l->p.x + l->p.size < SCREEN_WIDTH && !collisionEQ(&l->p, &l->d) /*&& !aabb_collision(&player, &enemy)*/)
+	if (al_key_down(&keyState, ALLEGRO_KEY_D) && l->p.x + l->p.size < SCREEN_WIDTH && !collisionEQ(&l->p, &l->d)  &&!collisionE(&l->p, &l->e))
 		movEntity(&l->p, 1);
 
 	if (al_key_down(&keyState, ALLEGRO_KEY_J)) l->p.modoAtaque = true;
@@ -77,7 +77,7 @@ void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState) {
 	}
 	if (collisionEQ(&l->p, &l->d) && l->k.get && l->d.y < 900) l->d.y += 10 * l->d.v;
 
-	if (!collisionE(&l->p, &l->e) && collisionEQ(&l->e, &l->f) /*&& !enemyDeath*/) {
+	if (!collisionE(&l->p, &l->e) && collisionEQ(&l->e, &l->f)) {
 
 		if ((l->e.x > l->p.x)) {
 			if (!collisionEQ(&l->e, &l->d))
@@ -88,19 +88,23 @@ void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState) {
 			movEntity(&l->e, 1);
 		}
 	}
-	if (!collisionEQ(&l->e, &l->f) /*&& !enemyDeath*/) {
 
-		l->e.y += ENEMY_GRAVIDADE;
+
+	if (!collisionEQ(&l->e, &l->f)) {
+		l->e.vY += ENEMY_GRAVIDADE;
+		l->e.y += l->e.vY;
 	}
-	if (collisionE(&l->p, &l->e) && l->p.life > 0) {
-		if (!l->p.modoAtaque) {
-			if (!l->p.modoDefesa) {
-				
-				
-				if (!l->e.islife)
-					l->p.life -= 1;
+	if (collisionEQ(&l->p, &l->f)) {
+		l->e.y = l->f.y - l->e.size; // Alinha com o chão
+		l->e.vY = 0;
+	}
+	
+	if (collisionE(&l->e, &l->p) && l->p.life > 0) {
+		
 
-			}
+		if (!l->p.modoAtaque) {
+			if (!l->p.modoDefesa) l->p.life -= 1;
+
 		}
 		else {
 			if (!l->p.modoDefesa) {
@@ -112,6 +116,50 @@ void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState) {
 
 		}
 	}
+	if (collisionE(&l->p, &l->e)) {
+		if (l->e.x > l->p.x)
+		{
+			l->e.x += 10;
+			l->p.x -= 10;
+		}
+		else {
+			if (!(l->p.y > l->e.y)) {
+				l->e.x -= 10;
+				l->p.x += 10;
+			}
+			else {
+				l->p.x += 10;
+			}
+		}
+
+	}
+
+	if ((l->p.x + l->p.size) > SCREEN_WIDTH)
+	{
+		l->p.x = SCREEN_WIDTH - l->p.size;
+	}
+	if ((l->e.x + l->e.size) > SCREEN_WIDTH)
+	{
+		l->e.x = SCREEN_WIDTH - l->e.size;
+	}
+
+	if ((l->p.x) < 0)
+	{
+		l->p.x = 0;
+	}
+	if ((l->e.x) < 0 )
+	{
+		l->e.x = 0;
+	}
+
+
+	if (l->p.life <= 0) {
+
+		*l = level_Load();
+	}
+
+	
+	
 
 }
 
