@@ -5,5 +5,6 @@
 #include "quad.h"
 #include "entity.h"
 
+entity playerLoad();
 
 #endif // !PLAYER_H

@@ -4,7 +4,8 @@
 #include "quad.h"
 #include "entity.h"
 #include "collision.h"
-
+#include "player.h"
+#include "level.h"
 #include <stdio.h>
 
 
@@ -27,8 +28,9 @@ int main() {
 	bool done = false, draw = true; // Verifica se o jogo está rodando e declara se pode desenhar na tela
 
 
+	//entity a = newEntity(400, 0, 0, 0,PLAYER_NORMAL_COLOR, true);
 
-
+	/*
 	int gravidade = 10;
 
 	float velYE = 0;
@@ -44,7 +46,7 @@ int main() {
 
 	bool modoAtaque = false, modoDefesa = false;
 
-	entity a = newEntity(400, 0, 0, PLAYER_NORMAL_COLOR, true);
+	
     
 	quad player = quad_create(PLAYER_X_0, PLAYER_Y_0, PLAYER_VELOCITY_0, QUAD_SIZE, QUAD_SIZE, MAXLIFE_0, PLAYER_NORMAL_COLOR); // Cria o Jogador
 	quad flor = quad_create(0, SCREEN_HEIGHT - 100, 0, SCREEN_WIDTH, 300, 0, al_map_rgb(0, 255, 0)); // Cria o Chão
@@ -56,9 +58,11 @@ int main() {
 
 	quad life_player = quad_create(100, 50, 0, player.life, 32, 0, al_map_rgb(0, 255, 0));
 
+	*/
 
-
-
+	//entity player = 
+	level levelT = level_Load();
+	
 
 	ALLEGRO_KEYBOARD_STATE keyState;
 	ALLEGRO_TIMER* timer = al_create_timer(1.0 / FPS);
@@ -84,6 +88,9 @@ int main() {
 		if (ev.type == ALLEGRO_EVENT_TIMER) {
 
 			al_get_keyboard_state(&keyState);
+
+			/*
+			
 
 			if (!aabb_collision(&player, &flor) && !aabb_collision(&player, &enemy)) {
 				velY += GRAVITY;
@@ -248,19 +255,21 @@ int main() {
 				enemy.x = 0;
 				enemy.y = 0;
 			}
-
+			*/
 			draw = true;
 
 		}
 		if (draw) {
 			draw = false;
-			drawEntity(&a);
+			Level_Draw(levelT);
+			/*
 			draw_quad(&ob);
 			draw_quad(&player);
 			if (!enemyDeath) draw_quad(&enemy);
 			draw_quad(&flor);
 			draw_quad(&life_player);
 			draw_quad(&door);
+			*/
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0, 0, 0));
 

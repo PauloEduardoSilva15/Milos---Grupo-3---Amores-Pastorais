@@ -11,6 +11,7 @@ typedef struct {
 	int x;
 	int y;
 	int v;
+	float vY;
 	int size;
 	int life;
 	ALLEGRO_COLOR color;
@@ -21,7 +22,7 @@ typedef struct {
 
 
 
-entity newEntity(int x, int y, int v, ALLEGRO_COLOR color, bool osLiving);
+entity newEntity(int x, int y, int v, float vY, ALLEGRO_COLOR color, bool osLiving);
 
 
 void movEntity(entity* e, int dir);
