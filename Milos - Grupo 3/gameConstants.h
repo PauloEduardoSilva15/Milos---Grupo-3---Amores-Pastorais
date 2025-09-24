@@ -22,7 +22,7 @@
 
 #define ENEMY_X_0 (SCREEN_WIDTH - 30) - QUAD_SIZE
 #define ENEMY_Y_0 (SCREEN_HEIGHT / 2) 
-#define ENEMY_VELOCITY_0 5
+#define ENEMY_VELOCITY_0 3
 #define ENEMY_COLOR  al_map_rgb(255, 0, 0)
 #define ENEMY_ATACK_DAMAGE 1
 

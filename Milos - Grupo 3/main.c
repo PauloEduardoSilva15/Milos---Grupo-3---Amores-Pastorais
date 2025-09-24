@@ -2,7 +2,9 @@
 #include <allegro5/allegro_primitives.h>
 #include "gameConstants.h"
 #include "quad.h"
+#include "entity.h"
 #include "collision.h"
+
 #include <stdio.h>
 
 
@@ -42,7 +44,8 @@ int main() {
 
 	bool modoAtaque = false, modoDefesa = false;
 
-
+	entity a = newEntity(400, 0, 0, PLAYER_NORMAL_COLOR, true);
+    
 	quad player = quad_create(PLAYER_X_0, PLAYER_Y_0, PLAYER_VELOCITY_0, QUAD_SIZE, QUAD_SIZE, MAXLIFE_0, PLAYER_NORMAL_COLOR); // Cria o Jogador
 	quad flor = quad_create(0, SCREEN_HEIGHT - 100, 0, SCREEN_WIDTH, 300, 0, al_map_rgb(0, 255, 0)); // Cria o Chão
 	quad enemy = quad_create(ENEMY_X_0, ENEMY_Y_0, ENEMY_VELOCITY_0, QUAD_SIZE, QUAD_SIZE, MAXLIFE_0, ENEMY_COLOR);
@@ -146,7 +149,7 @@ int main() {
 			}
 
 			if (aabb_collision(&player, &door) && get_ob && door.y < 600)
-				door.y += 20 * door.vel;
+				door.y += door.vel;
 
 
 
@@ -251,6 +254,7 @@ int main() {
 		}
 		if (draw) {
 			draw = false;
+			drawEntity(&a);
 			draw_quad(&ob);
 			draw_quad(&player);
 			if (!enemyDeath) draw_quad(&enemy);

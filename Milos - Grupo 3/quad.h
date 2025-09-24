@@ -1,7 +1,8 @@
 #ifndef QUAD_H;
 #define QUAD_H
 
-#include <allegro5/allegro.h>
+#include <allegro5/allegro5.h>
+#include <allegro5/allegro_primitives.h>
 
 typedef struct {
     int x;
