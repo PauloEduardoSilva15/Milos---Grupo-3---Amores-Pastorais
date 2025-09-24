@@ -17,12 +17,16 @@ typedef struct {
 	ALLEGRO_COLOR color;
 	quad q;
 	bool isLiving;
+	bool can_jump;
+	bool modoAtaque; 
+	bool modoDefesa;
+	bool islife;
 
 }entity;
 
 
 
-entity newEntity(int x, int y, int v, float vY, ALLEGRO_COLOR color, bool osLiving);
+entity newEntity(int x, int y, int v, float vY, ALLEGRO_COLOR color, bool osLiving, bool can_jump);
 
 
 void movEntity(entity* e, int dir);

@@ -87,11 +87,15 @@ int main() {
 
 		if (ev.type == ALLEGRO_EVENT_TIMER) {
 
-			al_get_keyboard_state(&keyState);
+			//al_get_keyboard_state(&keyState);
 
+			level_Update(&levelT, &keyState);
 			/*
 			
-
+		if (al_key_down(&keyState, ALLEGRO_KEY_A) && player.x > 0 && !aabb_collision(&player, &enemy))
+				mov_quad(&player, 0);
+			if (al_key_down(&keyState, ALLEGRO_KEY_D) && player.x + player.w < SCREEN_WIDTH && !aabb_collision(&player, &door) && !aabb_collision(&player, &enemy))
+				mov_quad(&player, 1);
 			if (!aabb_collision(&player, &flor) && !aabb_collision(&player, &enemy)) {
 				velY += GRAVITY;
 				player.y += velY;
@@ -99,10 +103,7 @@ int main() {
 
 
 
-			if (al_key_down(&keyState, ALLEGRO_KEY_A) && player.x > 0 && !aabb_collision(&player, &enemy))
-				mov_quad(&player, 0);
-			if (al_key_down(&keyState, ALLEGRO_KEY_D) && player.x + player.w < SCREEN_WIDTH && !aabb_collision(&player, &door) && !aabb_collision(&player, &enemy))
-				mov_quad(&player, 1);
+	
 
 			if (al_key_down(&keyState, ALLEGRO_KEY_W) && aabb_collision(&player, &flor) && can_jump) {
 				player.y -= GRAVITY;

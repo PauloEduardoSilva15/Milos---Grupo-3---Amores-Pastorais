@@ -5,7 +5,7 @@
 #include "quad.h"
 
 
-entity newEntity(int x, int y, int v, float vY,ALLEGRO_COLOR color, bool isLiving) {
+entity newEntity(int x, int y, int v, float vY,ALLEGRO_COLOR color, bool isLiving, bool can_jump) {
 	entity e;
 	e.x = x;
 	e.y = y;
@@ -14,6 +14,10 @@ entity newEntity(int x, int y, int v, float vY,ALLEGRO_COLOR color, bool isLivin
 	e.size = QUAD_SIZE;
 	e.color = color;
 	e.isLiving = isLiving;
+	e.can_jump = can_jump;
+	e.modoAtaque = false;
+	e.modoDefesa = false;
+	e.islife = true;
 	return e;
 }
 

@@ -20,10 +20,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="collision.c" />
+    <ClCompile Include="enemy.c" />
     <ClCompile Include="entity.c" />
     <ClCompile Include="gameConstants.c" />
+    <ClCompile Include="item.c" />
     <ClCompile Include="level.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="obstacle.c" />
     <ClCompile Include="player.c" />
     <ClCompile Include="quad.c" />
   </ItemGroup>
@@ -32,9 +35,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="collision.h" />
+    <ClInclude Include="enemy.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="gameConstants.h" />
+    <ClInclude Include="item.h" />
     <ClInclude Include="level.h" />
+    <ClInclude Include="obstacle.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="quad.h" />
   </ItemGroup>

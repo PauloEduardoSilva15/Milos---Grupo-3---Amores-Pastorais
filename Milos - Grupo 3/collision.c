@@ -1,10 +1,26 @@
 #include "collision.h"
 
 
-bool aabb_collision(quad* a, quad* b) {
+bool collisionEQ(entity * a, quad* b) {
 	return (a->x < b->x + b->w &&
-		a->x + a->w > b->x &&
+		a->x + a->size > b->x &&
 		a->y < b->y + b->h &&
-		a->y + a->h > b->y);
+		a->y + a->size > b->y);
+
+}
+
+bool collisionEI(entity* a, item* b) {
+	return (a->x < b->x + b->size &&
+		a->x + a->size > b->x &&
+		a->y < b->y + b->size &&
+		a->y + a->size > b->y);
+
+}
+
+bool collisionE(entity* a, entity* b) {
+	return (a->x < b->x + b->size &&
+		a->x + a->size > b->x &&
+		a->y < b->y + b->size &&
+		a->y + a->size > b->y);
 
 }
