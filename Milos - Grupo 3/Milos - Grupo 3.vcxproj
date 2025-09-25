@@ -20,12 +20,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c" />
+    <ClCompile Include="puzzle.c" />
     <ClCompile Include="quad.c" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="puzzle.h" />
     <ClInclude Include="quad.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
