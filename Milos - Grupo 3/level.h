@@ -18,6 +18,7 @@ typedef struct {
 	entity e;
 	quad f;
 	quad d;
+	quad dL;
 	item k;
 }level;
 

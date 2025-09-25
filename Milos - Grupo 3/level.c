@@ -21,6 +21,7 @@ level level_Load() {
 	teste.e = enemyLoad();
 	teste.f = quad_create(0, SCREEN_HEIGHT - 100, 0, SCREEN_WIDTH, 300, al_map_rgb(0, 255, 0)); // Cria o Chão
 	teste.d = obstacleLoad();
+	teste.dL = quad_create(DISPLAY_LIFE_X, DISPLAY_LIFE_Y, 0, MAXLIFE_0, QUAD_SIZE, al_map_rgb(0, 255, 0)); // Cria o Chão
 	teste.k = newItem(KEY_ITEM_X, KEY_ITEM_Y_0, false);
 	return teste;
 }
@@ -43,6 +44,8 @@ void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState) {
 
 		}
 	}
+
+	l->dL.w = l->p.life;
 
 
 	if (al_key_down(&keyState, ALLEGRO_KEY_A) && l->p.x > 0  && !collisionE(&l->p, &l->e))
@@ -77,7 +80,7 @@ void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState) {
 	}
 	if (collisionEQ(&l->p, &l->d) && l->k.get && l->d.y < 900) l->d.y += 10 * l->d.v;
 
-	if (!collisionE(&l->p, &l->e) && collisionEQ(&l->e, &l->f)) {
+	if (!collisionE(&l->p, &l->e) && collisionEQ(&l->e, &l->f) && !l->e.isDead) {
 
 		if ((l->e.x > l->p.x)) {
 			if (!collisionEQ(&l->e, &l->d))
@@ -90,11 +93,11 @@ void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState) {
 	}
 
 
-	if (!collisionEQ(&l->e, &l->f)) {
+	if (!collisionEQ(&l->e, &l->f) && !l->e.isDead) {
 		l->e.vY += ENEMY_GRAVIDADE;
 		l->e.y += l->e.vY;
 	}
-	if (collisionEQ(&l->p, &l->f)) {
+	if (collisionEQ(&l->p, &l->f) && !l->e.isDead) {
 		l->e.y = l->f.y - l->e.size; // Alinha com o chão
 		l->e.vY = 0;
 	}
@@ -103,15 +106,13 @@ void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState) {
 		
 
 		if (!l->p.modoAtaque) {
-			if (!l->p.modoDefesa) l->p.life -= 1;
+			if (!l->p.modoDefesa)
+				if(!l->e.isDead)l->p.life -= 1;
 
 		}
 		else {
 			if (!l->p.modoDefesa) {
-				if (l->e.life > 0) {
-					l->e.life -= 2;
-
-				}
+				if (l->e.life > 0) l->e.life -= 2;
 			}
 
 		}
@@ -138,7 +139,7 @@ void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState) {
 	{
 		l->p.x = SCREEN_WIDTH - l->p.size;
 	}
-	if ((l->e.x + l->e.size) > SCREEN_WIDTH)
+	if ((l->e.x + l->e.size) > SCREEN_WIDTH && !l->e.isDead)
 	{
 		l->e.x = SCREEN_WIDTH - l->e.size;
 	}
@@ -147,18 +148,25 @@ void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState) {
 	{
 		l->p.x = 0;
 	}
-	if ((l->e.x) < 0 )
+	if ((l->e.x) < 0 && !l->e.isDead)
 	{
 		l->e.x = 0;
 	}
-
-
+	
 	if (l->p.life <= 0) {
+		l->p = playerLoad();
+		l->e = enemyLoad();
+		
+		l->k.get = false;
 
-		*l = level_Load();
 	}
 
-	
+	if (l->e.life <= 0) l->e.isDead = true;
+
+	if (l->e.isDead) {
+		l->e.x = 0;
+		l->e.y = 0;
+	}
 	
 
 }
@@ -169,8 +177,11 @@ void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState) {
 void Level_Draw(level l) {
 	
 	drawEntity(&l.p);
-	drawEntity(&l.e);
+	if (!l.e.isDead)drawEntity(&l.e);
+	draw_quad(&l.dL);
 	draw_quad(&l.f);
 	draw_quad(&l.d);
 	itemDraw(&l.k);
+	al_flip_display();
+	al_clear_to_color(al_map_rgb(0, 0, 0));
 }

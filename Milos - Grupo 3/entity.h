@@ -20,6 +20,7 @@ typedef struct {
 	bool can_jump;
 	bool modoAtaque; 
 	bool modoDefesa;
+	bool isDead;
 
 }entity;
 

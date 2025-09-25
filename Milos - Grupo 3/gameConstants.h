@@ -36,6 +36,13 @@
 #define KEY_ITEM_Y_0  (SCREEN_HEIGHT / 2) + 184
 #define KEY_ITEM_COLOR  al_map_rgb(255, 255, 0)
 
+#define DISPLAY_LIFE_X (SCREEN_WIDTH - 700)
+#define DISPLAY_LIFE_Y 50
+#define DISPLAY_LIFE_W MAXLIFE_0
+#define DISPLAY_LIFE_H 32
+#define DISPLAY_LIFE_COLOR  al_map_rgb(0, 255, 0)
+
+
 
 #define DOR_X (SCREEN_WIDTH - 200) - QUAD_SIZE
 #define DOR_Y_0 (SCREEN_HEIGHT / 2) 

@@ -12,10 +12,12 @@ entity newEntity(int x, int y, int v, float vY,ALLEGRO_COLOR color, bool can_jum
 	e.v = v;
 	e.vY = vY;
 	e.size = QUAD_SIZE;
+	e.life = MAXLIFE_0;
 	e.color = color;
 	e.can_jump = can_jump;
 	e.modoAtaque = false;
 	e.modoDefesa = false;
+	e.isDead = false;
 	return e;
 }
 
