@@ -19,14 +19,14 @@ level level_Load() {
 	level teste;
 	teste.p = playerLoad(); //newEntity(PLAYER_X_0, PLAYER_Y_0, PLAYER_VELOCITY_0, 0, PLAYER_NORMAL_COLOR, true);
 	teste.e = enemyLoad();
-	teste.f = quad_create(0, SCREEN_HEIGHT - 100, 0, SCREEN_WIDTH, 300, al_map_rgb(0, 255, 0)); // Cria o Chão
+	teste.f = quad_create(0, SCREEN_HEIGHT - 100, 0, SCREEN_WIDTH, 300, al_map_rgb(0, 255, 0)); // Cria o Chï¿½o
 	teste.d = obstacleLoad();
-	teste.dL = quad_create(DISPLAY_LIFE_X, DISPLAY_LIFE_Y, 0, MAXLIFE_0, QUAD_SIZE, al_map_rgb(0, 255, 0)); // Cria o Chão
+	teste.dL = quad_create(DISPLAY_LIFE_X, DISPLAY_LIFE_Y, 0, MAXLIFE_0, QUAD_SIZE, al_map_rgb(0, 255, 0)); // Cria o Chï¿½o
 	teste.k = newItem(KEY_ITEM_X, KEY_ITEM_Y_0, false);
 	return teste;
 }
 
-void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState) {
+void level_Update(level* l, ALLEGRO_KEYBOARD_STATE keyState) {
 	al_get_keyboard_state(&keyState);
 	//l->p.can_jump = false;
 	if (!collisionEQ(&l->p, &l->f)&&!collisionE(&l->e, &l->p)) {
@@ -34,7 +34,7 @@ void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState) {
 		l->p.y += l->p.vY;
 	}
 	if (collisionEQ(&l->p, &l->f)) {
-		l->p.y = l->f.y - l->p.size; // Alinha com o chão
+		l->p.y = l->f.y - l->p.size; // Alinha com o chï¿½o
 		l->p.vY = 0;
 		l->p.can_jump = true;
 		if (al_key_down(&keyState, ALLEGRO_KEY_W) && l->p.can_jump) {
@@ -98,7 +98,7 @@ void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState) {
 		l->e.y += l->e.vY;
 	}
 	if (collisionEQ(&l->p, &l->f) && !l->e.isDead) {
-		l->e.y = l->f.y - l->e.size; // Alinha com o chão
+		l->e.y = l->f.y - l->e.size; // Alinha com o chï¿½o
 		l->e.vY = 0;
 	}
 	
