@@ -26,7 +26,7 @@ level level_Load() {
 	return teste;
 }
 
-void level_Update(level* l, ALLEGRO_KEYBOARD_STATE keyState) {
+void level_Update(level* l, ALLEGRO_KEYBOARD_STATE * keyState) {
 	al_get_keyboard_state(&keyState);
 	//l->p.can_jump = false;
 	if (!collisionEQ(&l->p, &l->f)&&!collisionE(&l->e, &l->p)) {
