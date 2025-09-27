@@ -1,4 +1,4 @@
-#ifndef QUAD_H;
+#ifndef QUAD_H
 #define QUAD_H
 
 #include <allegro5/allegro5.h>
