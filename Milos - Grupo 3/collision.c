@@ -17,6 +17,14 @@ bool collisionEI(entity* a, item* b) {
 
 }
 
+bool collisionEM(entity* a, Marker* b) {
+	return (a->x < b->x + b->size &&
+		a->x + a->size > b->x &&
+		a->y < b->y + b->size &&
+		a->y + a->size > b->y);
+
+}
+
 bool collisionE(entity* a, entity* b) {
 	return (a->x < b->x + b->size &&
 		a->x + a->size > b->x &&

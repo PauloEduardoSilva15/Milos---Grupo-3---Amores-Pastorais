@@ -4,10 +4,12 @@
 #include "quad.h"
 #include "entity.h"
 #include "item.h"
+#include "marker.h"
 #include <stdbool.h>
 
 bool collisionEQ(entity* a, quad* b);
 bool collisionEI(entity* a, item* b);
+bool collisionEM(entity* a, Marker* b);
 bool collisionE(entity* a, entity* b);
 
 #endif 
