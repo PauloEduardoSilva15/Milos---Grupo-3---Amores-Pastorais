@@ -11,6 +11,7 @@
 #include "item.h"
 #include "enemy.h"
 #include "player.h"
+#include "marker.h"
 
 
 typedef struct {
@@ -20,6 +21,9 @@ typedef struct {
 	quad d;
 	quad dL;
 	item k;
+	Marker m;
+	bool puzzle_open;
+    bool puzzle_solved;
 }level;
 
 

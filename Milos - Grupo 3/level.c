@@ -10,6 +10,7 @@
 #include "obstacle.h"
 #include "item.h"
 #include "collision.h"
+#include "puzzle.h"
 
 
 // Carrega o level
@@ -21,12 +22,22 @@ level level_Load() {
 	teste.d = obstacleLoad();//carrega a porta
 	teste.dL = quad_create(DISPLAY_LIFE_X, DISPLAY_LIFE_Y, 0, MAXLIFE_0, QUAD_SIZE, al_map_rgb(0, 255, 0)); // Carrega a barra de vida
 	teste.k = newItem(KEY_ITEM_X, KEY_ITEM_Y_0, false);//carrega a chave
+	teste.m = newMarker(100, 455); // Carrega o marcador
+	teste.puzzle_open = false;
+	teste.puzzle_solved = false;	
 	return teste;
+
+	puzzle_init();
 }
 
 // Atualiza o level
 void level_Update(level* l, ALLEGRO_KEYBOARD_STATE keyState) {
 	al_get_keyboard_state(&keyState);
+
+
+
+
+
 	//gravidade e pulo
 	if (!collisionEQ(&l->p, &l->f)&&!collisionE(&l->e, &l->p)) {
 		l->p.vY += PLAYER_GRAVIDADE;
@@ -72,8 +83,9 @@ void level_Update(level* l, ALLEGRO_KEYBOARD_STATE keyState) {
 	//verifica colisao com a chave e a porta
 	if (collisionEI(&l->p, &l->k)) l->k.get = true;
 	if (l->k.get) l->k.y = 100;
-	else {
-		l->k = newItem(KEY_ITEM_X, KEY_ITEM_Y_0, false);
+	if (!l->k.get) {
+		l->k.x = KEY_ITEM_X;
+		l->k.y = KEY_ITEM_Y_0;
 		l->d.y = DOR_Y_0;
 	}
 	if (collisionEQ(&l->p, &l->d) && l->k.get && l->d.y < 900) l->d.y += 10 * l->d.v;
@@ -137,12 +149,12 @@ void level_Update(level* l, ALLEGRO_KEYBOARD_STATE keyState) {
 
 // Desenha o level
 void Level_Draw(level l) {
+	MarkerDraw(&l.m);
 	drawEntity(&l.p);
 	if (!l.e.isDead) drawEntity(&l.e);
 	draw_quad(&l.dL);
 	draw_quad(&l.f);
 	draw_quad(&l.d);
 	itemDraw(&l.k);
-	al_flip_display();
-	al_clear_to_color(al_map_rgb(0, 0, 0));
+	
 }
