@@ -10,7 +10,6 @@
 #include "obstacle.h"
 #include "item.h"
 #include "collision.h"
-#include "puzzle.h"
 
 
 // Carrega o level
@@ -22,20 +21,13 @@ level level_Load() {
 	teste.d = obstacleLoad();//carrega a porta
 	teste.dL = quad_create(DISPLAY_LIFE_X, DISPLAY_LIFE_Y, 0, MAXLIFE_0, QUAD_SIZE, al_map_rgb(0, 255, 0)); // Carrega a barra de vida
 	teste.k = newItem(KEY_ITEM_X, KEY_ITEM_Y_0, false);//carrega a chave
-	teste.m = newMarker(100, 455); // Carrega o marcador
-	teste.puzzle_open = false;
-	teste.puzzle_solved = false;	
+	teste.m = newMarker(MARKER_X, MARKER_Y); // Carrega o marcador	
 	return teste;
-
-	puzzle_init();
 }
 
 // Atualiza o level
-void level_Update(level* l, ALLEGRO_KEYBOARD_STATE keyState) {
+void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState) {
 	al_get_keyboard_state(&keyState);
-
-
-
 
 
 	//gravidade e pulo

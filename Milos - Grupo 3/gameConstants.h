@@ -32,7 +32,7 @@
 #define ENEMY_ATACK_DAMAGE 1
 
 
-#define KEY_ITEM_X (SCREEN_WIDTH - 700)
+#define KEY_ITEM_X -30//(SCREEN_WIDTH - 700)
 #define KEY_ITEM_Y_0  (SCREEN_HEIGHT / 2) + 184
 #define KEY_ITEM_COLOR  al_map_rgb(255, 255, 0)
 
@@ -50,6 +50,9 @@
 #define DOR_VELOCITY_0 50
 #define DOR_COLOR  al_map_rgb(150, 50, 0)
 
+#define MARKER_X 100
+#define MARKER_Y 455
+#define MARKER_COLOR al_map_rgb(216, 216, 216)
 
 
 

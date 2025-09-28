@@ -51,8 +51,6 @@ int main() {
 
 		}
 
-
-
 		if (ev.type == ALLEGRO_EVENT_TIMER) {
 
 			//al_get_keyboard_state(&keyState);
@@ -64,7 +62,8 @@ int main() {
 		if (draw) {
 			draw = false;
 			Level_Draw(levelT);
-			
+			al_flip_display();
+			al_clear_to_color(al_map_rgb(0, 0, 0));
 
 		}
 	}
