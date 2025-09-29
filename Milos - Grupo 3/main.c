@@ -24,6 +24,7 @@ int main() {
 
 	al_init_primitives_addon(); // inicializa os addons adicionais como retângulo, circulo, etc
 	al_install_keyboard(); // inicializa o teclado
+	al_install_mouse();
 	al_init_font_addon(); // inicializa o addon de fontes
     al_init_ttf_addon(); // inicializa o addon de fontes ttf
 
@@ -43,6 +44,7 @@ int main() {
 	ALLEGRO_EVENT_QUEUE* events = al_create_event_queue(); // Evento Principal
 	al_register_event_source(events, al_get_keyboard_event_source());
 	al_register_event_source(events, al_get_timer_event_source(timer));
+	al_register_event_source(events, al_get_mouse_event_source());
 
 	al_start_timer(timer);
 

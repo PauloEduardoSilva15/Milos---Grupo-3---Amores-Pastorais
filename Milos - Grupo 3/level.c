@@ -10,7 +10,7 @@
 #include "obstacle.h"
 #include "item.h"
 #include "collision.h"
-
+#include <math.h>
 
 // Carrega o level
 level level_Load() {
