@@ -226,7 +226,7 @@ int main() {
 
         if (draw) {
             draw = false;
-            al_draw_text(Font, al_map_rgb(255, 255, 255), 50, 50, 0, "Bem Vindo ao jogo!");
+            al_draw_text(Font, al_map_rgb(255, 255, 255), 50, 50, 0, "Versão Alfa 0.0.5");
             // desenha elementos do jogo
             draw_quad(&flor);
             draw_quad(&door);
