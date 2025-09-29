@@ -65,6 +65,11 @@ int main() {
     al_register_event_source(events, al_get_keyboard_event_source());
     al_register_event_source(events, al_get_timer_event_source(timer));
     al_register_event_source(events, al_get_mouse_event_source());
+   
+    al_clear_to_color(al_map_rgb(0, 0, 0));
+    al_draw_text(textoFonte, al_map_rgb(255, 255, 255), 50, 50, 0, "Bem Vindo ao jogo!");
+    al_flip_display();
+
 
     // puzzle
     bool puzzle_open = false;
@@ -113,7 +118,7 @@ int main() {
                 }
             }
         }
-
+      
         if (ev.type == ALLEGRO_EVENT_TIMER) {
 
             al_get_keyboard_state(&keyState);
@@ -265,6 +270,8 @@ int main() {
     al_destroy_display(window);
     al_destroy_timer(timer);
     al_destroy_event_queue(events);
+    al_destroy_font(textoFonte);
+
 
     return 0;
 }
