@@ -46,6 +46,7 @@ void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState) {
 			l->puzzle_solved = true;
 			l->puzzle_open = false;
 			puzzle_destroy(); // Limpa o puzzle após resolver
+			l->k.x = 100;
 		}
 		return; // Não executa o resto da lógica do jogo enquanto puzzle está aberto
 	}
@@ -76,6 +77,16 @@ void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState) {
 		l->e.vY = 0;
 	}
 
+	//verifica colisao com a chave e a porta
+	if (collisionEI(&l->p, &l->k)) l->k.get = true;
+	if (l->k.get) l->k.y = 100;
+	if (!l->k.get) {
+		l->k.x = KEY_ITEM_X;
+		l->k.y = KEY_ITEM_Y_0;
+		l->d.y = DOR_Y_0;
+	}
+	if (collisionEQ(&l->p, &l->d) && l->k.get && l->d.y < 900) l->d.y += 10 * l->d.v;
+
 	// CONTROLES DO PLAYER
 	if (!l->puzzle_open) {
 		// movimenta o player
@@ -96,15 +107,7 @@ void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState) {
 	if (l->p.modoDefesa) l->p.color = PLAYER_DEFENSE_COLOR;//muda a cor do player NO MODO DEFESA
 	if (!l->p.modoAtaque && !l->p.modoDefesa)l->p.color = PLAYER_NORMAL_COLOR;//muda a cor do player NO MODO NORMAL
 
-	//verifica colisao com a chave e a porta
-	if (collisionEI(&l->p, &l->k)) l->k.get = true;
-	if (l->k.get) l->k.y = 100;
-	if (!l->k.get) {
-		l->k.x = KEY_ITEM_X;
-		l->k.y = KEY_ITEM_Y_0;
-		l->d.y = DOR_Y_0;
-	}
-	if (collisionEQ(&l->p, &l->d) && l->k.get && l->d.y < 900) l->d.y += 10 * l->d.v;
+	
 
 
 
