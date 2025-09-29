@@ -57,7 +57,8 @@ int main() {
     int markerW = 32;
     int markerH = 50;
 
-    ALLEGRO_FONT* font = al_create_builtin_font();
+    ALLEGRO_FONT* Font = al_create_builtin_font();
+
 
     ALLEGRO_KEYBOARD_STATE keyState;
     ALLEGRO_TIMER* timer = al_create_timer(1.0 / 60);
@@ -65,6 +66,8 @@ int main() {
     al_register_event_source(events, al_get_keyboard_event_source());
     al_register_event_source(events, al_get_timer_event_source(timer));
     al_register_event_source(events, al_get_mouse_event_source());
+  
+
 
     // puzzle
     bool puzzle_open = false;
@@ -113,7 +116,7 @@ int main() {
                 }
             }
         }
-
+      
         if (ev.type == ALLEGRO_EVENT_TIMER) {
 
             al_get_keyboard_state(&keyState);
@@ -223,7 +226,7 @@ int main() {
 
         if (draw) {
             draw = false;
-
+            al_draw_text(Font, al_map_rgb(255, 255, 255), 50, 50, 0, "Versão Alfa 0.0.5");
             // desenha elementos do jogo
             draw_quad(&flor);
             draw_quad(&door);
@@ -246,7 +249,7 @@ int main() {
                 int tx = markerX;
                 int ty = markerY - 24;
                 al_draw_filled_rectangle(tx, ty, tx + 120, ty + 20, al_map_rgba(0, 0, 0, 200));
-                al_draw_text(font, al_map_rgb(255, 255, 255), tx + 4, ty + 2, 0, "[E] Interagir");
+                al_draw_text(Font, al_map_rgb(255, 255, 255), tx + 4, ty + 2, 0, "[E] Interagir");
             }
 
             // se puzzle estiver aberto, desenhe a tela do puzzle por cima
@@ -261,10 +264,12 @@ int main() {
     }
 
     puzzle_destroy();
-    al_destroy_font(font);
+    //al_destroy_font(textoFonte);
     al_destroy_display(window);
     al_destroy_timer(timer);
     al_destroy_event_queue(events);
+    al_destroy_font(Font);
+
 
     return 0;
 }
