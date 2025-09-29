@@ -21,53 +21,77 @@ level level_Load() {
 	teste.d = obstacleLoad();//carrega a porta
 	teste.dL = quad_create(DISPLAY_LIFE_X, DISPLAY_LIFE_Y, 0, MAXLIFE_0, QUAD_SIZE, al_map_rgb(0, 255, 0)); // Carrega a barra de vida
 	teste.k = newItem(KEY_ITEM_X, KEY_ITEM_Y_0, false);//carrega a chave
-	teste.m = newMarker(MARKER_X, MARKER_Y); // Carrega o marcador	
+	teste.m = newMarker(MARKER_X, MARKER_Y); // Carrega o marcador
+	teste.puzzle_open = false; //inicia com o puzzle fechado
+	teste.puzzle_solved = false; //inicia com o puzzle n�o resolvido
+	teste.show_interact_text = false; //inicia sem mostrar o texto de interação
 	return teste;
 }
 
 // Atualiza o level
 void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState) {
-	al_get_keyboard_state(&keyState);
+	
+	// Verifica colisão com marker
+	l->show_interact_text = collisionEM(&l->p, &l->m);
 
+	// Abre puzzle quando colide com marker e pressiona E
+	if (l->show_interact_text && al_key_down(keyState, ALLEGRO_KEY_E)) {
+		l->puzzle_open = true;
+	}
 
-	//gravidade e pulo
-	if (!collisionEQ(&l->p, &l->f)&&!collisionE(&l->e, &l->p)) {
+	// Se puzzle está aberto, não atualiza o jogo normal
+	if (l->puzzle_open) {
+		// O puzzle será atualizado no main loop através de puzzle_handle_event
+		if (puzzle_is_solved()) {
+			l->puzzle_solved = true;
+			l->puzzle_open = false;
+			puzzle_destroy(); // Limpa o puzzle após resolver
+		}
+		return; // Não executa o resto da lógica do jogo enquanto puzzle está aberto
+	}
+
+	// GRAVIDADE E PULO
+	if (!collisionEQ(&l->p, &l->f) && !collisionE(&l->e, &l->p)) {
 		l->p.vY += PLAYER_GRAVIDADE;
 		l->p.y += l->p.vY;
 	}
+
 	if (collisionEQ(&l->p, &l->f)) {
-		l->p.y = l->f.y - l->p.size; // Alinha com o ch�o
+		l->p.y = l->f.y - l->p.size;
 		l->p.vY = 0;
 		l->p.can_jump = true;
-		if (al_key_down(&keyState, ALLEGRO_KEY_W) && l->p.can_jump) {
+		if (al_key_down(keyState, ALLEGRO_KEY_W) && l->p.can_jump) {
 			l->p.y -= PLAYER_GRAVIDADE;
 			l->p.vY = PLAYER_JUMP_FORCE;
 			l->p.can_jump = false;
-
 		}
 	}
+
 	if (!collisionEQ(&l->e, &l->f) && !l->e.isDead) {
 		l->e.vY += ENEMY_GRAVIDADE;
 		l->e.y += l->e.vY;
 	}
 	if (collisionEQ(&l->p, &l->f) && !l->e.isDead) {
-		l->e.y = l->f.y - l->e.size; // Alinha com o ch�o
+		l->e.y = l->f.y - l->e.size; // Alinha com o chão
 		l->e.vY = 0;
 	}
 
-
-	if(!collisionE(&l->p, &l->e)){
-		if (al_key_down(&keyState, ALLEGRO_KEY_A))
-			movEntity(&l->p, 0);
-		if (al_key_down(&keyState, ALLEGRO_KEY_D) && !collisionEQ(&l->p, &l->d))
-			movEntity(&l->p, 1);
+	// CONTROLES DO PLAYER
+	if (!l->puzzle_open) {
+		// movimenta o player
+		if (!collisionE(&l->p, &l->e)) {
+			if (al_key_down(keyState, ALLEGRO_KEY_A))
+				movEntity(&l->p, 0);
+			if (al_key_down(keyState, ALLEGRO_KEY_D) && !collisionEQ(&l->p, &l->d))
+				movEntity(&l->p, 1);
+		}
+		// modo ataque e defesa
+		if (al_key_down(keyState, ALLEGRO_KEY_J)) l->p.modoAtaque = true;
+		else l->p.modoAtaque = false;
+		if (al_key_down(keyState, ALLEGRO_KEY_K)) l->p.modoDefesa = true;
+		else l->p.modoDefesa = false;
 	}
-	
-	//modo ataque e defesa
-	if (al_key_down(&keyState, ALLEGRO_KEY_J)) l->p.modoAtaque = true;//segura o j para atacar
-	else l->p.modoAtaque = false;
-	if (al_key_down(&keyState, ALLEGRO_KEY_K)) l->p.modoDefesa = true; //segura o k para defender
-	else l->p.modoDefesa = false;
+
 	if (l->p.modoAtaque) l->p.color = PLAYER_ATACK_COLOR;//muda a cor do player NO MODO ATAQUE
 	if (l->p.modoDefesa) l->p.color = PLAYER_DEFENSE_COLOR;//muda a cor do player NO MODO DEFESA
 	if (!l->p.modoAtaque && !l->p.modoDefesa)l->p.color = PLAYER_NORMAL_COLOR;//muda a cor do player NO MODO NORMAL
@@ -83,13 +107,14 @@ void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState) {
 	if (collisionEQ(&l->p, &l->d) && l->k.get && l->d.y < 900) l->d.y += 10 * l->d.v;
 
 
-	
+
 
 	//movimenta o inimigo
 	if (!collisionE(&l->p, &l->e) && collisionEQ(&l->e, &l->f) && !l->e.isDead) {
-		if (l->e.x > l->p.x){
+		if (l->e.x > l->p.x) {
 			if (!collisionEQ(&l->e, &l->d)) movEntity(&l->e, 0);//esquerda
-		} else movEntity(&l->e, 1);//direita
+		}
+		else movEntity(&l->e, 1);//direita
 	}
 
 	l->dL.w = l->p.life; //atualiza a barra de vida do player
@@ -98,7 +123,7 @@ void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState) {
 	if (collisionE(&l->e, &l->p) && l->p.life > 0) {
 		if (!l->p.modoAtaque) {
 			if (!l->p.modoDefesa)
-				if(!l->e.isDead)l->p.life -= 3; //tira vida do player
+				if (!l->e.isDead)l->p.life -= 3; //tira vida do player
 		}
 		else {
 			if (!l->p.modoDefesa)
@@ -143,11 +168,21 @@ void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState) {
 void Level_Draw(level l, ALLEGRO_FONT* Font) {
 	MarkerDraw(&l.m);
 	drawEntity(&l.p);
+
+	// Mostra texto de interação apenas quando perto do marker
+	if (l.show_interact_text) {
+		al_draw_text(Font, TEXT_COLOR, l.m.x - 25, l.m.y - 25, 0, "[E] Interagir");
+	}
+
 	if(collisionEM(&l.p, &l.m)) al_draw_text(Font, TEXT_COLOR, l.m.x-25, l.m.y - 25, 0, "[E] Interagir");
 	if (!l.e.isDead) drawEntity(&l.e);
 	draw_quad(&l.dL);
 	draw_quad(&l.f);
 	draw_quad(&l.d);
 	itemDraw(&l.k);
-	
+
+	// Desenha o puzzle se estiver aberto
+	if (l.puzzle_open) {
+		puzzle_draw(SCREEN_WIDTH, SCREEN_HEIGHT);
+	}
 }

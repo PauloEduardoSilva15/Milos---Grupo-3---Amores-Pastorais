@@ -15,6 +15,7 @@
 #include "player.h"
 #include "marker.h"
 
+
 typedef struct {
 	entity p;
 	entity e;
@@ -23,6 +24,9 @@ typedef struct {
 	quad dL;
 	item k;
 	Marker m;
+	bool puzzle_open;
+	bool puzzle_solved;
+	bool show_interact_text;  // Nova flag para mostrar texto de interação
 }level;
 
 

@@ -1,11 +1,9 @@
-// puzzle.c
 #include "puzzle.h"
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_font.h>
+#include "gameConstants.h"
 #include <string.h>
 
-#define GRID_ROWS 3
-#define GRID_COLS 5
 
 typedef enum {
     PIECE_STRAIGHT = 0,

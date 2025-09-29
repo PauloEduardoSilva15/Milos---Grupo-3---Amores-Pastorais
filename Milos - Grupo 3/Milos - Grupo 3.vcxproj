@@ -29,6 +29,7 @@
     <ClCompile Include="marker.c" />
     <ClCompile Include="obstacle.c" />
     <ClCompile Include="player.c" />
+    <ClCompile Include="puzzle.c" />
     <ClCompile Include="quad.c" />
   </ItemGroup>
   <ItemGroup>
@@ -44,6 +45,7 @@
     <ClInclude Include="marker.h" />
     <ClInclude Include="obstacle.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="puzzle.h" />
     <ClInclude Include="quad.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

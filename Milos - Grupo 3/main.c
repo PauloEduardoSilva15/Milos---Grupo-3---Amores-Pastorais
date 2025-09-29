@@ -5,6 +5,7 @@
 #include "gameConstants.h"
 #include <stdio.h>
 #include "level.h"
+#include "puzzle.h"
 #include <stdio.h>
 
 
@@ -29,7 +30,8 @@ int main() {
 
 	bool done = false, draw = true; // Verifica se o jogo está rodando e declara se pode desenhar na tela
 
-
+	// No início do programa
+	puzzle_init();
 
 	level levelT = level_Load();
 
@@ -49,6 +51,40 @@ int main() {
 		ALLEGRO_EVENT ev;
 		al_wait_for_event(events, &ev);
 
+		if (levelT.puzzle_open) {
+			// Se puzzle está aberto, envia eventos apenas para o puzzle
+			puzzle_handle_event(&ev);
+		}
+		else {
+			// Se puzzle não está aberto, processa eventos normais do jogo
+			if (ev.type == ALLEGRO_EVENT_TIMER) {
+
+				al_get_keyboard_state(&keyState);
+
+				level_Update(&levelT, &keyState);
+				draw = true;
+
+			}
+			if (draw) {
+				al_draw_text(Font, TEXT_COLOR, 25, 25, 0, VERSION);
+				draw = false;
+				Level_Draw(levelT, Font);
+				al_flip_display();
+				al_clear_to_color(al_map_rgb(0, 0, 0));
+			}
+		}
+
+		if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
+			if (ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
+				if (levelT.puzzle_open) {
+					levelT.puzzle_open = false; // Fecha puzzle com ESC
+				}
+				else {
+					done = true; // Sai do jogo com ESC
+				}
+			}
+		}
+		/*
 		if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
 
 			if (ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE) done = true; // O Loop Acaba quando pressiona o ESC
@@ -71,6 +107,7 @@ int main() {
 			al_clear_to_color(al_map_rgb(0, 0, 0));
 
 		}
+		*/
 	}
 
 	al_destroy_display(window);
