@@ -1,10 +1,9 @@
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
 #include "gameConstants.h"
-#include "quad.h"
-#include "entity.h"
-#include "collision.h"
-#include "player.h"
+#include <stdio.h>
 #include "level.h"
 #include <stdio.h>
 
@@ -24,12 +23,17 @@ int main() {
 
 	al_init_primitives_addon(); // inicializa os addons adicionais como retângulo, circulo, etc
 	al_install_keyboard(); // inicializa o teclado
+	al_init_font_addon(); // inicializa o addon de fontes
+    al_init_ttf_addon(); // inicializa o addon de fontes ttf
+
 
 	bool done = false, draw = true; // Verifica se o jogo está rodando e declara se pode desenhar na tela
 
 
 
 	level levelT = level_Load();
+
+	ALLEGRO_FONT* Font = al_create_builtin_font();
 	
 
 	ALLEGRO_KEYBOARD_STATE keyState;
@@ -60,8 +64,9 @@ int main() {
 
 		}
 		if (draw) {
+			al_draw_text(Font, TEXT_COLOR, 25, 25, 0, VERSION);
 			draw = false;
-			Level_Draw(levelT);
+			Level_Draw(levelT, Font);
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0, 0, 0));
 

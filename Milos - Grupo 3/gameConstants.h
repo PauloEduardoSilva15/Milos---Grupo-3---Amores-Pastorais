@@ -4,12 +4,18 @@
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_primitives.h>
 
+
+#define TITLE "Pastoral Loves" // Titulo da Janela
+#define VERSION "Alpha 0.0.6"
 #define SCREEN_WIDTH 800 // Largura da Janela
 #define SCREEN_HEIGHT 600 // Altura da Janela
 #define FPS 60
 
-#define QUAD_SIZE 32 // As artes do jogo será no padrão 32bits -> 32x32p pixels
-#define ITENS_QUAD_SIZE (QUAD_SIZE/2)// As artes dos itens jogo será no padrão 16bits -> 16x16 pixels
+#define TEXT_COLOR al_map_rgb(255, 255, 255)
+
+
+#define QUAD_SIZE 32 // As artes do jogo serï¿½ no padrï¿½o 32bits -> 32x32p pixels
+#define ITENS_QUAD_SIZE (QUAD_SIZE/2)// As artes dos itens jogo serï¿½ no padrï¿½o 16bits -> 16x16 pixels
 #define MAXLIFE_0 100 /// Maximo de vida que toda entidade pode ter
 
 #define PLAYER_GRAVIDADE 1.0;
@@ -54,6 +60,8 @@
 #define MARKER_Y 455
 #define MARKER_COLOR al_map_rgb(216, 216, 216)
 
+#define GRID_ROWS 3
+#define GRID_COLS 5
 
 
 #endif

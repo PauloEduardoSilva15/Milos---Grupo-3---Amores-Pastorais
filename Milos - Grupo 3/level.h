@@ -3,6 +3,8 @@
 
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
 #include <stdbool.h>
 #include "gameConstants.h"
 #include "quad.h"
@@ -28,7 +30,7 @@ level level_Load();
 
 void level_Update(level* l, ALLEGRO_KEYBOARD_STATE * keyState);
 
-void Level_Draw(level l);
+void Level_Draw(level l, ALLEGRO_FONT* Font);
 
 
 #endif // !1

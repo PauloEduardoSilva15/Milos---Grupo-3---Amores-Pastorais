@@ -140,9 +140,10 @@ void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState) {
 }
 
 // Desenha o level
-void Level_Draw(level l) {
+void Level_Draw(level l, ALLEGRO_FONT* Font) {
 	MarkerDraw(&l.m);
 	drawEntity(&l.p);
+	if(collisionEM(&l.p, &l.m)) al_draw_text(Font, TEXT_COLOR, l.m.x-25, l.m.y - 25, 0, "[E] Interagir");
 	if (!l.e.isDead) drawEntity(&l.e);
 	draw_quad(&l.dL);
 	draw_quad(&l.f);
