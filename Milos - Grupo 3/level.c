@@ -39,18 +39,6 @@ void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState) {
 		l->puzzle_open = true;
 	}
 
-	// Se puzzle está aberto, não atualiza o jogo normal
-	if (l->puzzle_open) {
-		// O puzzle será atualizado no main loop através de puzzle_handle_event
-		if (puzzle_is_solved()) {
-			l->puzzle_solved = true;
-			l->puzzle_open = false;
-			puzzle_destroy(); // Limpa o puzzle após resolver
-			l->k.x = 100;
-		}
-		return; // Não executa o resto da lógica do jogo enquanto puzzle está aberto
-	}
-
 	// GRAVIDADE E PULO
 	if (!collisionEQ(&l->p, &l->f) && !collisionE(&l->e, &l->p)) {
 		l->p.vY += PLAYER_GRAVIDADE;
@@ -174,15 +162,11 @@ void Level_Draw(level l, ALLEGRO_FONT* Font) {
 
 	// Mostra texto de interação apenas quando perto do marker
 
-	if(collisionEM(&l.p, &l.m)) al_draw_text(Font, TEXT_COLOR, l.m.x-25, l.m.y - 25, 0, "[E] Interagir");
+	if(collisionEM(&l.p, &l.m)&& !l.puzzle_solved) al_draw_text(Font, TEXT_COLOR, l.m.x-25, l.m.y - 25, 0, "[E] Interagir");
 	if (!l.e.isDead) drawEntity(&l.e);
 	draw_quad(&l.dL);
 	draw_quad(&l.f);
 	draw_quad(&l.d);
 	itemDraw(&l.k);
 
-	// Desenha o puzzle se estiver aberto
-	if (l.puzzle_open) {
-		puzzle_draw(SCREEN_WIDTH, SCREEN_HEIGHT);
-	}
 }

@@ -18,16 +18,15 @@ typedef enum {
 typedef struct {
     PieceType type;
     int rot;        // 0..3 (multiplo de 90 graus)
-    int locked;     // 1 = imóvel
-    int isStart;    // 1 = início
+    int locked;     // 1 = imï¿½vel
+    int isStart;    // 1 = inï¿½cio
     int isEnd;      // 1 = final
-    int connected;  // 1 = fluxo chegou até aqui
+    int connected;  // 1 = fluxo chegou atï¿½ aqui
     int x, y;
     int size;
 } Piece;
 
-static Piece pieces[GRID_ROWS][GRID_COLS];
-static int solved = 0;
+
 
 void puzzle_init(void);
 void puzzle_handle_event(ALLEGRO_EVENT* ev);

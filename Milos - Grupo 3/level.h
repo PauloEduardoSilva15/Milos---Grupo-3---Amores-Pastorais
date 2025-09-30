@@ -26,7 +26,7 @@ typedef struct {
 	Marker m;
 	bool puzzle_open;
 	bool puzzle_solved;
-	bool show_interact_text;  // Nova flag para mostrar texto de interação
+	bool show_interact_text;  // Nova flag para mostrar texto de interaï¿½ï¿½o
 }level;
 
 
@@ -37,6 +37,6 @@ void level_Update(level* l, ALLEGRO_KEYBOARD_STATE * keyState);
 void Level_Draw(level l, ALLEGRO_FONT* Font);
 
 
-#endif // !1
+#endif 
 
 

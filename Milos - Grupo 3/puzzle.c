@@ -5,6 +5,8 @@
 #include <string.h>
 
 
+static Piece pieces[GRID_ROWS][GRID_COLS];
+static int solved = 0;
 
 // ----- Funções auxiliares -----
 static int piece_has_side(PieceType t, int rot, int side) {

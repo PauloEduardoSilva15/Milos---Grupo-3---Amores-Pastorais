@@ -53,12 +53,30 @@ int main() {
 		ALLEGRO_EVENT ev;
 		al_wait_for_event(events, &ev);
 
-		if (levelT.puzzle_open) {
+		if (levelT.puzzle_open)
+		{
 			// Se puzzle está aberto, envia eventos apenas para o puzzle
-			// manter o timer para desenhar
 			
 			puzzle_handle_event(&ev);
-			
+			if (ev.type == ALLEGRO_EVENT_TIMER) {
+				if (levelT.puzzle_open) {
+				// O puzzle será atualizado no main loop através de puzzle_handle_event
+					if (puzzle_is_solved()) {
+						levelT.puzzle_open = false;
+						levelT.puzzle_solved = puzzle_is_solved();
+						puzzle_destroy(); // Limpa o puzzle após resolver
+						
+					
+					}
+				}
+				draw = true;
+			}
+			if (draw) {
+				al_draw_text(Font, TEXT_COLOR, 25, 25, 0, VERSION);
+				if(!puzzle_is_solved())puzzle_draw(SCREEN_WIDTH, SCREEN_HEIGHT);
+				al_flip_display();
+				draw = false;
+			}
 		}
 		else {
 			// Se puzzle não está aberto, processa eventos normais do jogo
