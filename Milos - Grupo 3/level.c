@@ -173,9 +173,6 @@ void Level_Draw(level l, ALLEGRO_FONT* Font) {
 	drawEntity(&l.p);
 
 	// Mostra texto de interação apenas quando perto do marker
-	if (l.show_interact_text) {
-		al_draw_text(Font, TEXT_COLOR, l.m.x - 25, l.m.y - 25, 0, "[E] Interagir");
-	}
 
 	if(collisionEM(&l.p, &l.m)) al_draw_text(Font, TEXT_COLOR, l.m.x-25, l.m.y - 25, 0, "[E] Interagir");
 	if (!l.e.isDead) drawEntity(&l.e);

@@ -55,7 +55,10 @@ int main() {
 
 		if (levelT.puzzle_open) {
 			// Se puzzle está aberto, envia eventos apenas para o puzzle
+			// manter o timer para desenhar
+			
 			puzzle_handle_event(&ev);
+			
 		}
 		else {
 			// Se puzzle não está aberto, processa eventos normais do jogo
@@ -77,13 +80,17 @@ int main() {
 		}
 
 		if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
+
+			if (levelT.puzzle_open && ev.keyboard.keycode == ALLEGRO_KEY_R) {
+				levelT.puzzle_open = false; 
+			}
+
+			
+			
 			if (ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
-				if (levelT.puzzle_open) {
-					levelT.puzzle_open = false; // Fecha puzzle com ESC
-				}
-				else {
-					done = true; // Sai do jogo com ESC
-				}
+				
+				
+				done = true; // Sai do jogo com ESC
 			}
 		}
 		/*

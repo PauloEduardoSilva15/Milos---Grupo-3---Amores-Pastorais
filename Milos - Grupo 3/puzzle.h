@@ -7,21 +7,27 @@
 #include "quad.h"
 #include "gameConstants.h"
 
-typedef struct
-{
-	int x;
-	int y;
-	int size;
-	int rotation;   // 0..3 (multiplo de 90 graus)
-	int type;       // 0 = reto, 1 = cotovelo, 2 = T, 3 = cruz
-}Pieces;
+
+typedef enum {
+    PIECE_STRAIGHT = 0,
+    PIECE_ELBOW = 1,
+    PIECE_TEE = 2,
+    PIECE_CROSS = 3
+} PieceType;
 
 typedef struct {
-	quad area;
-	ALLEGRO_BITMAP* img;
-	Pieces grid[GRID_ROWS][GRID_COLS];
-}Puzzle;
+    PieceType type;
+    int rot;        // 0..3 (multiplo de 90 graus)
+    int locked;     // 1 = imóvel
+    int isStart;    // 1 = início
+    int isEnd;      // 1 = final
+    int connected;  // 1 = fluxo chegou até aqui
+    int x, y;
+    int size;
+} Piece;
 
+static Piece pieces[GRID_ROWS][GRID_COLS];
+static int solved = 0;
 
 void puzzle_init(void);
 void puzzle_handle_event(ALLEGRO_EVENT* ev);
