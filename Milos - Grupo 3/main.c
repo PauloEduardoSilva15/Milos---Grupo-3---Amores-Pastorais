@@ -19,7 +19,7 @@ int main() {
 
 
 	ALLEGRO_DISPLAY* window = al_create_display(SCREEN_WIDTH, SCREEN_HEIGHT); // Cria a janela do jogo
-
+	al_set_window_title(window, TITLE);
 	if (!window) return -1; // Verifica se criou uma janela
 
 	al_init_primitives_addon(); // inicializa os addons adicionais como retângulo, circulo, etc
@@ -52,7 +52,7 @@ int main() {
 
 		ALLEGRO_EVENT ev;
 		al_wait_for_event(events, &ev);
-
+		if (levelT.puzzle_solved) puzzle_init();
 		if (levelT.puzzle_open)
 		{
 			// Se puzzle está aberto, envia eventos apenas para o puzzle
@@ -66,7 +66,6 @@ int main() {
 						levelT.puzzle_solved = puzzle_is_solved();
 						puzzle_destroy(); // Limpa o puzzle após resolver
 						levelT.k.get = true;
-						
 					
 					}
 				}

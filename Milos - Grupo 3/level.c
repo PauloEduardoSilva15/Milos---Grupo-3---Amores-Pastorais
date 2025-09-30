@@ -35,7 +35,7 @@ void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState) {
 	l->show_interact_text = collisionEM(&l->p, &l->m);
 
 	// Abre puzzle quando colide com marker e pressiona E
-	if (l->show_interact_text && al_key_down(keyState, ALLEGRO_KEY_E)) {
+	if (l->show_interact_text && al_key_down(keyState, ALLEGRO_KEY_E) && !l->puzzle_solved) {
 		l->puzzle_open = true;
 	}
 
