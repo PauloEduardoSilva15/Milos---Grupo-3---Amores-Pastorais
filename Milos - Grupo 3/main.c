@@ -65,6 +65,7 @@ int main() {
 						levelT.puzzle_open = false;
 						levelT.puzzle_solved = puzzle_is_solved();
 						puzzle_destroy(); // Limpa o puzzle após resolver
+						levelT.k.get = true;
 						
 					
 					}
@@ -75,6 +76,7 @@ int main() {
 				al_draw_text(Font, TEXT_COLOR, 25, 25, 0, VERSION);
 				if(!puzzle_is_solved())puzzle_draw(SCREEN_WIDTH, SCREEN_HEIGHT);
 				al_flip_display();
+				al_clear_to_color(al_map_rgb(0, 0, 0));
 				draw = false;
 			}
 		}
@@ -107,7 +109,9 @@ int main() {
 			
 			if (ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
 				
-				
+				if (levelT.puzzle_open) {
+					levelT.puzzle_open = false;
+				}
 				done = true; // Sai do jogo com ESC
 			}
 		}

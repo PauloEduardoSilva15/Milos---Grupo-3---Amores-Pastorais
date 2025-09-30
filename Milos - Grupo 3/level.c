@@ -67,7 +67,10 @@ void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState) {
 
 	//verifica colisao com a chave e a porta
 	if (collisionEI(&l->p, &l->k)) l->k.get = true;
-	if (l->k.get) l->k.y = 100;
+	if (l->k.get) {
+		l->k.x = 100;
+		l->k.y = 100;
+	}
 	if (!l->k.get) {
 		l->k.x = KEY_ITEM_X;
 		l->k.y = KEY_ITEM_Y_0;
