@@ -9,32 +9,52 @@ TitleMenu createTitleMenu( ALLEGRO_FONT *font){
     menu.startGameButton = quad_create((SCREEN_WIDTH / 2) - 100, SCREEN_HEIGHT / 2, 0, 200, QUAD_SIZE, al_map_rgb(0, 255, 0));
     menu.exitButton = quad_create((SCREEN_WIDTH / 2)-100, SCREEN_HEIGHT / 2 + 100, 0, 200, QUAD_SIZE, al_map_rgb(255, 0, 0));
     menu.selectedOption = 0;
+    menu.selectedButton = &menu.startGameButton;
     menu.runningLevel = false;
+
 
     return menu;
 }
 
-void leverlReturn(TitleMenu menu, ALLEGRO_MOUSE_STATE * mouseState) {
+
+int ReturnMenuOption(TitleMenu menu, ALLEGRO_MOUSE_STATE * mouseState) {
     
-    if (al_mouse_button_down(mouseState, 0)) {
-        menu.runningLevel = true;
-        menu.selectedOption = 1; 
+    if (al_mouse_button_down(mouseState, 1)) {
+        if (quad_contains_point(&menu.startGameButton, mouseState->x, mouseState->y)) {
+            menu.runningLevel = true;
+            return 1; // Start Game
+        }
+        else if (quad_contains_point(&menu.exitButton, mouseState->x, mouseState->y)) {
+            return 2; // Exit
+        }
     }
 
-    return menu.selectedOption = 0;
+    return 0; // No option selected
+
 }
 
 
-void drawTitleMenu(TitleMenu* menu) {
+
+void drawTitleMenu(TitleMenu* menu, ALLEGRO_MOUSE_STATE* mouseState) {
     //al_draw_bitmap(menu->logo, 0, 0, 0);
     draw_quad(&menu->startGameButton);
     draw_quad(&menu->exitButton);
 
     // Desenha o texto dos botões
-    //al_draw_text(menu->font, al_map_rgb(0, 0, 0), menu->startGameButton.x + menu->startGameButton.w / 2, menu->startGameButton.y + menu->startGameButton.h / 4, ALLEGRO_ALIGN_CENTER, "Start Game");
-    //al_draw_text(menu->font, al_map_rgb(0, 0, 0), menu->exitButton.x + menu->exitButton.w / 2, menu->exitButton.y + menu->exitButton.h / 4, ALLEGRO_ALIGN_CENTER, "Exit");
+    al_draw_text(menu->font, al_map_rgb(0, 0, 0), menu->startGameButton.x + menu->startGameButton.w / 2, menu->startGameButton.y + menu->startGameButton.h / 4, ALLEGRO_ALIGN_CENTER, "Start Game");
+    al_draw_text(menu->font, al_map_rgb(0, 0, 0), menu->exitButton.x + menu->exitButton.w / 2, menu->exitButton.y + menu->exitButton.h / 4, ALLEGRO_ALIGN_CENTER, "Exit");
 
     // Desenha um retângulo ao redor da opção selecionada
-    //quad* selectedQuad = (menu->selectedOption == 0) ? &menu->startGameButton : &menu->exitButton;
-    //al_draw_rectangle(selectedQuad->x - 5, selectedQuad->y - 5, selectedQuad->x + selectedQuad->w + 5, selectedQuad->y + selectedQuad->h + 5, al_map_rgb(255, 255, 0), 3);
+    //
+    if (quad_contains_point(&menu->startGameButton, mouseState->x, mouseState->y)) {
+        menu->selectedButton = &menu->startGameButton;
+    } else if (quad_contains_point(&menu->exitButton, mouseState->x, mouseState->y)) {
+        menu->selectedButton = &menu->exitButton;
+    } else {
+        menu->selectedButton = NULL; // Nenhum botão selecionado
+    }
+    if (menu->selectedButton != NULL) {
+        al_draw_rectangle(menu->selectedButton->x - 5, menu->selectedButton->y - 5, menu->selectedButton->x + menu->selectedButton->w + 5, menu->selectedButton->y + menu->selectedButton->h + 5, al_map_rgb(255, 255, 0), 3);
+    }
+    
 }

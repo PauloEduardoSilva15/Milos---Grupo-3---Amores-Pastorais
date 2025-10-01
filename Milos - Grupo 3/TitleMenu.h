@@ -11,20 +11,21 @@
 
 
 typedef struct TitleMenu {
-    //ALLEGRO_BITMAP* background;
+    //ALLEGRO_BITMAP* logo;
     //quad logo;
     ALLEGRO_FONT* font;
     quad startGameButton;
     quad exitButton;
+    quad* selectedButton;
     int selectedOption; // 0 = Start Game, 1 = Exit
     bool runningLevel;
 } TitleMenu;
 
 TitleMenu createTitleMenu(ALLEGRO_FONT *font);
 
-void leverlReturn(TitleMenu menu, ALLEGRO_MOUSE_STATE * mouseState);
+int ReturnMenuOption(TitleMenu menu, ALLEGRO_MOUSE_STATE * mouseState);
 
-void drawTitleMenu(TitleMenu* menu);
+void drawTitleMenu(TitleMenu* menu, ALLEGRO_MOUSE_STATE* mouseState);
 
 
 #endif // !TITLEMENU_H

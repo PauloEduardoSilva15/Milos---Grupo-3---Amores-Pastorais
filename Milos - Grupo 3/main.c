@@ -95,10 +95,10 @@ int main() {
 			if (ev.type == ALLEGRO_EVENT_TIMER) {
 
 				al_get_keyboard_state(&keyState);
-
 				al_get_mouse_state(&mouseState);
-				leverlReturn(titleMenu, &mouseState);
+				titleMenu.selectedOption = ReturnMenuOption(titleMenu, &mouseState);
 				//level_Update(&levelT, &keyState);
+				if(titleMenu.selectedOption == 2) done = true;
 				draw = true;
 
 			}
@@ -106,9 +106,12 @@ int main() {
 				al_draw_text(Font, TEXT_COLOR, 25, 25, 0, VERSION);
 				draw = false;
 				
-				if(!titleMenu.runningLevel)drawTitleMenu(&titleMenu);
-				if(titleMenu.selectedOption == 1)Level_Draw(levelT, Font);
-				//al_draw_bitmap(background, 0, 0, 0);
+
+				drawTitleMenu(&titleMenu, &mouseState);
+				//Level_Draw(levelT, Font);
+
+					
+				
 				al_flip_display();
 				al_clear_to_color(al_map_rgb(0, 0, 0));
 			}
