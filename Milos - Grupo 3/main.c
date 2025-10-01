@@ -2,6 +2,7 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
+#include <allegro5/allegro_image.h>
 #include "gameConstants.h"
 #include <stdio.h>
 #include "level.h"
@@ -37,8 +38,18 @@ int main() {
 	level levelT = level_Load();
 
 	ALLEGRO_FONT* Font = al_create_builtin_font();
+
+	//ALLEGRO_BITMAP* logo = malloc(al_load_bitmap(".\GameLogo.png"));
+
+	//if (!logo) {
+	//	fprintf(stderr, "Erro: Não foi possível carregar a imagem\n");
+	//	// Trate o erro adequadamente - não continue tentando usar o bitmap
+	//	return -1;
+	//}
+
 	TitleMenu titleMenu = createTitleMenu(Font);
 
+	ALLEGRO_MOUSE_STATE mouseState;
 	ALLEGRO_KEYBOARD_STATE keyState;
 	ALLEGRO_TIMER* timer = al_create_timer(1.0 / FPS);
 	ALLEGRO_EVENT_QUEUE* events = al_create_event_queue(); // Evento Principal
@@ -85,6 +96,8 @@ int main() {
 
 				al_get_keyboard_state(&keyState);
 
+				al_get_mouse_state(&mouseState);
+				leverlReturn(titleMenu, &mouseState);
 				//level_Update(&levelT, &keyState);
 				draw = true;
 
@@ -92,8 +105,10 @@ int main() {
 			if (draw) {
 				al_draw_text(Font, TEXT_COLOR, 25, 25, 0, VERSION);
 				draw = false;
-				//Level_Draw(levelT, Font);
-				drawTitleMenu(&titleMenu);
+				
+				if(!titleMenu.runningLevel)drawTitleMenu(&titleMenu);
+				if(titleMenu.selectedOption == 1)Level_Draw(levelT, Font);
+				//al_draw_bitmap(background, 0, 0, 0);
 				al_flip_display();
 				al_clear_to_color(al_map_rgb(0, 0, 0));
 			}
@@ -118,6 +133,7 @@ int main() {
 
 	}
 
+	//al_destroy_bitmap(logo);
 	al_destroy_display(window);
 	al_destroy_timer(timer);
 	al_destroy_event_queue(events);
