@@ -31,6 +31,7 @@
     <ClCompile Include="player.c" />
     <ClCompile Include="puzzle.c" />
     <ClCompile Include="quad.c" />
+    <ClCompile Include="TitleMenu.c" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -47,6 +48,7 @@
     <ClInclude Include="player.h" />
     <ClInclude Include="puzzle.h" />
     <ClInclude Include="quad.h" />
+    <ClInclude Include="TitleMenu.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

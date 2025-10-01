@@ -114,30 +114,7 @@ int main() {
 				done = true; // Sai do jogo com ESC
 			}
 		}
-		/*
-		if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
 
-			if (ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE) done = true; // O Loop Acaba quando pressiona o ESC
-
-		}
-
-		if (ev.type == ALLEGRO_EVENT_TIMER) {
-
-			//al_get_keyboard_state(&keyState);
-
-			level_Update(&levelT, &keyState);
-			draw = true;
-
-		}
-		if (draw) {
-			al_draw_text(Font, TEXT_COLOR, 25, 25, 0, VERSION);
-			draw = false;
-			Level_Draw(levelT, Font);
-			al_flip_display();
-			al_clear_to_color(al_map_rgb(0, 0, 0));
-
-		}
-		*/
 	}
 
 	al_destroy_display(window);
