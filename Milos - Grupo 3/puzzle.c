@@ -1,29 +1,9 @@
-// puzzle.c
 #include "puzzle.h"
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_font.h>
+#include "gameConstants.h"
 #include <string.h>
 
-#define GRID_ROWS 3
-#define GRID_COLS 5
-
-typedef enum {
-    PIECE_STRAIGHT = 0,
-    PIECE_ELBOW = 1,
-    PIECE_TEE = 2,
-    PIECE_CROSS = 3
-} PieceType;
-
-typedef struct {
-    PieceType type;
-    int rot;        // 0..3 (multiplo de 90 graus)
-    int locked;     // 1 = imóvel
-    int isStart;    // 1 = início
-    int isEnd;      // 1 = final
-    int connected;  // 1 = fluxo chegou até aqui
-    int x, y;
-    int size;
-} Piece;
 
 static Piece pieces[GRID_ROWS][GRID_COLS];
 static int solved = 0;
