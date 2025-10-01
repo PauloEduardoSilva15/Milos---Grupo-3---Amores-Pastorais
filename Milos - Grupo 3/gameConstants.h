@@ -14,8 +14,8 @@
 #define TEXT_COLOR al_map_rgb(255, 255, 255)
 
 
-#define QUAD_SIZE 32 // As artes do jogo ser� no padr�o 32bits -> 32x32p pixels
-#define ITENS_QUAD_SIZE (QUAD_SIZE/2)// As artes dos itens jogo ser� no padr�o 16bits -> 16x16 pixels
+#define QUAD_SIZE 32 // As artes do jogo será no padrao 32bits -> 32x32p pixels
+#define ITENS_QUAD_SIZE (QUAD_SIZE/2)// As artes dos itens jogo ser no padr�o 16bits -> 16x16 pixels
 #define MAXLIFE_0 100 /// Maximo de vida que toda entidade pode ter
 
 #define PLAYER_GRAVIDADE 1.0;
