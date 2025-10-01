@@ -7,7 +7,7 @@
 #include "level.h"
 #include "puzzle.h"
 #include <stdio.h>
-
+#include "TitleMenu.h"
 
 
 
@@ -37,7 +37,7 @@ int main() {
 	level levelT = level_Load();
 
 	ALLEGRO_FONT* Font = al_create_builtin_font();
-	
+	TitleMenu titleMenu = createTitleMenu(Font);
 
 	ALLEGRO_KEYBOARD_STATE keyState;
 	ALLEGRO_TIMER* timer = al_create_timer(1.0 / FPS);
@@ -85,14 +85,15 @@ int main() {
 
 				al_get_keyboard_state(&keyState);
 
-				level_Update(&levelT, &keyState);
+				//level_Update(&levelT, &keyState);
 				draw = true;
 
 			}
 			if (draw) {
 				al_draw_text(Font, TEXT_COLOR, 25, 25, 0, VERSION);
 				draw = false;
-				Level_Draw(levelT, Font);
+				//Level_Draw(levelT, Font);
+				drawTitleMenu(&titleMenu);
 				al_flip_display();
 				al_clear_to_color(al_map_rgb(0, 0, 0));
 			}
