@@ -17,21 +17,6 @@ TitleMenu createTitleMenu( ALLEGRO_FONT *font){
 }
 
 
-int ReturnMenuOption(TitleMenu menu, ALLEGRO_MOUSE_STATE * mouseState) {
-    
-    if (al_mouse_button_down(mouseState, 1)) {
-        if (quad_contains_point(&menu.startGameButton, mouseState->x, mouseState->y)) {
-            menu.runningLevel = true;
-            return 1; // Start Game
-        }
-        else if (quad_contains_point(&menu.exitButton, mouseState->x, mouseState->y)) {
-            return 2; // Exit
-        }
-    }
-
-    return 0; // No option selected
-
-}
 
 
 

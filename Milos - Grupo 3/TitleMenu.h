@@ -23,7 +23,7 @@ typedef struct TitleMenu {
 
 TitleMenu createTitleMenu(ALLEGRO_FONT *font);
 
-int ReturnMenuOption(TitleMenu menu, ALLEGRO_MOUSE_STATE * mouseState);
+
 
 void drawTitleMenu(TitleMenu* menu, ALLEGRO_MOUSE_STATE* mouseState);
 

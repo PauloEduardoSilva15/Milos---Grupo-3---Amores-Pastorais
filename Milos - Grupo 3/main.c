@@ -25,12 +25,14 @@ int main() {
 
 	al_init_primitives_addon(); // inicializa os addons adicionais como retângulo, circulo, etc
 	al_install_keyboard(); // inicializa o teclado
-	al_install_mouse();
+	al_install_mouse(); // inicia o mouse
 	al_init_font_addon(); // inicializa o addon de fontes
     al_init_ttf_addon(); // inicializa o addon de fontes ttf
 
 
 	bool done = false, draw = true; // Verifica se o jogo está rodando e declara se pode desenhar na tela
+	bool running = false;
+
 
 	// No início do programa
 	puzzle_init();
@@ -96,8 +98,9 @@ int main() {
 
 				al_get_keyboard_state(&keyState);
 				al_get_mouse_state(&mouseState);
-				titleMenu.selectedOption = ReturnMenuOption(titleMenu, &mouseState);
-				//level_Update(&levelT, &keyState);
+				//titleMenu.selectedOption = ReturnMenuOption(titleMenu, &mouseState, &ev);
+				
+				if(titleMenu.selectedOption == 1) level_Update(&levelT, &keyState);
 				if(titleMenu.selectedOption == 2) done = true;
 				draw = true;
 
@@ -107,8 +110,8 @@ int main() {
 				draw = false;
 				
 
-				drawTitleMenu(&titleMenu, &mouseState);
-				//Level_Draw(levelT, Font);
+				if(!titleMenu.runningLevel)drawTitleMenu(&titleMenu, &mouseState);
+				if (titleMenu.selectedOption == 1)Level_Draw(levelT, Font);
 
 					
 				
@@ -131,6 +134,17 @@ int main() {
 					levelT.puzzle_open = false;
 				}
 				done = true; // Sai do jogo com ESC
+			}
+		}
+
+		if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
+			if (quad_contains_point(&titleMenu.startGameButton, mouseState.x, mouseState.y)) {
+				titleMenu.runningLevel = true;
+				titleMenu.selectedOption = 1; // Start Game
+			}
+			else {
+				if (quad_contains_point(&titleMenu.exitButton, mouseState.x, mouseState.y))
+					titleMenu.selectedOption = 2; // Exit
 			}
 		}
 

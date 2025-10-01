@@ -48,8 +48,6 @@
     <ClInclude Include="player.h" />
     <ClInclude Include="puzzle.h" />
     <ClInclude Include="quad.h" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="resource1.h" />
     <ClInclude Include="TitleMenu.h" />
   </ItemGroup>
   <ItemGroup>
