@@ -120,9 +120,9 @@ int main() {
 			if (levelT.puzzle_open && ev.keyboard.keycode == ALLEGRO_KEY_R) {
 				levelT.puzzle_open = false; 
 			}
-
 			
-			
+			if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) done = true; // Fecha o jogo se clicar no X da janela
+		
 			if (ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
 				
 				if (levelT.puzzle_open) {

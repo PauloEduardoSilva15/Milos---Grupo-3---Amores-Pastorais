@@ -5,7 +5,7 @@ TitleMenu createTitleMenu( ALLEGRO_FONT *font){
     TitleMenu menu;
     //menu.bg = al_load_bitmap("Milos-Grupo3/imgs/bgMenu.jpeg"); // Linux
     //menu.logo = al_load_bitmap("Milos-Grupo3/imgs/GameLogo.png"); // Linux
-    menu.bg = al_load_bitmap("./imgs/bgMenu.jpeg"); // Linux
+    menu.bg = al_load_bitmap("./imgs/bgMenu.jpeg"); // Windows
     menu.logo = al_load_bitmap("./imgs/GameLogo.png"); //Windows
     menu.font = font;
     menu.startGameButton = quad_create((SCREEN_WIDTH / 2) - 100, SCREEN_HEIGHT / 2, 0, 200, QUAD_SIZE, al_map_rgb(0, 255, 0));
