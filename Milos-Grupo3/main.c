@@ -23,6 +23,7 @@ int main() {
 	al_set_window_title(window, TITLE);
 	if (!window) return -1; // Verifica se criou uma janela
 
+	al_init_image_addon(); // inicializa o addon de imagens
 	al_init_primitives_addon(); // inicializa os addons adicionais como retângulo, circulo, etc
 	al_install_keyboard(); // inicializa o teclado
 	al_install_mouse(); // inicia o mouse
@@ -114,7 +115,7 @@ int main() {
 				if(!titleMenu.runningLevel)drawTitleMenu(&titleMenu, &mouseState);
 				if (titleMenu.selectedOption == 1)Level_Draw(levelT, Font);
 
-				//al_draw_bitmap(logo, 32, 32, 0);
+				al_draw_bitmap(logo, 32, 32, 0);
 				
 				al_flip_display();
 				al_clear_to_color(al_map_rgb(0, 0, 0));
@@ -151,7 +152,7 @@ int main() {
 
 	}
 
-	//al_destroy_bitmap(logo);
+	al_destroy_bitmap(logo);
 	al_destroy_display(window);
 	al_destroy_timer(timer);
 	al_destroy_event_queue(events);
