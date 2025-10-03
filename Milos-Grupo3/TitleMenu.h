@@ -11,7 +11,9 @@
 
 
 typedef struct TitleMenu {
-    //ALLEGRO_BITMAP* logo;
+    ALLEGRO_BITMAP* bg;
+    ALLEGRO_BITMAP* logo;
+
     //quad logo;
     ALLEGRO_FONT* font;
     quad startGameButton;

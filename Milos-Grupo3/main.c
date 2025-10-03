@@ -42,15 +42,7 @@ int main() {
 
 	ALLEGRO_FONT* Font = al_create_builtin_font();
 
-	ALLEGRO_BITMAP* logo = al_load_bitmap("imgs/GameLogo.png"); // Compilar no Windows
-	//ALLEGRO_BITMAP* logo = al_load_bitmap("Milos-Grupo3/imgs/GameLogo.png");   // Compilar no linux
-
 	
-	if (!logo) {
-		fprintf(stderr, "Erro: Não foi possível carregar a imagem\n");
-		// Trate o erro adequadamente - não continue tentando usar o bitmap
-		return -1;
-	}
 	
 	TitleMenu titleMenu = createTitleMenu(Font);
 
@@ -88,7 +80,7 @@ int main() {
 				draw = true;
 			}
 			if (draw) {
-				al_draw_text(Font, TEXT_COLOR, 25, 25, 0, VERSION);
+				//al_draw_text(Font, TEXT_COLOR, 25, 25, 0, VERSION);
 				if(!puzzle_is_solved())puzzle_draw(SCREEN_WIDTH, SCREEN_HEIGHT);
 				al_flip_display();
 				al_clear_to_color(al_map_rgb(0, 0, 0));
@@ -109,15 +101,15 @@ int main() {
 
 			}
 			if (draw) {
-				al_draw_text(Font, TEXT_COLOR, 25, 25, 0, VERSION);
+				
 				draw = false;
 				
 
 				if(!titleMenu.runningLevel)drawTitleMenu(&titleMenu, &mouseState);
 				if (titleMenu.selectedOption == 1)Level_Draw(levelT, Font);
 
-				al_draw_bitmap(logo, 32, 32, 0);
 				
+				al_draw_text(Font, TEXT_COLOR, 25, 25, 0, VERSION);
 				al_flip_display();
 				al_clear_to_color(al_map_rgb(0, 0, 0));
 			}
@@ -152,8 +144,8 @@ int main() {
 		}
 
 	}
-
-	al_destroy_bitmap(logo);
+	al_destroy_bitmap(titleMenu.bg);
+	al_destroy_bitmap(titleMenu.logo);
 	al_destroy_display(window);
 	al_destroy_timer(timer);
 	al_destroy_event_queue(events);
