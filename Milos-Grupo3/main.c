@@ -42,7 +42,8 @@ int main() {
 
 	ALLEGRO_FONT* Font = al_create_builtin_font();
 
-	ALLEGRO_BITMAP* logo = al_load_bitmap("Milos-Grupo3/imgs/GameLogo.png");
+	ALLEGRO_BITMAP* logo = al_load_bitmap("imgs/GameLogo.png"); // Compilar no Windows
+	//ALLEGRO_BITMAP* logo = al_load_bitmap("Milos-Grupo3/imgs/GameLogo.png");   // Compilar no linux
 
 	
 	if (!logo) {
