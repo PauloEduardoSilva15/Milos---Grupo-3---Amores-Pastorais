@@ -41,15 +41,15 @@ int main() {
 
 	ALLEGRO_FONT* Font = al_create_builtin_font();
 
-	//ALLEGRO_BITMAP* logo = malloc(al_load_bitmap("Milos - Grupo 3\GameLogo.png"));
+	ALLEGRO_BITMAP* logo = al_load_bitmap("Milos-Grupo3/imgs/GameLogo.png");
 
-	/*
+	
 	if (!logo) {
 		fprintf(stderr, "Erro: Não foi possível carregar a imagem\n");
 		// Trate o erro adequadamente - não continue tentando usar o bitmap
 		return -1;
 	}
-	*/
+	
 	TitleMenu titleMenu = createTitleMenu(Font);
 
 	ALLEGRO_MOUSE_STATE mouseState;
@@ -114,7 +114,7 @@ int main() {
 				if(!titleMenu.runningLevel)drawTitleMenu(&titleMenu, &mouseState);
 				if (titleMenu.selectedOption == 1)Level_Draw(levelT, Font);
 
-					
+				//al_draw_bitmap(logo, 32, 32, 0);
 				
 				al_flip_display();
 				al_clear_to_color(al_map_rgb(0, 0, 0));
