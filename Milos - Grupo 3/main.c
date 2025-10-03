@@ -41,13 +41,13 @@ int main() {
 
 	ALLEGRO_FONT* Font = al_create_builtin_font();
 
-	//ALLEGRO_BITMAP* logo = malloc(al_load_bitmap(".\GameLogo.png"));
+	ALLEGRO_BITMAP* logo = malloc(al_load_bitmap(".\GameLogo.png"));
 
-	//if (!logo) {
-	//	fprintf(stderr, "Erro: Não foi possível carregar a imagem\n");
-	//	// Trate o erro adequadamente - não continue tentando usar o bitmap
-	//	return -1;
-	//}
+	if (!logo) {
+		fprintf(stderr, "Erro: Não foi possível carregar a imagem\n");
+		// Trate o erro adequadamente - não continue tentando usar o bitmap
+		return -1;
+	}
 
 	TitleMenu titleMenu = createTitleMenu(Font);
 
