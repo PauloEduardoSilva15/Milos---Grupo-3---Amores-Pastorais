@@ -31,7 +31,7 @@ int main() {
 
 
 	bool done = false, draw = true; // Verifica se o jogo está rodando e declara se pode desenhar na tela
-	bool running = false;
+	
 
 
 	// No início do programa
