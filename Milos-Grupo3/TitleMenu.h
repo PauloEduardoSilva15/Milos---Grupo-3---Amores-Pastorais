@@ -6,6 +6,7 @@
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
+#include <stdlib.h>
 #include "quad.h"
 #include "gameConstants.h"
 
@@ -19,7 +20,7 @@ typedef struct TitleMenu {
     quad startGameButton;
     quad exitButton;
     quad* selectedButton;
-    int selectedOption; // 0 = Start Game, 1 = Exit
+    int selectedOption; // 1 = Start Game, 2 = Exit
     bool runningLevel;
 } TitleMenu;
 
