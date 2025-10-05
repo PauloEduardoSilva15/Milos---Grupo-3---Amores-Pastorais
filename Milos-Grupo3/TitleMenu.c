@@ -3,10 +3,10 @@
 
 TitleMenu createTitleMenu( ALLEGRO_FONT *font){
     TitleMenu menu;
-    menu.bg = al_load_bitmap("Milos-Grupo3/imgs/bgMenu.jpeg"); // Linux
-    menu.logo = al_load_bitmap("Milos-Grupo3/imgs/GameLogo.png"); // Linux
-    //menu.bg = al_load_bitmap("./imgs/bgMenu.jpeg"); // Windows
-    //menu.logo = al_load_bitmap("./imgs/GameLogo.png"); //Windows
+    //menu.bg = al_load_bitmap("Milos-Grupo3/imgs/bgMenu.jpeg"); // Linux
+    //menu.logo = al_load_bitmap("Milos-Grupo3/imgs/GameLogo.png"); // Linux
+    menu.bg = al_load_bitmap("./imgs/bgMenu.jpeg"); // Windows
+    menu.logo = al_load_bitmap("./imgs/GameLogo.png"); //Windows
     menu.font = font;
     menu.startGameButton = quad_create((SCREEN_WIDTH / 2) - 100, SCREEN_HEIGHT / 2, 0, 200, QUAD_SIZE, BUTTON_COLOR_NORMAL);
     menu.exitButton = quad_create((SCREEN_WIDTH / 2)-100, SCREEN_HEIGHT / 2 + 100, 0, 200, QUAD_SIZE, BUTTON_COLOR_NORMAL);
@@ -33,8 +33,8 @@ void drawTitleMenu(TitleMenu* menu, ALLEGRO_MOUSE_STATE* mouseState) {
     draw_quad(&menu->exitButton);
 
     // Desenha o texto dos botões
-    al_draw_text(menu->font, al_map_rgb(0, 0, 0), menu->startGameButton.x + menu->startGameButton.w / 2, menu->startGameButton.y + menu->startGameButton.h / 4, ALLEGRO_ALIGN_CENTER, "Start Game");
-    al_draw_text(menu->font, al_map_rgb(0, 0, 0), menu->exitButton.x + menu->exitButton.w / 2, menu->exitButton.y + menu->exitButton.h / 4, ALLEGRO_ALIGN_CENTER, "Exit");
+    al_draw_text(menu->font, TEXT_COLOR, menu->startGameButton.x + menu->startGameButton.w / 2, menu->startGameButton.y + menu->startGameButton.h / 4, ALLEGRO_ALIGN_CENTER, "Start Game");
+    al_draw_text(menu->font, TEXT_COLOR, menu->exitButton.x + menu->exitButton.w / 2, menu->exitButton.y + menu->exitButton.h / 4, ALLEGRO_ALIGN_CENTER, "Exit");
 
     // Desenha um retângulo ao redor da opção selecionada
     //
