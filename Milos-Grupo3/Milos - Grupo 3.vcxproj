@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="button.c" />
     <ClCompile Include="collision.c" />
     <ClCompile Include="enemy.c" />
     <ClCompile Include="entity.c" />
@@ -31,11 +32,13 @@
     <ClCompile Include="player.c" />
     <ClCompile Include="puzzle.c" />
     <ClCompile Include="quad.c" />
+    <ClCompile Include="TitleMenu.c" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="button.h" />
     <ClInclude Include="collision.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="entity.h" />
@@ -47,6 +50,10 @@
     <ClInclude Include="player.h" />
     <ClInclude Include="puzzle.h" />
     <ClInclude Include="quad.h" />
+    <ClInclude Include="TitleMenu.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="GameLogo.png" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

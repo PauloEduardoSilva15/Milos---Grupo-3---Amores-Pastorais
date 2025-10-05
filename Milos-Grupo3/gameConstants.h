@@ -6,7 +6,7 @@
 
 
 #define TITLE "Pastoral Loves" // Titulo da Janela
-#define VERSION "Alpha 0.0.6"
+#define VERSION "Alpha 0.0.7"
 #define SCREEN_WIDTH 800 // Largura da Janela
 #define SCREEN_HEIGHT 600 // Altura da Janela
 #define FPS 60
@@ -14,8 +14,8 @@
 #define TEXT_COLOR al_map_rgb(255, 255, 255)
 
 
-#define QUAD_SIZE 32 // As artes do jogo ser� no padr�o 32bits -> 32x32p pixels
-#define ITENS_QUAD_SIZE (QUAD_SIZE/2)// As artes dos itens jogo ser� no padr�o 16bits -> 16x16 pixels
+#define QUAD_SIZE 32 // As artes do jogo será no padrao 32bits -> 32x32p pixels
+#define ITENS_QUAD_SIZE (QUAD_SIZE/2)// As artes dos itens jogo ser no padr�o 16bits -> 16x16 pixels
 #define MAXLIFE_0 100 /// Maximo de vida que toda entidade pode ter
 
 #define PLAYER_GRAVIDADE 1.0;
@@ -62,6 +62,11 @@
 
 #define GRID_ROWS 3
 #define GRID_COLS 5
+
+#define BUTTON_X 200
+#define BUTTON_COLOR_NORMAL al_map_rgb(64, 25, 22) 
+#define BUTTON_COLOR_HOVER al_map_rgb(115, 72, 47) 
+//#define BUTTON_COLOR_CLICKED al_map_rgb(150, 150, 0)
 
 
 #endif

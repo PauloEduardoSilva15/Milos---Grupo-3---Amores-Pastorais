@@ -18,6 +18,8 @@ typedef struct {
 
 // Funções do quad
 quad quad_create(int x, int y, int v, int w, int h, ALLEGRO_COLOR color);
+
+bool quad_contains_point(quad* q, int x, int y);
 void draw_quad(quad* p);
 
 #endif
