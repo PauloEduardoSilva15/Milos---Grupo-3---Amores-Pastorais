@@ -8,11 +8,10 @@ TitleMenu createTitleMenu( ALLEGRO_FONT *font){
     menu.bg = al_load_bitmap("./imgs/bgMenu.jpeg"); // Windows
     menu.logo = al_load_bitmap("./imgs/GameLogo.png"); //Windows
     menu.font = font;
-    menu.startGameButton = newButton((SCREEN_WIDTH / 2)-100, (SCREEN_HEIGHT / 2), "Start Game", font);
-    menu.exitButton = newButton((SCREEN_WIDTH / 2)-100, (SCREEN_HEIGHT / 2) + 50, "Exit", font);
-    menu.selectedOption = 0;
-    //menu.selectedButton = &menu.startGameButton;
-    menu.runningLevel = false;
+    menu.startGameButton = newButton((SCREEN_WIDTH / 2)-100, (SCREEN_HEIGHT / 2), "Jogar", font); // Botão de iniciar o jogo
+    menu.exitButton = newButton((SCREEN_WIDTH / 2)-100, (SCREEN_HEIGHT / 2) + 50, "Sair", font);// Botão de sair do jogo
+    menu.selectedOption = 0; // Nenhuma opção selecionada
+    menu.runningLevel = false;// Indica se o nível está em execução
 
 
     return menu;
