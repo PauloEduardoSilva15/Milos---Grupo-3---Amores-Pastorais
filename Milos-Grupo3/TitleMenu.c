@@ -3,13 +3,13 @@
 
 TitleMenu createTitleMenu( ALLEGRO_FONT *font){
     TitleMenu menu;
-    //menu.bg = al_load_bitmap("Milos-Grupo3/imgs/bgMenu.jpeg"); // Linux
-    //menu.logo = al_load_bitmap("Milos-Grupo3/imgs/GameLogo.png"); // Linux
-    menu.bg = al_load_bitmap("./imgs/bgMenu.jpeg"); // Windows
-    menu.logo = al_load_bitmap("./imgs/GameLogo.png"); //Windows
+    menu.bg = al_load_bitmap("Milos-Grupo3/imgs/bgMenu.jpeg"); // Linux
+    menu.logo = al_load_bitmap("Milos-Grupo3/imgs/GameLogo.png"); // Linux
+    //menu.bg = al_load_bitmap("./imgs/bgMenu.jpeg"); // Windows
+    //menu.logo = al_load_bitmap("./imgs/GameLogo.png"); //Windows
     menu.font = font;
-    menu.startGameButton = quad_create((SCREEN_WIDTH / 2) - 100, SCREEN_HEIGHT / 2, 0, 200, QUAD_SIZE, al_map_rgb(0, 255, 0));
-    menu.exitButton = quad_create((SCREEN_WIDTH / 2)-100, SCREEN_HEIGHT / 2 + 100, 0, 200, QUAD_SIZE, al_map_rgb(255, 0, 0));
+    menu.startGameButton = quad_create((SCREEN_WIDTH / 2) - 100, SCREEN_HEIGHT / 2, 0, 200, QUAD_SIZE, BUTTON_COLOR_NORMAL);
+    menu.exitButton = quad_create((SCREEN_WIDTH / 2)-100, SCREEN_HEIGHT / 2 + 100, 0, 200, QUAD_SIZE, BUTTON_COLOR_NORMAL);
     menu.selectedOption = 0;
     menu.selectedButton = &menu.startGameButton;
     menu.runningLevel = false;
@@ -46,7 +46,11 @@ void drawTitleMenu(TitleMenu* menu, ALLEGRO_MOUSE_STATE* mouseState) {
         menu->selectedButton = NULL; // Nenhum botão selecionado
     }
     if (menu->selectedButton != NULL) {
-        al_draw_rectangle(menu->selectedButton->x - 5, menu->selectedButton->y - 5, menu->selectedButton->x + menu->selectedButton->w + 5, menu->selectedButton->y + menu->selectedButton->h + 5, al_map_rgb(255, 255, 0), 3);
+        //al_draw_rectangle(menu->selectedButton->x - 5, menu->selectedButton->y - 5, menu->selectedButton->x + menu->selectedButton->w + 5, menu->selectedButton->y + menu->selectedButton->h + 5, al_map_rgb(255, 255, 0), 3);
+        menu->selectedButton->color = BUTTON_COLOR_HOVER; // Muda a cor do botão selecionado para amarelo
+    }else{
+        menu->startGameButton.color = BUTTON_COLOR_NORMAL;
+        menu->exitButton.color = BUTTON_COLOR_NORMAL;
     }
-    
+
 }

@@ -63,5 +63,9 @@
 #define GRID_ROWS 3
 #define GRID_COLS 5
 
+#define BUTTON_COLOR_NORMAL al_map_rgb (195, 73, 73)
+#define BUTTON_COLOR_HOVER al_map_rgb(78, 43, 41)
+//#define BUTTON_COLOR_CLICKED al_map_rgb(150, 150, 0)
+
 
 #endif
