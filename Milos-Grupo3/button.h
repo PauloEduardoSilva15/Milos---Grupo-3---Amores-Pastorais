@@ -13,17 +13,17 @@ typedef struct {
 	int y;
 	int w;
 	int h;
-	char text;
+	char text[16];
 	ALLEGRO_FONT* font;
 	ALLEGRO_COLOR color;
 	ALLEGRO_COLOR font_color;
 
 }button;
 
-button newButton(int x, int y, char text, ALLEGRO_FONT* font);
+button newButton(int x, int y, char text[], ALLEGRO_FONT* font);
 
 bool button_contains_point(button* q, int x, int y);
 
-void drawButton(button b);
+void drawButton(button * b);
 
 #endif

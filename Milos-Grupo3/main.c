@@ -82,6 +82,11 @@ int main() {
 			if (draw) {
 				//al_draw_text(Font, TEXT_COLOR, 25, 25, 0, VERSION);
 				if(!puzzle_is_solved())puzzle_draw(SCREEN_WIDTH, SCREEN_HEIGHT);
+
+				al_draw_text(Font, TEXT_COLOR, 50, SCREEN_HEIGHT-100, 0, "Controles:");
+				al_draw_text(Font, TEXT_COLOR, 50, SCREEN_HEIGHT-80, 0, "R - Sair do Puzzle");
+
+
 				al_flip_display();
 				al_clear_to_color(al_map_rgb(0, 0, 0));
 				draw = false;
@@ -110,6 +115,16 @@ int main() {
 
 				
 				al_draw_text(Font, TEXT_COLOR, 25, 25, 0, VERSION);
+
+				// Tutorial Controls
+				al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 50, 0, "Controles:");
+				al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 60, 0, "W - Pular");
+				al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 70, 0, "A - Esquerda");
+				al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 80, 0, "D - Direita");
+				al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 90, 0, "E - Interagir");
+				al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 100, 0, "J - Ataque");
+				al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 110, 0, "K - Defesa");
+
 				al_flip_display();
 				al_clear_to_color(al_map_rgb(0, 0, 0));
 			}
@@ -133,12 +148,12 @@ int main() {
 		}
 
 		if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
-			if (quad_contains_point(&titleMenu.startGameButton, mouseState.x, mouseState.y)) {
+			if (button_contains_point(&titleMenu.startGameButton, mouseState.x, mouseState.y)) {
 				titleMenu.runningLevel = true;
 				titleMenu.selectedOption = 1; // Start Game
 			}
 			else {
-				if (quad_contains_point(&titleMenu.exitButton, mouseState.x, mouseState.y))
+				if (button_contains_point(&titleMenu.exitButton, mouseState.x, mouseState.y))
 					titleMenu.selectedOption = 2; // Exit
 			}
 		}
