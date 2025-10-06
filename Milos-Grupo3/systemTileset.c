@@ -97,6 +97,12 @@ void set_tile(Tilemap* map, int x, int y, int tile_index) {
     }
 }
 
+void set_tile_collision(Tilemap* map, int x, int y, bool has_collision){
+    if (x >= 0 && x < map->width && y >= 0 && y < map->height) {
+        map->collision_map[y][x] = has_collision;
+    }
+}
+
 // Carrega um tilemap a partir de um arquivo (formato simples)
 Tilemap* load_tilemap(const char* filename) {
     FILE* file = fopen(filename, "r");
@@ -106,15 +112,15 @@ Tilemap* load_tilemap(const char* filename) {
     }
     
     int width, height;
-    //fscanf(file, "%d %d", &width, &height);
-    fscanf_s(file, "%d %d", &width, &height);
+    fscanf(file, "%d %d", &width, &height);
+    //fscanf_s(file, "%d %d", &width, &height);
     
     Tilemap* map = create_tilemap(width, height);
     
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
-            //fscanf(file, "%d", &map->tiles[y][x]);
-            fscanf_s(file, "%d", &map->tiles[y][x]);
+            fscanf(file, "%d", &map->tiles[y][x]);
+            //fscanf_s(file, "%d", &map->tiles[y][x]);
         }
     }
     

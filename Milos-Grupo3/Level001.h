@@ -3,15 +3,17 @@
 
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
-
 #include <stdio.h>
 #include <stdlib.h>
 #include "gameConstants.h"
+#include "entity.h"
+#include "player.h"
 #include "systemTileset.h"
 
 typedef struct {
     Tileset * tileset;
     Tilemap * map;
+    entity player;
 
 
 }levelI;
