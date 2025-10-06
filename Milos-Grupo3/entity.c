@@ -22,8 +22,6 @@ entity newEntity(int x, int y, int v, float vY,ALLEGRO_COLOR color, bool can_jum
 }
 
 
-
-
 void movEntity(entity* e, int dir) {
 
 	switch (dir) {

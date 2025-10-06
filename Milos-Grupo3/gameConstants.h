@@ -18,6 +18,9 @@
 #define ITENS_QUAD_SIZE (QUAD_SIZE/2)// As artes dos itens jogo ser no padr�o 16bits -> 16x16 pixels
 #define MAXLIFE_0 100 /// Maximo de vida que toda entidade pode ter
 
+#define MAP_WIDTH 20
+#define MAP_HEIGHT 15
+
 #define PLAYER_GRAVIDADE 1.0;
 
 #define PLAYER_X_0 (SCREEN_WIDTH / 2) - QUAD_SIZE

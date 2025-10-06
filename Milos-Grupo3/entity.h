@@ -7,7 +7,7 @@
 #include "gameConstants.h"
 #include "quad.h"
 
-//Entitys ou entidade são todos os personagens. Essa estrutura serve para o jogador, pro inimigo e para os npcs
+//Entitys ou entidade sï¿½o todos os personagens. Essa estrutura serve para o jogador, pro inimigo e para os npcs
 
 //Struct da entity
 typedef struct {
@@ -19,7 +19,6 @@ typedef struct {
 	int life;
 	ALLEGRO_COLOR color;
 	quad q;
-
 	bool can_jump;
 	bool modoAtaque; 
 	bool modoDefesa;
@@ -28,7 +27,7 @@ typedef struct {
 }entity;
 
 
-//funçôes da entity
+//funï¿½ï¿½es da entity
 entity newEntity(int x, int y, int v, float vY, ALLEGRO_COLOR color, bool can_jump);
 void movEntity(entity* e, int dir);
 void drawEntity(entity* e);

@@ -5,8 +5,10 @@
 #include <allegro5/allegro_image.h>
 #include "gameConstants.h"
 #include <stdio.h>
-#include "level.h"
+//#include "level.h"
+#include "Level001.h"
 #include "puzzle.h"
+#include "systemTileset.h"
 #include <stdio.h>
 #include "TitleMenu.h"
 
@@ -38,7 +40,7 @@ int main() {
 	// No início do programa
 	puzzle_init();
 
-	level levelT = level_Load();
+	levelI levelT = Level_I_load();
 
 	ALLEGRO_FONT* Font = al_create_builtin_font();
 
@@ -60,8 +62,61 @@ int main() {
 
 		ALLEGRO_EVENT ev;
 		al_wait_for_event(events, &ev);
-		if (levelT.puzzle_solved) puzzle_init();
-		if (levelT.puzzle_open)
+
+		if (ev.type == ALLEGRO_EVENT_TIMER) {
+
+			al_get_keyboard_state(&keyState);
+			al_get_mouse_state(&mouseState);
+			//titleMenu.selectedOption = ReturnMenuOption(titleMenu, &mouseState, &ev);
+				
+			//if(titleMenu.selectedOption == 1) level_Update(&levelT, &keyState);
+			if(titleMenu.selectedOption == 2) done = true;
+			draw = true;
+
+		}
+		if (draw) {
+				
+			draw = false;
+				
+
+			if(!titleMenu.runningLevel)drawTitleMenu(&titleMenu, &mouseState);
+			if (titleMenu.selectedOption == 1)Level_I_Draw(levelT);
+
+				
+			al_draw_text(Font, TEXT_COLOR, 25, 25, 0, VERSION);
+
+			// Tutorial Controls
+			al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 50, 0, "Controles:");
+			al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 60, 0, "W - Pular");
+			al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 70, 0, "A - Esquerda");
+			al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 80, 0, "D - Direita");
+			al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 90, 0, "E - Interagir");
+			al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 100, 0, "J - Ataque");
+			al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 110, 0, "K - Defesa");
+
+			al_flip_display();
+			al_clear_to_color(al_map_rgb(0, 0, 0));
+		}
+
+		if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
+			if (button_contains_point(&titleMenu.startGameButton, mouseState.x, mouseState.y)) {
+				titleMenu.runningLevel = true;
+				titleMenu.selectedOption = 1; // Start Game
+			}
+			else {
+				if (button_contains_point(&titleMenu.exitButton, mouseState.x, mouseState.y))
+					titleMenu.selectedOption = 2; // Exit
+			}
+		}
+
+		if (ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
+				
+				//if (levelT.puzzle_open) levelT.puzzle_open = false;
+				done = true; // Sai do jogo com ESC
+			}
+
+		//if (levelT.puzzle_solved) puzzle_init();
+		/*if (levelT.puzzle_open)
 		{
 			// Se puzzle está aberto, envia eventos apenas para o puzzle
 			
@@ -157,13 +212,15 @@ int main() {
 					titleMenu.selectedOption = 2; // Exit
 			}
 		}
-
+	*/
 	}
+	destroy_tileset(levelT.tileset);
+	destroy_tilemap(levelT.map);
 	al_destroy_bitmap(titleMenu.bg);
 	al_destroy_bitmap(titleMenu.logo);
 	al_destroy_display(window);
 	al_destroy_timer(timer);
 	al_destroy_event_queue(events);
-
+	
 	return 0;
 }

@@ -1,10 +1,22 @@
 #ifndef LEVEL001_H
 #define LEVEL001_H
 
+#include <allegro5/allegro.h>
+#include <allegro5/allegro_image.h>
+
+#include <stdio.h>
+#include <stdlib.h>
+#include "gameConstants.h"
+#include "systemTileset.h"
+
 typedef struct {
+    Tileset * tileset;
+    Tilemap * map;
 
 
+}levelI;
 
-}Level001;
+levelI Level_I_load();
+void Level_I_Draw(levelI l);
 
 #endif // !LEVEL001_H
