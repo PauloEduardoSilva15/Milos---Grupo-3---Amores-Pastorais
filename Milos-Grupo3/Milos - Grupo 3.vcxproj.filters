@@ -60,6 +60,9 @@
     <ClCompile Include="Level001.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="systemTileset.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -112,5 +115,10 @@
     <Image Include="GameLogo.png">
       <Filter>Resource Files</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="map001.txt">
+      <Filter>Source Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

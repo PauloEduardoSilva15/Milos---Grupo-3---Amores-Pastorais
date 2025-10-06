@@ -106,13 +106,15 @@ Tilemap* load_tilemap(const char* filename) {
     }
     
     int width, height;
-    fscanf(file, "%d %d", &width, &height);
+    //fscanf(file, "%d %d", &width, &height);
+    fscanf_s(file, "%d %d", &width, &height);
     
     Tilemap* map = create_tilemap(width, height);
     
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
-            fscanf(file, "%d", &map->tiles[y][x]);
+            //fscanf(file, "%d", &map->tiles[y][x]);
+            fscanf_s(file, "%d", &map->tiles[y][x]);
         }
     }
     

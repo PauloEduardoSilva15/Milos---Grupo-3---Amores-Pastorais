@@ -33,6 +33,7 @@
     <ClCompile Include="player.c" />
     <ClCompile Include="puzzle.c" />
     <ClCompile Include="quad.c" />
+    <ClCompile Include="systemTileset.c" />
     <ClCompile Include="TitleMenu.c" />
   </ItemGroup>
   <ItemGroup>
@@ -56,6 +57,9 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="GameLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="map001.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
