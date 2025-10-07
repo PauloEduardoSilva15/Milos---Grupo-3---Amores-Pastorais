@@ -9,6 +9,7 @@
 #include "puzzle.h"
 #include <stdio.h>
 #include "TitleMenu.h"
+#include "gameover.h"
 
 
 
