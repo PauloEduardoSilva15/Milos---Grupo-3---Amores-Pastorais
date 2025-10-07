@@ -37,3 +37,22 @@ void movEntity(entity* e, int dir) {
 void drawEntity(entity* e) {
 	al_draw_filled_rectangle(e->x, e->y, e->x + e->size, e->y + e->size, e->color);
 }
+
+void applyGravity(entity* e, float gravity) {
+    if (e->can_jump == false) { // A gravidade só age quando o jogador está no ar
+        e->vY += gravity;
+    }
+}
+
+// Inicia o pulo, alterando a velocidade vertical e o estado de pulo
+void jumpEntity(entity* e, float jump_velocity) {
+    if (e->can_jump) {
+        e->vY = jump_velocity; // jump_velocity deve ser negativo
+        e->can_jump = false;
+    }
+}
+
+// Aplica a velocidade vertical (vY) à posição y da entidade
+void updateEntityY(entity* e) {
+    e->y += (int)e->vY;
+}

@@ -97,11 +97,8 @@ void set_tile(Tilemap* map, int x, int y, int tile_index) {
     }
 }
 
-void set_tile_collision(Tilemap* map, int x, int y, bool has_collision){
-    if (x >= 0 && x < map->width && y >= 0 && y < map->height) {
-        map->collision_map[y][x] = has_collision;
-    }
-}
+
+
 
 // Carrega um tilemap a partir de um arquivo (formato simples)
 Tilemap* load_tilemap(const char* filename) {
@@ -127,3 +124,63 @@ Tilemap* load_tilemap(const char* filename) {
     fclose(file);
     return map;
 }
+
+
+bool check_entity_tile_collision(const entity* e, const Tilemap* map, const Tileset* tileset, int tile_index_to_check){
+    // 1. Calcular as coordenadas do canto superior esquerdo e inferior direito da entidade
+    int entity_left = e->x;
+    int entity_top = e->y;
+    int entity_right = e->x + e->size;
+    int entity_bottom = e->y + e->size;
+
+    // 2. Determinar o range de tiles que a entidade está ocupando
+    // Converte coordenadas do mundo para coordenadas do mapa (índices de tile)
+    int tile_width = tileset->tile_width;
+    int tile_height = tileset->tile_height;
+
+    int map_x_start = entity_left / tile_width;
+    int map_y_start = entity_top / tile_height;
+    int map_x_end = (entity_right - 1) / tile_width; // -1 para evitar checar o tile adjacente
+    int map_y_end = (entity_bottom - 1) / tile_height; // -1 para evitar checar o tile adjacente
+    
+    // 3. Iterar sobre o range de tiles
+    for (int y = map_y_start; y <= map_y_end; y++) {
+        for (int x = map_x_start; x <= map_x_end; x++) {
+            
+            // 4. Verificar se o tile está dentro dos limites do mapa
+            if (x >= 0 && x < map->width && y >= 0 && y < map->height) {
+                
+                // 5. Verificar o índice do tile
+                int current_tile_index = map->tiles[y][x];
+                
+                // 6. Se o tile atual for o tile específico procurado, há colisão.
+                if (current_tile_index == tile_index_to_check) {
+                    
+                    // Verificação de colisão mais precisa (AABB)
+                    // Calcula as coordenadas do tile atual
+                    int tile_left = x * tile_width;
+                    int tile_top = y * tile_height;
+                    int tile_right = tile_left + tile_width;
+                    int tile_bottom = tile_top + tile_height;
+                    
+                    // Checa se os retângulos se sobrepõem (AABB)
+                    // Note que as coordenadas da entidade já foram usadas para encontrar o tile,
+                    // mas essa checagem é útil se o tile_index_to_check for, por exemplo, um tile de "parede".
+                    bool collision_overlap = (entity_left < tile_right &&
+                                            entity_right > tile_left &&
+                                            entity_top < tile_bottom &&
+                                            entity_bottom > tile_top);
+                                            
+                    if (collision_overlap) {
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+    
+    // 7. Se a iteração terminar sem encontrar o tile específico em colisão, retorna falso.
+    return false;
+}
+
+

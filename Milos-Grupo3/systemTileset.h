@@ -5,6 +5,8 @@
 #include <allegro5/allegro_image.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
+#include "entity.h"
 
 typedef struct {
     ALLEGRO_BITMAP* tileset;
@@ -13,12 +15,20 @@ typedef struct {
     int tiles_per_row;
 } Tileset;
 
+
 typedef struct {
     int** tiles; // matriz 2D de índices de tiles
     int width;
     int height;
     bool** collision_map;
 } Tilemap;
+
+
+
+
+
+
+
 
 
 Tileset* load_tileset(const char* filename, int tile_width, int tile_height);
@@ -31,7 +41,10 @@ Tilemap* create_tilemap(int width, int height);
 void destroy_tilemap(Tilemap* map);
 void draw_tilemap(Tilemap* map, Tileset* tileset, int offset_x, int offset_y);
 void set_tile(Tilemap* map, int x, int y, int tile_index);
-void set_tile_collision(Tilemap* map, int x, int y, bool has_collision);
 Tilemap* load_tilemap(const char* filename);
+
+
+bool check_entity_tile_collision(const entity* e, const Tilemap* map, const Tileset* tileset, int tile_index_to_check);
+void get_tile_world_start_pos(const entity* e, const Tilemap* map, const Tileset* tileset, int* world_x, int* world_y);
 
 #endif // SYSTEM_TILESET_H

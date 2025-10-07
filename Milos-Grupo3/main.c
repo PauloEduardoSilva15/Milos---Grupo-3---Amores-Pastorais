@@ -38,7 +38,7 @@ int main() {
 
 
 	// No início do programa
-	puzzle_init();
+	//puzzle_init();
 
 	levelI levelT = Level_I_load();
 
@@ -69,7 +69,7 @@ int main() {
 			al_get_mouse_state(&mouseState);
 			//titleMenu.selectedOption = ReturnMenuOption(titleMenu, &mouseState, &ev);
 				
-			//if(titleMenu.selectedOption == 1) level_Update(&levelT, &keyState);
+			if(titleMenu.selectedOption == 1) level_I_Update(&levelT, &keyState);
 			if(titleMenu.selectedOption == 2) done = true;
 			draw = true;
 

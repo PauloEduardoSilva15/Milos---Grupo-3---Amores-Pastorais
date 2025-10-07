@@ -5,6 +5,8 @@
 #include "entity.h"
 #include "item.h"
 #include "marker.h"
+#include "systemTileset.h"
+#include "gameConstants.h"
 #include <stdbool.h>
 
 bool collisionEQ(entity* a, quad* b);

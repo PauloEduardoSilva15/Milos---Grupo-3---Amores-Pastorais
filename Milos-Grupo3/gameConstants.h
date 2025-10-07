@@ -13,6 +13,10 @@
 
 #define TEXT_COLOR al_map_rgb(255, 255, 255)
 
+#define MAP1_TILE_FLOOR 1
+#define MAP1_TILE_WALL 14
+#define MAP1_TILE_WALL_2 24
+
 
 #define QUAD_SIZE 32 // As artes do jogo será no padrao 32bits -> 32x32p pixels
 #define ITENS_QUAD_SIZE (QUAD_SIZE/2)// As artes dos itens jogo ser no padr�o 16bits -> 16x16 pixels
@@ -21,7 +25,10 @@
 #define MAP_WIDTH 20
 #define MAP_HEIGHT 15
 
-#define PLAYER_GRAVIDADE 1.0;
+#define GRAVITY 1.0f  // Aceleração da gravidade por frame
+#define JUMP_VELOCITY -15.0f 
+
+#define PLAYER_GRAVIDADE 1.0f;
 
 #define PLAYER_X_0 (SCREEN_WIDTH / 2) - QUAD_SIZE
 #define PLAYER_Y_0 (SCREEN_HEIGHT / 2) - QUAD_SIZE

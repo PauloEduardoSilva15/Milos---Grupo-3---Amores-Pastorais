@@ -11,14 +11,17 @@
 #include "systemTileset.h"
 
 typedef struct {
+    int entity_tile_start_x, entity_tile_start_y;
     Tileset * tileset;
     Tilemap * map;
     entity player;
-
+    
 
 }levelI;
 
 levelI Level_I_load();
+//void setColisionsOnMap(levelI l);
+void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate);
 void Level_I_Draw(levelI l);
 
 #endif // !LEVEL001_H
