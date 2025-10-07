@@ -11,11 +11,10 @@
 #include "systemTileset.h"
 
 typedef struct {
-    int entity_tile_start_x, entity_tile_start_y;
     Tileset * tileset;
     Tilemap * map;
     entity player;
-    
+    float cameraX;
 
 }levelI;
 

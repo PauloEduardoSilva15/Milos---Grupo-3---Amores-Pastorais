@@ -35,4 +35,5 @@ void applyGravity(entity* e, float gravity);
 void jumpEntity(entity* e, float jump_velocity);
 void updateEntityY(entity* e);
 
+void draw_entity_with_camera(entity* p, int camera_x);
 #endif // !ENTITY_H

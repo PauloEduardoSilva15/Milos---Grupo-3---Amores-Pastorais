@@ -9,6 +9,7 @@ levelI Level_I_load(){
     //l.tileset = load_tileset("./imgs/tilesets/tileset001.png", QUAD_SIZE, QUAD_SIZE);
     //l.map = load_tilemap("./map001.txt");
     l.player = playerLoad();
+    l.cameraX = 0;
 
     
     return l;
@@ -55,7 +56,7 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
         if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WALL))
             l->player.x += l->player.v;
         if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WALL_2))
-            l->player.x -= l->player.v;
+            l->player.x += l->player.v;
          
     
     } 
@@ -68,7 +69,7 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
         
     } 
 
-
+    l->cameraX = -(l->player.x - SCREEN_WIDTH / 2);
 
     
     
@@ -83,6 +84,7 @@ void Level_I_Draw(levelI  l){
 
     
     draw_tilemap(l.map, l.tileset, 0, 0);
-    drawEntity(&l.player);
+    //drawEntity(&l.player);
+    draw_entity_with_camera(&l.player, l.cameraX);
     
 }

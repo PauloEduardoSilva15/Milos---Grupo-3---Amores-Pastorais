@@ -56,3 +56,8 @@ void jumpEntity(entity* e, float jump_velocity) {
 void updateEntityY(entity* e) {
     e->y += (int)e->vY;
 }
+
+void draw_entity_with_camera(entity* p, int camera_x) {
+    al_draw_filled_rectangle(p->x + camera_x, p->y,
+        p->x + p->size + camera_x, p->y + p->size, p->color);
+}
