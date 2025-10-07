@@ -14,7 +14,8 @@ typedef struct {
     Tileset * tileset;
     Tilemap * map;
     entity player;
-    float cameraX;
+    int cameraX;
+    int cameraY;
 
 }levelI;
 

@@ -10,6 +10,7 @@ levelI Level_I_load(){
     //l.map = load_tilemap("./map001.txt");
     l.player = playerLoad();
     l.cameraX = 0;
+    l.cameraY = 0;
 
     
     return l;
@@ -83,7 +84,7 @@ void Level_I_Draw(levelI  l){
     
 
     
-    draw_tilemap(l.map, l.tileset, 0, 0);
+    draw_tilemap(l.map, l.tileset, l.cameraX, l.cameraY);
     //drawEntity(&l.player);
     draw_entity_with_camera(&l.player, l.cameraX);
     
