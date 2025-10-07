@@ -15,6 +15,13 @@ int aabb_collision(quad* a, quad* b) {
         a->y + a->h > b->y);
 }
 
+// Função auxiliar para desenhar quads aplicando o offset da câmera
+void draw_quad_with_camera(quad* p, float camera_x) {
+    al_draw_filled_rectangle(p->x + camera_x, p->y,
+        p->x + p->w + camera_x, p->y + p->h, p->color);
+}
+
+
 int main() {
 
     if (!al_init()) return -1;
@@ -40,8 +47,12 @@ int main() {
     bool get_ob = false;
     bool modoAtaque = false, modoDefesa = false;
 
+    // CÂMERA: Variável de offset horizontal
+    float cameraX = 0;
+
     quad player = quad_create((sizeWindow[0] / 2) - 32, 300, 5, 32, 32, 100, al_map_rgb(0, 0, 255));
-    quad flor = quad_create(0, sizeWindow[1] - 100, 0, sizeWindow[0], 300, 0, al_map_rgb(0, 255, 0));
+    // Chão estendido para suportar o movimento da câmera
+    quad flor = quad_create(-1000, sizeWindow[1] - 100, 0, sizeWindow[0] + 2000, 300, 0, al_map_rgb(0, 255, 0));
     quad enemy = quad_create(770 - 32, 300, 5, 32, 32, 100, al_map_rgb(255, 0, 0));
     quad door = quad_create(600, 300, 10, 32, 200, 0, al_map_rgb(150, 50, 0));
 
@@ -125,9 +136,10 @@ int main() {
 
             // quando puzzle aberto, bloqueia movimentos
             if (!puzzle_open) {
-                if (al_key_down(&keyState, ALLEGRO_KEY_A) && player.x > 0 && !aabb_collision(&player, &enemy))
+                // Checagens de limite de tela removidas para permitir movimento livre
+                if (al_key_down(&keyState, ALLEGRO_KEY_A) && !aabb_collision(&player, &enemy))
                     mov_quad(&player, 0);
-                if (al_key_down(&keyState, ALLEGRO_KEY_D) && player.x + player.w < sizeWindow[0] && !aabb_collision(&player, &door) && !aabb_collision(&player, &enemy))
+                if (al_key_down(&keyState, ALLEGRO_KEY_D) && !aabb_collision(&player, &door) && !aabb_collision(&player, &enemy))
                     mov_quad(&player, 1);
 
                 if (al_key_down(&keyState, ALLEGRO_KEY_W) && aabb_collision(&player, &flor)) {
@@ -210,13 +222,17 @@ int main() {
                 }
             }
 
-            if ((player.x + player.h) > sizeWindow[0]) player.x = sizeWindow[0] - player.h;
-            if ((enemy.x + enemy.h) > sizeWindow[0]) enemy.x = sizeWindow[0] - enemy.h;
-            if ((player.x) < 0) player.x = 0;
-            if ((enemy.x) < 0) enemy.x = 0;
+            // Reposição de limites (ajustada para o mundo grande)
+            if ((player.x + player.h) > flor.w - 100) player.x = flor.w - 100 - player.h;
+            if ((enemy.x + enemy.h) > flor.w - 100) enemy.x = flor.w - 100 - enemy.h;
+            if ((player.x) < flor.x + 100) player.x = flor.x + 100;
+            if ((enemy.x) < flor.x + 100) enemy.x = flor.x + 100;
 
             if (player.life <= 0) done = true;
             if (enemy.life <= 0) enemy.x = 832;
+
+            // CÂMERA: Calcula o offset para centralizar o jogador
+            cameraX = -(player.x - sizeWindow[0] / 2);
 
             draw = true;
         }
@@ -225,25 +241,33 @@ int main() {
             draw = false;
 
             // desenha elementos do jogo
-            draw_quad(&flor);
-            draw_quad(&door);
-            // desenhar marcador cinza sobre onde era o quadrado amarelo
-            al_draw_filled_rectangle(markerX, markerY, markerX + markerW, markerY + markerH, al_map_rgb(80, 80, 80));
-            // desenha player/enemy/vidas/porta etc
-            draw_quad(&player);
-            draw_quad(&enemy);
+            // USO DA CÂMERA: Usa draw_quad_with_camera para objetos do mundo
+            draw_quad_with_camera(&flor, cameraX);
+            draw_quad_with_camera(&door, cameraX);
+
+            // desenhar marcador cinza (com offset da câmera)
+            int markedX_cam = markerX + cameraX;
+            int markedY_cam = markerY;
+            al_draw_filled_rectangle(markedX_cam, markedY_cam, markedX_cam + markerW, markedY_cam + markerH, al_map_rgb(80, 80, 80));
+
+            // USO DA CÂMERA: Player e Enemy
+            draw_quad_with_camera(&player, cameraX);
+            draw_quad_with_camera(&enemy, cameraX);
+
+            // HUD (Barras de vida) não usam a câmera
             draw_quad(&life_player);
             draw_quad(&life_enemy);
-            // desenhar chave apenas se estiver visível (posicionada)
-            if (ob.x > -500) draw_quad(&ob);
+
+            // desenhar chave apenas se estiver visível (posicionada) (com offset)
+            if (ob.x > -500) draw_quad_with_camera(&ob, cameraX);
 
             // se player estiver perto do marcador (<=50 px) e puzzle ainda não resolvido, mostrar instrução
             float dx = (player.x + player.w / 2) - (markerX + markerW / 2);
             float dy = (player.y + player.h / 2) - (markerY + markerH / 2);
             float dist = sqrtf(dx * dx + dy * dy);
             if (dist <= 50.0f && !puzzle_solved) {
-                // desenha um retângulo pequeno e texto [E] Interagir
-                int tx = markerX;
+                // Desenho do texto de interação (com offset da câmera)
+                int tx = markerX + cameraX;
                 int ty = markerY - 24;
                 al_draw_filled_rectangle(tx, ty, tx + 120, ty + 20, al_map_rgba(0, 0, 0, 200));
                 al_draw_text(font, al_map_rgb(255, 255, 255), tx + 4, ty + 2, 0, "[E] Interagir");
