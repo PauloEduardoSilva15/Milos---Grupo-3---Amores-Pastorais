@@ -10,6 +10,7 @@
 #include "obstacle.h"
 #include "item.h"
 #include "collision.h"
+#include "gameover.h"
 #include <math.h>
 
 // Carrega o level
@@ -149,7 +150,8 @@ void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState) {
 	if ((l->e.x) < 0 && !l->e.isDead) l->e.x = 0;
 
 	//verifica se alguem morreu
-	if (l->p.life <= 0) *l = level_Load();
+	//verifica se alguem morreu
+	if (l->p.life <= 0) *l = gameOver_Show();
 	if (l->e.life <= 0) l->e.isDead = true;
 	if (l->e.isDead) {
 		l->e.x = 0;
