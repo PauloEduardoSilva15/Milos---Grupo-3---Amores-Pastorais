@@ -15,10 +15,11 @@
 
 
 // level 001
-#define MAP1_TILE_FLOOR 1
+#define MAP1_TILE_FLOOR 1 
 #define MAP1_TILE_WALL 14
 #define MAP1_TILE_WALL_2 24
 #define MAP1_TILE_SPIN 17
+#define MAP1_TILE_CHEST 18
 
 
 #define QUAD_SIZE 32 // As artes do jogo será no padrao 32bits -> 32x32p pixels
