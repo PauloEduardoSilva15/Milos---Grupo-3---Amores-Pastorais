@@ -59,7 +59,7 @@
     <Image Include="GameLogo.png" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="map001.txt" />
+    <Text Include="maps\001\map001.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
