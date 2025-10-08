@@ -61,9 +61,13 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
          
     
     } 
+
+    if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_SPIN)) l->player.isDead = true;
+    if(l->player.isDead) *l = Level_I_load();
+
     if (al_key_down(keystate, ALLEGRO_KEY_D)){
         movEntity(&l->player, 1);
-        if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WALL))
+        if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_SPIN))
             l->player.x -= l->player.v;
         if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WALL_2))
             l->player.x -= l->player.v;

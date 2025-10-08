@@ -17,14 +17,9 @@ TitleMenu createTitleMenu( ALLEGRO_FONT *font){
     return menu;
 }
 
-
-
-
-
 void drawTitleMenu(TitleMenu* menu, ALLEGRO_MOUSE_STATE* mouseState) {
 
     al_draw_scaled_bitmap(menu->bg, 0, 0, al_get_bitmap_width(menu->bg), al_get_bitmap_height(menu->bg), 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
-
     al_draw_scaled_bitmap(menu->logo, 0, 0, al_get_bitmap_width(menu->logo), al_get_bitmap_height(menu->logo), SCREEN_WIDTH / 2 - al_get_bitmap_width(menu->logo) / 4, 50,al_get_bitmap_width(menu->logo) / 2, al_get_bitmap_height(menu->logo) / 2, 0);
 
     //al_draw_bitmap(menu->logo, 0, 0, 0);
@@ -47,6 +42,5 @@ void drawTitleMenu(TitleMenu* menu, ALLEGRO_MOUSE_STATE* mouseState) {
     } else {
         menu->startGameButton.color = BUTTON_COLOR_NORMAL;
         menu->exitButton.color = BUTTON_COLOR_NORMAL;
-
     }
 }
