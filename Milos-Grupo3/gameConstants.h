@@ -6,13 +6,15 @@
 
 
 #define TITLE "Pastoral Loves" // Titulo da Janela
-#define VERSION "Alpha 0.0.7"
+#define VERSION "Alpha 0.0.8"// versão do jogo
 #define SCREEN_WIDTH 800 // Largura da Janela
 #define SCREEN_HEIGHT 600 // Altura da Janela
 #define FPS 60
 
 #define TEXT_COLOR al_map_rgb(255, 255, 255)
 
+
+// level 001
 #define MAP1_TILE_FLOOR 1
 #define MAP1_TILE_WALL 14
 #define MAP1_TILE_WALL_2 24
@@ -23,11 +25,7 @@
 #define ITENS_QUAD_SIZE (QUAD_SIZE/2)// As artes dos itens jogo ser no padr�o 16bits -> 16x16 pixels
 #define MAXLIFE_0 100 /// Maximo de vida que toda entidade pode ter
 
-#define MAP_WIDTH 20
-#define MAP_HEIGHT 15
 
-#define GRAVITY 1.0f  // Aceleração da gravidade por frame
-#define JUMP_VELOCITY -15.0f 
 
 #define PLAYER_GRAVIDADE 1.0f;
 
