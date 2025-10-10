@@ -1,9 +1,9 @@
 #include "textBox.h"
 
 
-textBox dialogueLoad(ALLEGRO_FONT* font) {
+textBox dialogueLoad() {
 	textBox dialogue;
-	dialogue.font = font;
+	
 	dialogue.x = 0;
 	dialogue.y = 400;
 	dialogue.width = SCREEN_WIDTH;
@@ -15,8 +15,8 @@ textBox dialogueLoad(ALLEGRO_FONT* font) {
 }
 
 
-void drawDialogue(textBox * text, int textOption) {
-
+void drawDialogue(textBox * text, ALLEGRO_FONT* font, int textOption) {
+	text->font = font;
 	text->dialogueOption = textOption;
 	switch (textOption) {
 	case 0:

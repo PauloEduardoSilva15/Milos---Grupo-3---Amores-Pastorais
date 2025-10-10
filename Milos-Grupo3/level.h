@@ -14,20 +14,23 @@
 #include "enemy.h"
 #include "player.h"
 #include "marker.h"
+#include "textBox.h"
 
 
 typedef struct {
-	entity p;
-	entity e;
-	entity npc;
-	quad f;
-	quad d;
-	quad dL;
-	item k;
-	Marker m;
+	entity p; //player
+	entity e; // inimigo
+	entity npc; // npc
+	quad f; // chão ou floor
+	quad d; // porta ou door
+	quad dL; // display life
+	item k; // key ou chave
+	Marker m; // maker
+	textBox textBox; // caixa de texto
+	bool inDialogue;
 	bool puzzle_open;
 	bool puzzle_solved;
-	bool show_interact_text;  // Nova flag para mostrar texto de intera��o
+	bool show_interact_text;  // Nova flag para mostrar texto de interação
 }level;
 
 

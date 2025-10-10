@@ -3,10 +3,10 @@
 
 TitleMenu createTitleMenu( ALLEGRO_FONT *font){
     TitleMenu menu;
-    //menu.bg = al_load_bitmap("Milos-Grupo3/imgs/bgMenu.jpeg"); // Linux
-    //menu.logo = al_load_bitmap("Milos-Grupo3/imgs/GameLogo.png"); // Linux
-    menu.bg = al_load_bitmap("./imgs/bgMenu.jpeg"); // Windows
-    menu.logo = al_load_bitmap("./imgs/GameLogo.png"); //Windows
+    menu.bg = al_load_bitmap("Milos-Grupo3/imgs/bgMenu.jpeg"); // Linux
+    menu.logo = al_load_bitmap("Milos-Grupo3/imgs/GameLogo.png"); // Linux
+    //menu.bg = al_load_bitmap("./imgs/bgMenu.jpeg"); // Windows
+    //menu.logo = al_load_bitmap("./imgs/GameLogo.png"); //Windows
     menu.font = font;
     menu.startGameButton = newButton((SCREEN_WIDTH / 2)-100, (SCREEN_HEIGHT / 2), "Jogar", font); // Botão de iniciar o jogo
     menu.exitButton = newButton((SCREEN_WIDTH / 2)-100, (SCREEN_HEIGHT / 2) + 50, "Sair", font);// Botão de sair do jogo

@@ -19,8 +19,8 @@ typedef struct {
 	ALLEGRO_COLOR boxColor;
 }textBox;
 
-textBox dialogueLoad(ALLEGRO_FONT* font);
-void drawDialogue(textBox * text, int textOption);
+textBox dialogueLoad();
+void drawDialogue(textBox * text, ALLEGRO_FONT* font, int textOption);
 
 #endif // !TEXTBOX_H
 
