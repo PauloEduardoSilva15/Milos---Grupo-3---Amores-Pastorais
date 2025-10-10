@@ -17,6 +17,7 @@ level level_Load() {
 	level teste;//declara o level
 	teste.p = playerLoad(); //carrega o player
 	teste.e = enemyLoad(); //carrega o inimigo
+	teste.npc = newEntity(150, 500 - 32, 0, 0, al_map_rgb(100, 0, 150), false);
 	teste.f = quad_create(0, SCREEN_HEIGHT - 100, 0, SCREEN_WIDTH, 300, al_map_rgb(0, 255, 0)); // Carrega o Ch�o
 	teste.d = obstacleLoad();//carrega a porta
 	teste.dL = quad_create(DISPLAY_LIFE_X, DISPLAY_LIFE_Y, 0, MAXLIFE_0, QUAD_SIZE, al_map_rgb(0, 255, 0)); // Carrega a barra de vida
@@ -38,6 +39,7 @@ void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState) {
 	if (l->show_interact_text && al_key_down(keyState, ALLEGRO_KEY_E) && !l->puzzle_solved) {
 		l->puzzle_open = true;
 	}
+
 
 	// GRAVIDADE E PULO
 	if (!collisionEQ(&l->p, &l->f) && !collisionE(&l->e, &l->p)) {
@@ -161,12 +163,17 @@ void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState) {
 // Desenha o level
 void Level_Draw(level l, ALLEGRO_FONT* Font) {
 	MarkerDraw(&l.m);
+
+	drawEntity(&l.npc);
 	drawEntity(&l.p);
 
+	
 	// Mostra texto de interação apenas quando perto do marker
 
 	if(collisionEM(&l.p, &l.m)&& !l.puzzle_solved) al_draw_text(Font, TEXT_COLOR, l.m.x-25, l.m.y - 25, 0, "[E] Interagir");
 	if (!l.e.isDead) drawEntity(&l.e);
+
+	if (collisionE(&l.p, &l.npc))al_draw_text(Font, TEXT_COLOR, l.npc.x - 25, l.npc.y - 25, 0, "[E] Falar");
 	draw_quad(&l.dL);
 	draw_quad(&l.f);
 	draw_quad(&l.d);

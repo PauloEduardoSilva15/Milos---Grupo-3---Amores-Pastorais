@@ -19,6 +19,7 @@
 typedef struct {
 	entity p;
 	entity e;
+	entity npc;
 	quad f;
 	quad d;
 	quad dL;

@@ -32,6 +32,7 @@
     <ClCompile Include="player.c" />
     <ClCompile Include="puzzle.c" />
     <ClCompile Include="quad.c" />
+    <ClCompile Include="textBox.c" />
     <ClCompile Include="TitleMenu.c" />
   </ItemGroup>
   <ItemGroup>
@@ -50,6 +51,7 @@
     <ClInclude Include="player.h" />
     <ClInclude Include="puzzle.h" />
     <ClInclude Include="quad.h" />
+    <ClInclude Include="textBox.h" />
     <ClInclude Include="TitleMenu.h" />
   </ItemGroup>
   <ItemGroup>
