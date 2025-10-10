@@ -145,6 +145,10 @@ int main() {
 				}
 				done = true; // Sai do jogo com ESC
 			}
+			if(levelT.inDialogue && al_key_down(&keyState, ALLEGRO_KEY_T) && levelT.dialogueOption < 2) {
+			levelT.dialogueOption++;
+		
+			}
 		}
 
 		if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
