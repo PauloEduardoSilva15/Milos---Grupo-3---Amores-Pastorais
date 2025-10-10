@@ -17,20 +17,42 @@ level level_Load() {
 	level teste;//declara o level
 	teste.p = playerLoad(); //carrega o player
 	teste.e = enemyLoad(); //carrega o inimigo
-	teste.npc = newEntity(150, 500 - 32, 0, 0, al_map_rgb(100, 0, 150), false);
+	teste.npc = newEntity(190, 500 - 32, 0, 0, al_map_rgb(100, 0, 150), false);
 	teste.f = quad_create(0, SCREEN_HEIGHT - 100, 0, SCREEN_WIDTH, 300, al_map_rgb(0, 255, 0)); // Carrega o Ch�o
 	teste.d = obstacleLoad();//carrega a porta
 	teste.dL = quad_create(DISPLAY_LIFE_X, DISPLAY_LIFE_Y, 0, MAXLIFE_0, QUAD_SIZE, al_map_rgb(0, 255, 0)); // Carrega a barra de vida
+	teste.textBox = dialogueLoad();
+	teste.inDialogue = false;
 	teste.k = newItem(KEY_ITEM_X, KEY_ITEM_Y_0, false);//carrega a chave
 	teste.m = newMarker(MARKER_X, MARKER_Y); // Carrega o marcador
 	teste.puzzle_open = false; //inicia com o puzzle fechado
 	teste.puzzle_solved = false; //inicia com o puzzle n�o resolvido
 	teste.show_interact_text = false; //inicia sem mostrar o texto de interação
+	teste.dialogueOption = 0;
+	teste.dialogoTermindado = false;
 	return teste;
 }
 
 // Atualiza o level
 void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState) {
+
+	if(al_key_down(keyState, ALLEGRO_KEY_E) && collisionE(&l->p, &l->npc)){
+		l->inDialogue = true;
+	}
+	if(al_key_down(keyState, ALLEGRO_KEY_R)){
+		l->inDialogue = false;
+	}
+
+	if(l->inDialogue && al_key_down(keyState, ALLEGRO_KEY_T) && l->dialogueOption < 2) {
+		l->dialogueOption++;
+		
+	}
+	if(l->dialogueOption >= 2){
+		l->dialogueOption = 0;
+	} 
+	
+
+	
 	
 	// Verifica colisão com marker
 	l->show_interact_text = collisionEM(&l->p, &l->m);
@@ -162,6 +184,8 @@ void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState) {
 
 // Desenha o level
 void Level_Draw(level l, ALLEGRO_FONT* Font) {
+
+	
 	MarkerDraw(&l.m);
 
 	drawEntity(&l.npc);
@@ -178,5 +202,5 @@ void Level_Draw(level l, ALLEGRO_FONT* Font) {
 	draw_quad(&l.f);
 	draw_quad(&l.d);
 	itemDraw(&l.k);
-
+	if(l.inDialogue) drawDialogue(&l.textBox, Font, l.dialogueOption);
 }

@@ -27,10 +27,12 @@ typedef struct {
 	item k; // key ou chave
 	Marker m; // maker
 	textBox textBox; // caixa de texto
+	int dialogueOption;
 	bool inDialogue;
 	bool puzzle_open;
 	bool puzzle_solved;
 	bool show_interact_text;  // Nova flag para mostrar texto de interação
+	bool dialogoTermindado;
 }level;
 
 
