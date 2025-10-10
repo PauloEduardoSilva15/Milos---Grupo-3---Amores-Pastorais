@@ -14,11 +14,13 @@ typedef struct {
 	int x, y;
 	int width, height;
 	int dialogueOption;
+	char personagem[16];
+	char texto[50];
 	ALLEGRO_COLOR boxColor;
 }textBox;
 
 textBox dialogueLoad(ALLEGRO_FONT* font);
-void drawDialogue(textBox * text);
+void drawDialogue(textBox * text, int textOption);
 
 #endif // !TEXTBOX_H
 
