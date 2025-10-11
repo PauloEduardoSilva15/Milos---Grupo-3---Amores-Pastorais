@@ -3,8 +3,6 @@
 
 TitleMenu createTitleMenu( ALLEGRO_FONT *font){
     TitleMenu menu;
-    //menu.bg = al_load_bitmap("Milos-Grupo3/imgs/bgMenu.jpeg"); // Linux
-    //menu.logo = al_load_bitmap("Milos-Grupo3/imgs/GameLogo.png"); // Linux
     menu.bg = al_load_bitmap("./imgs/bgMenu.jpeg"); // Windows
     menu.logo = al_load_bitmap("./imgs/GameLogo.png"); //Windows
     menu.font = font;
