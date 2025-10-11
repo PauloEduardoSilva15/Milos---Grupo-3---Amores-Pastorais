@@ -100,7 +100,7 @@ int main() {
 				al_get_mouse_state(&mouseState);
 				//titleMenu.selectedOption = ReturnMenuOption(titleMenu, &mouseState, &ev);
 				
-				if(titleMenu.selectedOption == 1) level_Update(&levelT, &keyState);
+				if(titleMenu.selectedOption == 1) level_Update(&levelT, &keyState, &ev);
 				if(titleMenu.selectedOption == 2) done = true;
 				draw = true;
 
@@ -144,6 +144,10 @@ int main() {
 					levelT.puzzle_open = false;
 				}
 				done = true; // Sai do jogo com ESC
+			}
+			if(levelT.inDialogue && ev.keyboard.keycode == ALLEGRO_KEY_T && levelT.dialogueOption < 2) {
+			levelT.dialogueOption++;
+		
 			}
 		}
 

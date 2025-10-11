@@ -32,6 +32,7 @@
     <ClCompile Include="player.c" />
     <ClCompile Include="puzzle.c" />
     <ClCompile Include="quad.c" />
+    <ClCompile Include="textBox.c" />
     <ClCompile Include="TitleMenu.c" />
   </ItemGroup>
   <ItemGroup>
@@ -50,6 +51,7 @@
     <ClInclude Include="player.h" />
     <ClInclude Include="puzzle.h" />
     <ClInclude Include="quad.h" />
+    <ClInclude Include="textBox.h" />
     <ClInclude Include="TitleMenu.h" />
   </ItemGroup>
   <ItemGroup>
@@ -152,7 +154,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
