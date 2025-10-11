@@ -34,16 +34,16 @@ level level_Load() {
 }
 
 // Atualiza o level
-void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState, ALLEGRO_EVENT * ev) {
+void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState, ALLEGRO_EVENT ev) {
 
-	if(ev->keyboard.keycode == ALLEGRO_KEY_E && collisionE(&l->p, &l->npc)){
+	if(al_key_down(keyState, ALLEGRO_KEY_E) && collisionE(&l->p, &l->npc)){
 		l->inDialogue = true;
 	}
-	if(ev->keyboard.keycode == ALLEGRO_KEY_R){
+	if(al_key_down(keyState, ALLEGRO_KEY_R)){
 		l->inDialogue = false;
 	}
 
-	if(l->inDialogue && ev->keyboard.keycode == ALLEGRO_KEY_T && l->dialogueOption < 2) {
+	if(l->inDialogue && al_key_down(keyState, ALLEGRO_KEY_T) && l->dialogueOption < 2) {
 		l->dialogueOption++;
 		
 	}
