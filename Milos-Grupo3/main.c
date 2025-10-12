@@ -107,7 +107,7 @@ int main() {
 				if (titleMenu.selectedOption == 1 && !levelT.p.isDead) level_Update(&levelT, &keyState, &ev);
 				if (titleMenu.selectedOption == 2) done = true;
 				draw = true;
-
+				if (levelT.p.isDead) gameOver.active = true;
 			}
 			if (draw) {
 
@@ -115,8 +115,8 @@ int main() {
 
 
 				if (!titleMenu.runningLevel)drawTitleMenu(&titleMenu, &mouseState);
-				if (titleMenu.selectedOption == 1 && !levelT.p.isDead)Level_Draw(levelT, Font);
-				if (levelT.p.isDead) drawGameOver(&gameOver, &mouseState);
+				if (titleMenu.selectedOption == 1 && !gameOver.active)Level_Draw(levelT, Font);
+				if (gameOver.active) drawGameOver(&gameOver, &mouseState);
 
 
 				al_draw_text(Font, TEXT_COLOR, 25, 25, 0, VERSION);
@@ -165,12 +165,14 @@ int main() {
 				if (button_contains_point(&titleMenu.exitButton, mouseState.x, mouseState.y))
 					titleMenu.selectedOption = 2; // Exit
 			}
-			if (button_contains_point(&gameOver.retryButton, mouseState.x, mouseState.y)) {
-				titleMenu.runningLevel = false;
-				titleMenu.selectedOption = 0;
+			if (button_contains_point(&gameOver.retryButton, mouseState.x, mouseState.y) && gameOver.active) {
+				gameOver.active = false;
+				titleMenu = createTitleMenu(Font);
+				levelT = level_Load();
+				gameOver = createGameOver(Font);
 			}
 			else {
-				if (button_contains_point(&gameOver.exitButton, mouseState.x, mouseState.y))
+				if (button_contains_point(&gameOver.exitButton, mouseState.x, mouseState.y) && gameOver.active)
 					done = true;
 			}
 		}
