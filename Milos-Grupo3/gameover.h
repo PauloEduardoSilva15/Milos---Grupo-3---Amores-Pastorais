@@ -13,7 +13,7 @@ typedef struct GameOver {
     ALLEGRO_FONT* font;
     button retryButton;   // "Tela Inicial"
     button exitButton;    // "Sair"
-    int selectedOption;   // 1 = Tela Inicial, 2 = Sair
+    //int selectedOption;   // 1 = Tela Inicial, 2 = Sair
     bool active;          // indica se a tela está ativa
 } GameOver;
 
