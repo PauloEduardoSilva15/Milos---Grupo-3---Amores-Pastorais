@@ -10,8 +10,6 @@
 #include "gameConstants.h"
 
 typedef struct GameOver {
-    ALLEGRO_BITMAP* bg;
-    ALLEGRO_BITMAP* logo; // imagem "Você Perdeu"
     ALLEGRO_FONT* font;
     button retryButton;   // "Tela Inicial"
     button exitButton;    // "Sair"
@@ -21,9 +19,6 @@ typedef struct GameOver {
 
 GameOver createGameOver(ALLEGRO_FONT* font);
 void drawGameOver(GameOver* over, ALLEGRO_MOUSE_STATE* mouseState);
-
-extern GameOver gameOver_global;
-void showGameOver();
 
 #endif
 #pragma once

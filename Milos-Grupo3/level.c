@@ -10,7 +10,6 @@
 #include "obstacle.h"
 #include "item.h"
 #include "collision.h"
-#include "gameover.h"
 #include <math.h>
 
 // Carrega o level
@@ -35,25 +34,25 @@ level level_Load() {
 }
 
 // Atualiza o level
-void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState, ALLEGRO_EVENT * ev) {
+void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState, ALLEGRO_EVENT* ev) {
 
-	
-	if(al_key_down(keyState, ALLEGRO_KEY_E) && collisionE(&l->p, &l->npc)){
+
+	if (al_key_down(keyState, ALLEGRO_KEY_E) && collisionE(&l->p, &l->npc)) {
 		l->inDialogue = true;
 	}
-	if(al_key_down(keyState, ALLEGRO_KEY_R)){
+	if (al_key_down(keyState, ALLEGRO_KEY_R)) {
 		l->inDialogue = false;
 	}
 
-	
-	if(l->dialogueOption >= 2){
+
+	if (l->dialogueOption >= 2) {
 		l->inDialogue = false;
 		l->dialogueOption = 0;
-	} 
-	
+	}
 
-	
-	
+
+
+
 	// Verifica colisão com marker
 	l->show_interact_text = collisionEM(&l->p, &l->m);
 
@@ -122,7 +121,7 @@ void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState, ALLEGRO_EVENT * ev
 	if (l->p.modoDefesa) l->p.color = PLAYER_DEFENSE_COLOR;//muda a cor do player NO MODO DEFESA
 	if (!l->p.modoAtaque && !l->p.modoDefesa)l->p.color = PLAYER_NORMAL_COLOR;//muda a cor do player NO MODO NORMAL
 
-	
+
 
 
 
@@ -173,7 +172,7 @@ void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState, ALLEGRO_EVENT * ev
 	if ((l->e.x) < 0 && !l->e.isDead) l->e.x = 0;
 
 	//verifica se alguem morreu
-	if (l->p.life <= 0) showGameOver();
+	if (l->p.life <= 0) l->p.isDead = true;
 	if (l->e.life <= 0) l->e.isDead = true;
 	if (l->e.isDead) {
 		l->e.x = 0;
@@ -185,16 +184,16 @@ void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState, ALLEGRO_EVENT * ev
 // Desenha o level
 void Level_Draw(level l, ALLEGRO_FONT* Font) {
 
-	
+
 	MarkerDraw(&l.m);
 
 	drawEntity(&l.npc);
 	drawEntity(&l.p);
 
-	
+
 	// Mostra texto de interação apenas quando perto do marker
 
-	if(collisionEM(&l.p, &l.m)&& !l.puzzle_solved) al_draw_text(Font, TEXT_COLOR, l.m.x-25, l.m.y - 25, 0, "[E] Interagir");
+	if (collisionEM(&l.p, &l.m) && !l.puzzle_solved) al_draw_text(Font, TEXT_COLOR, l.m.x - 25, l.m.y - 25, 0, "[E] Interagir");
 	if (!l.e.isDead) drawEntity(&l.e);
 
 	if (collisionE(&l.p, &l.npc))al_draw_text(Font, TEXT_COLOR, l.npc.x - 25, l.npc.y - 25, 0, "[E] Falar");
@@ -202,5 +201,5 @@ void Level_Draw(level l, ALLEGRO_FONT* Font) {
 	draw_quad(&l.f);
 	draw_quad(&l.d);
 	itemDraw(&l.k);
-	if(l.inDialogue) drawDialogue(&l.textBox, Font, l.dialogueOption);
+	if (l.inDialogue) drawDialogue(&l.textBox, Font, l.dialogueOption);
 }

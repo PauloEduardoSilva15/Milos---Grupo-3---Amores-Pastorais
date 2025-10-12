@@ -14,29 +14,33 @@
 #include "enemy.h"
 #include "player.h"
 #include "marker.h"
+#include "textBox.h"
 
 
 typedef struct {
-	entity p;
-	entity e;
-	quad f;
-	quad d;
-	quad dL;
-	item k;
-	Marker m;
+	entity p; //player
+	entity e; // inimigo
+	entity npc; // npc
+	quad f; // chão ou floor
+	quad d; // porta ou door
+	quad dL; // display life
+	item k; // key ou chave
+	Marker m; // maker
+	textBox textBox; // caixa de texto
+	int dialogueOption;
+	bool inDialogue;
 	bool puzzle_open;
 	bool puzzle_solved;
-	bool show_interact_text;  // Nova flag para mostrar texto de intera��o
+	bool show_interact_text;  // Nova flag para mostrar texto de interação
+	bool dialogoTermindado;
 }level;
 
 
 level level_Load();
 
-void level_Update(level* l, ALLEGRO_KEYBOARD_STATE * keyState);
+void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState, ALLEGRO_EVENT* ev);
 
 void Level_Draw(level l, ALLEGRO_FONT* Font);
 
 
 #endif 
-
-

@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include "TitleMenu.h"
 #include "gameover.h"
+#include "textBox.h"
 
 
 
@@ -47,7 +48,7 @@ int main() {
 	
 	
 	TitleMenu titleMenu = createTitleMenu(Font);
-	gameOver_global = createGameOver(Font);
+	GameOver gameOver = createGameOver(Font);
 
 	ALLEGRO_MOUSE_STATE mouseState;
 	ALLEGRO_KEYBOARD_STATE keyState;
@@ -67,27 +68,27 @@ int main() {
 		if (levelT.puzzle_open)
 		{
 			// Se puzzle está aberto, envia eventos apenas para o puzzle
-			
+
 			puzzle_handle_event(&ev);
 			if (ev.type == ALLEGRO_EVENT_TIMER) {
 				if (levelT.puzzle_open) {
-				// O puzzle será atualizado no main loop através de puzzle_handle_event
+					// O puzzle será atualizado no main loop através de puzzle_handle_event
 					if (puzzle_is_solved()) {
 						levelT.puzzle_open = false;
 						levelT.puzzle_solved = puzzle_is_solved();
 						puzzle_destroy(); // Limpa o puzzle após resolver
 						levelT.k.get = true;
-					
+
 					}
 				}
 				draw = true;
 			}
 			if (draw) {
 				//al_draw_text(Font, TEXT_COLOR, 25, 25, 0, VERSION);
-				if(!puzzle_is_solved())puzzle_draw(SCREEN_WIDTH, SCREEN_HEIGHT);
+				if (!puzzle_is_solved())puzzle_draw(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-				al_draw_text(Font, TEXT_COLOR, 50, SCREEN_HEIGHT-100, 0, "Controles:");
-				al_draw_text(Font, TEXT_COLOR, 50, SCREEN_HEIGHT-80, 0, "R - Sair do Puzzle");
+				al_draw_text(Font, TEXT_COLOR, 50, SCREEN_HEIGHT - 100, 0, "Controles:");
+				al_draw_text(Font, TEXT_COLOR, 50, SCREEN_HEIGHT - 80, 0, "R - Sair do Puzzle");
 
 
 				al_flip_display();
@@ -102,21 +103,22 @@ int main() {
 				al_get_keyboard_state(&keyState);
 				al_get_mouse_state(&mouseState);
 				//titleMenu.selectedOption = ReturnMenuOption(titleMenu, &mouseState, &ev);
-				
-				if(titleMenu.selectedOption == 1) level_Update(&levelT, &keyState, &ev);
-				if(titleMenu.selectedOption == 2) done = true;
+
+				if (titleMenu.selectedOption == 1 && !levelT.p.isDead) level_Update(&levelT, &keyState, &ev);
+				if (titleMenu.selectedOption == 2) done = true;
 				draw = true;
 
 			}
 			if (draw) {
-				
+
 				draw = false;
-				
 
-				if(!titleMenu.runningLevel)drawTitleMenu(&titleMenu, &mouseState);
-				if (titleMenu.selectedOption == 1)Level_Draw(levelT, Font);
 
-				
+				if (!titleMenu.runningLevel)drawTitleMenu(&titleMenu, &mouseState);
+				if (titleMenu.selectedOption == 1 && !levelT.p.isDead)Level_Draw(levelT, Font);
+				if (levelT.p.isDead) drawGameOver(&gameOver, &mouseState);
+
+
 				al_draw_text(Font, TEXT_COLOR, 25, 25, 0, VERSION);
 
 				// Tutorial Controls
@@ -136,21 +138,21 @@ int main() {
 		if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
 
 			if (levelT.puzzle_open && ev.keyboard.keycode == ALLEGRO_KEY_R) {
-				levelT.puzzle_open = false; 
+				levelT.puzzle_open = false;
 			}
-			
-			if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) done = true; // Fecha o jogo se clicar no X da janela
-		
+
+			if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) done = true; // Fecha o jogo se clicar no X da janela
+
 			if (ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
-				
+
 				if (levelT.puzzle_open) {
 					levelT.puzzle_open = false;
 				}
 				done = true; // Sai do jogo com ESC
 			}
-			if(levelT.inDialogue && ev.keyboard.keycode == ALLEGRO_KEY_T && levelT.dialogueOption < 2) {
-			levelT.dialogueOption++;
-		
+			if (levelT.inDialogue && ev.keyboard.keycode == ALLEGRO_KEY_T && levelT.dialogueOption < 2) {
+				levelT.dialogueOption++;
+
 			}
 		}
 
@@ -163,28 +165,15 @@ int main() {
 				if (button_contains_point(&titleMenu.exitButton, mouseState.x, mouseState.y))
 					titleMenu.selectedOption = 2; // Exit
 			}
-		}
-
-		if (gameOver_global.active) {
-			if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
-				if (button_contains_point(&gameOver_global.retryButton, mouseState.x, mouseState.y)) {
-					gameOver_global.active = false;
-					titleMenu.runningLevel = false; // volta ao menu inicial
-					titleMenu.selectedOption = 0;
-				}
-				else if (button_contains_point(&gameOver_global.exitButton, mouseState.x, mouseState.y)) {
-					done = true; // fecha o jogo
-				}
+			if (button_contains_point(&gameOver.retryButton, mouseState.x, mouseState.y)) {
+				titleMenu.runningLevel = false;
+				titleMenu.selectedOption = 0;
 			}
-
-			if (ev.type == ALLEGRO_EVENT_TIMER) {
-				drawGameOver(&gameOver_global, &mouseState);
-				al_flip_display();
-				al_clear_to_color(al_map_rgb(0, 0, 0));
+			else {
+				if (button_contains_point(&gameOver.exitButton, mouseState.x, mouseState.y))
+					done = true;
 			}
-			continue; // pausa o resto do jogo enquanto tela Game Over está ativa
 		}
-
 
 	}
 	al_destroy_bitmap(titleMenu.bg);
