@@ -31,9 +31,5 @@ typedef struct {
 entity newEntity(int x, int y, int v, float vY, ALLEGRO_COLOR color, bool can_jump);
 void movEntity(entity* e, int dir);
 void drawEntity(entity* e);
-void applyGravity(entity* e, float gravity);
-void jumpEntity(entity* e, float jump_velocity);
-void updateEntityY(entity* e);
-
 void draw_entity_with_camera(entity* p, int camera_x);
 #endif // !ENTITY_H
