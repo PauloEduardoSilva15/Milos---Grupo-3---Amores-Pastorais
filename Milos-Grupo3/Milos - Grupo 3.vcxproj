@@ -24,6 +24,7 @@
     <ClCompile Include="enemy.c" />
     <ClCompile Include="entity.c" />
     <ClCompile Include="gameConstants.c" />
+    <ClCompile Include="gameover.c" />
     <ClCompile Include="item.c" />
     <ClCompile Include="level.c" />
     <ClCompile Include="main.c" />
@@ -44,6 +45,7 @@
     <ClInclude Include="enemy.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="gameConstants.h" />
+    <ClInclude Include="gameover.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="level.h" />
     <ClInclude Include="marker.h" />

@@ -37,12 +37,8 @@ typedef struct {
 
 
 level level_Load();
-
-void level_Update(level* l, ALLEGRO_KEYBOARD_STATE * keyState, ALLEGRO_EVENT* ev);
-
+void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState, ALLEGRO_EVENT* ev);
 void Level_Draw(level l, ALLEGRO_FONT* Font);
 
 
 #endif 
-
-
