@@ -25,7 +25,7 @@ bool collisionEM(entity* a, Marker* b) {
 
 }
 
-bool collisionE(entity* a, entity* b) {
+bool collisionEntityWithEntity(entity* a, entity* b) {
 	return (a->x < b->x + b->size &&
 		a->x + a->size > b->x &&
 		a->y < b->y + b->size &&

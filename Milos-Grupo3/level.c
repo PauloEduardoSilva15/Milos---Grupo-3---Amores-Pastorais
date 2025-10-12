@@ -1,4 +1,4 @@
-#include "level.h"
+/*#include "level.h"
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_primitives.h>
 #include <stdbool.h>
@@ -172,4 +172,4 @@ void Level_Draw(level l, ALLEGRO_FONT* Font) {
 	draw_quad(&l.d);
 	itemDraw(&l.k);
 
-}
+}*/

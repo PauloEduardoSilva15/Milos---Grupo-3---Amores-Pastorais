@@ -1,4 +1,4 @@
-#ifndef LEVEL_H
+/*#ifndef LEVEL_H
 #define LEVEL_H
 
 #include <allegro5/allegro5.h>
@@ -40,3 +40,4 @@ void Level_Draw(level l, ALLEGRO_FONT* Font);
 #endif 
 
 
+*/
