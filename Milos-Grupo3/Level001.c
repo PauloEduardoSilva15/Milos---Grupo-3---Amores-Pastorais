@@ -130,5 +130,5 @@ void Level_I_Draw(levelI  l, ALLEGRO_FONT* Font){
     if (l.inDialogue) drawDialogue(&l.dialogue, Font, l.dialogueOption);
     draw_entity_with_camera(&l.npc, l.cameraX);
     draw_entity_with_camera(&l.player, l.cameraX);
-    if(l.inPause) al_clear_to_color(al_map_rgb(0, 0, 0));
+    //if(l.inPause) al_clear_to_color(al_map_rgb(0, 0, 0));
 }
