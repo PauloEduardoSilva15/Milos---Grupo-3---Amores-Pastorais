@@ -80,7 +80,7 @@ int main() {
 				
 
 			if(!titleMenu.runningLevel)drawTitleMenu(&titleMenu, &mouseState);
-			if (titleMenu.selectedOption == 1)Level_I_Draw(levelT);
+			if (titleMenu.selectedOption == 1)Level_I_Draw(levelT, Font);
 
 				
 			al_draw_text(Font, TEXT_COLOR, 25, 25, 0, VERSION);
@@ -109,11 +109,18 @@ int main() {
 			}
 		}
 
-		if (ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
+		if(ev.type ==  ALLEGRO_EVENT_KEY_DOWN){
+			if (ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
 				
-				//if (levelT.puzzle_open) levelT.puzzle_open = false;
 				done = true; // Sai do jogo com ESC
 			}
+
+			if (levelT.inDialogue && ev.keyboard.keycode == ALLEGRO_KEY_T && levelT.dialogueOption < 2)
+				levelT.dialogueOption++;
+
+		}
+
+		
 
 		//if (levelT.puzzle_solved) puzzle_init();
 		/*if (levelT.puzzle_open)
