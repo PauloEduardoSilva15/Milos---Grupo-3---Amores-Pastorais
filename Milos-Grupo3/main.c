@@ -15,6 +15,7 @@
 
 
 
+
 int main() {
 
 	if (!al_init()) return -1;
@@ -46,6 +47,7 @@ int main() {
 	
 	
 	TitleMenu titleMenu = createTitleMenu(Font);
+	gameOver_global = createGameOver(Font);
 
 	ALLEGRO_MOUSE_STATE mouseState;
 	ALLEGRO_KEYBOARD_STATE keyState;
@@ -101,7 +103,7 @@ int main() {
 				al_get_mouse_state(&mouseState);
 				//titleMenu.selectedOption = ReturnMenuOption(titleMenu, &mouseState, &ev);
 				
-				if(titleMenu.selectedOption == 1) level_Update(&levelT, &keyState);
+				if(titleMenu.selectedOption == 1) level_Update(&levelT, &keyState, &ev);
 				if(titleMenu.selectedOption == 2) done = true;
 				draw = true;
 
@@ -146,6 +148,10 @@ int main() {
 				}
 				done = true; // Sai do jogo com ESC
 			}
+			if(levelT.inDialogue && ev.keyboard.keycode == ALLEGRO_KEY_T && levelT.dialogueOption < 2) {
+			levelT.dialogueOption++;
+		
+			}
 		}
 
 		if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
@@ -158,6 +164,27 @@ int main() {
 					titleMenu.selectedOption = 2; // Exit
 			}
 		}
+
+		if (gameOver_global.active) {
+			if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
+				if (button_contains_point(&gameOver_global.retryButton, mouseState.x, mouseState.y)) {
+					gameOver_global.active = false;
+					titleMenu.runningLevel = false; // volta ao menu inicial
+					titleMenu.selectedOption = 0;
+				}
+				else if (button_contains_point(&gameOver_global.exitButton, mouseState.x, mouseState.y)) {
+					done = true; // fecha o jogo
+				}
+			}
+
+			if (ev.type == ALLEGRO_EVENT_TIMER) {
+				drawGameOver(&gameOver_global, &mouseState);
+				al_flip_display();
+				al_clear_to_color(al_map_rgb(0, 0, 0));
+			}
+			continue; // pausa o resto do jogo enquanto tela Game Over está ativa
+		}
+
 
 	}
 	al_destroy_bitmap(titleMenu.bg);
