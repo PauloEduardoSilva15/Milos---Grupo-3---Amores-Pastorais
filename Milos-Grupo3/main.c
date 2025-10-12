@@ -115,10 +115,9 @@ int main() {
 				done = true; // Sai do jogo com ESC
 			}
 
-			if (levelT.inDialogue && ev.keyboard.keycode == ALLEGRO_KEY_T && levelT.dialogueOption < 2)
+			if (levelT.inDialogue && ev.keyboard.keycode == ALLEGRO_KEY_T && (levelT.dialogueOption != 5 || levelT.dialogueOption != 9))
 				levelT.dialogueOption++;
-
-		}
+			}
 
 		
 

@@ -28,11 +28,15 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
 	}
 
 
-	if (l->dialogueOption >= 2) {
+	if (l->dialogueOption == 5 || l->dialogueOption == 9) {
 		l->inDialogue = false;
 		l->dialogueOption = 0;
 	}
 
+    if(l->player.x == 768){
+        l->npc.x = 2988;
+        l->dialogueOption = 6;
+    }
 
 
     if(check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WALL_2) || check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD) || check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_FLOOR_2)){
@@ -54,38 +58,44 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
 	}
     if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_SPIN)) l->player.isDead = true;
     //Controles do player
-    if (al_key_down(keystate, ALLEGRO_KEY_W) && l->player.can_jump) {
-        l->player.y -= PLAYER_GRAVIDADE;
-		l->player.vY = PLAYER_JUMP_FORCE;
-		l->player.can_jump = false;
-        if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WALL)){
-            /*if(!check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WALL_2) ){
+    if(!l->inDialogue){
+
+        
+        if (al_key_down(keystate, ALLEGRO_KEY_W) && l->player.can_jump) {
+            l->player.y -= PLAYER_GRAVIDADE;
+		    l->player.vY = PLAYER_JUMP_FORCE;
+		    l->player.can_jump = false;
+            if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WALL)){
+
                 l->player.vY += PLAYER_GRAVIDADE;
                 l->player.y += l->player.vY;
-            }*/
-            l->player.vY += PLAYER_GRAVIDADE;
-            l->player.y += l->player.vY;
-        }
-	}    
-    if (al_key_down(keystate, ALLEGRO_KEY_A)){
-       movEntity(&l->player, 0); 
-        if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WALL))
-            l->player.x += l->player.v;
-        if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WALL_2))
-            l->player.x += l->player.v;
-        if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD))
-            l->player.x += l->player.v;
+            }
+	    }    
+        if (al_key_down(keystate, ALLEGRO_KEY_A)){
+            movEntity(&l->player, 0); 
+            if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WALL))
+                l->player.x += l->player.v;
+            if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WALL_2))
+                l->player.x += l->player.v;
+            if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD))
+                l->player.x += l->player.v;
     
-    } 
-    if (al_key_down(keystate, ALLEGRO_KEY_D)){
-        movEntity(&l->player, 1);
-        if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_SPIN))
-            l->player.x -= l->player.v;
-        if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WALL_2))
-            l->player.x -= l->player.v;
-        if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD))
-            l->player.x -= l->player.v;
-    } 
+        } 
+        if (al_key_down(keystate, ALLEGRO_KEY_D)){
+            movEntity(&l->player, 1);
+            if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WALL))
+                l->player.x -= l->player.v;
+            if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WALL_2))
+                l->player.x -= l->player.v;
+            if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD))
+                l->player.x -= l->player.v;
+        } 
+        
+        
+    }
+
+    
+    
 
     if(al_key_down(keystate, ALLEGRO_KEY_X)){
         printf("x = %d, y = %d ", l->player.x, l->player.y);

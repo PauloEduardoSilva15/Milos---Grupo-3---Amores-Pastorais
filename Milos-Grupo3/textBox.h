@@ -15,7 +15,7 @@ typedef struct {
 	int width, height;
 	int dialogueOption;
 	char personagem[16];
-	char texto[50];
+	char texto[100];
 	ALLEGRO_COLOR boxColor;
 }textBox;
 
