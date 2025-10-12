@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include "TitleMenu.h"
 #include "gameover.h"
+#include "gamePauseMenu.h"
 
 
 
@@ -50,6 +51,8 @@ int main() {
 	TitleMenu titleMenu = createTitleMenu(Font);
 	GameOver gameOver = createGameOver(Font);
 
+	PauseMenu pauseMenu = createPauseMenu(Font);
+
 	ALLEGRO_MOUSE_STATE mouseState;
 	ALLEGRO_KEYBOARD_STATE keyState;
 	ALLEGRO_TIMER* timer = al_create_timer(1.0 / FPS);
@@ -75,7 +78,7 @@ int main() {
 			if(titleMenu.selectedOption == 2) done = true;
 			draw = true;
 			if (levelT.player.isDead) gameOver.active = true;
-
+			//if(levelT.inPause) drawPauseMenu(&pauseMenu);
 		}
 		if (draw) {
 				
@@ -85,10 +88,10 @@ int main() {
 			if(!titleMenu.runningLevel)drawTitleMenu(&titleMenu, &mouseState);
 			if (titleMenu.selectedOption == 1 && !gameOver.active)Level_I_Draw(levelT, Font);
 			if (gameOver.active) drawGameOver(&gameOver, &mouseState);
-
+			
 
 				
-			al_draw_text(Font, TEXT_COLOR, 25, 25, 0, VERSION);
+			if(levelT.inPause && !levelT.inDialogue) drawPauseMenu(&pauseMenu, &mouseState);
 
 			// Tutorial Controls
 			al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 50, 0, "Controles:");
@@ -114,29 +117,42 @@ int main() {
 			}
 
 			if (button_contains_point(&gameOver.retryButton, mouseState.x, mouseState.y) && gameOver.active) {
-				gameOver.active = false;
+				//gameOver.active = false;
 				titleMenu = createTitleMenu(Font);
 				levelT = Level_I_load();
+				pauseMenu = createPauseMenu(Font);
 				gameOver = createGameOver(Font);
 			}
 			else {
 				if (button_contains_point(&gameOver.exitButton, mouseState.x, mouseState.y) && gameOver.active)
 					done = true;
 			}
+
+			if (button_contains_point(&pauseMenu.retriviedbutton, mouseState.x, mouseState.y) && levelT.inPause) {
+				titleMenu = createTitleMenu(Font);
+				levelT = Level_I_load();
+				gameOver = createGameOver(Font);
+			}
+			else {
+				if (button_contains_point(&pauseMenu.ContinuePlaybutton, mouseState.x, mouseState.y) && levelT.inPause)
+					levelT.inPause = false;
+				if (button_contains_point(&pauseMenu.exitButton, mouseState.x, mouseState.y) && levelT.inPause)
+					done = true;
+			}
+			
 		}
 
 		if(ev.type ==  ALLEGRO_EVENT_KEY_DOWN){
-			if (ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
+			if (ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE && titleMenu.runningLevel) {
 				
-				done = true; // Sai do jogo com ESC
+				levelT.inPause = true;
+				//done = true; // Sai do jogo com ESC
 			}
 
 			if (levelT.inDialogue && ev.keyboard.keycode == ALLEGRO_KEY_T && (levelT.dialogueOption != 5 || levelT.dialogueOption != 9))
 				levelT.dialogueOption++;
 			
-
-
-			}
+		}
 
 
 		//if (levelT.puzzle_solved) puzzle_init();

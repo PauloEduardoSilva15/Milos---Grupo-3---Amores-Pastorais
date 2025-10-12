@@ -22,10 +22,7 @@ typedef struct{
     //bool runningLevel;
 } PauseMenu;
 
-PauseMenu createPauseMenu(ALLEGRO_FONT* font);
-
-
-
+PauseMenu createPauseMenu(ALLEGRO_FONT * font);
 void drawPauseMenu(PauseMenu* menu, ALLEGRO_MOUSE_STATE* mouseState);
 
 

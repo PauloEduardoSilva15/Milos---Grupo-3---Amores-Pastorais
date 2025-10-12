@@ -13,6 +13,7 @@
 #include "player.h"
 #include "systemTileset.h"
 #include "textBox.h"
+#include "gamePauseMenu.h"
 
 typedef struct {
     Tileset * tileset;
@@ -22,6 +23,8 @@ typedef struct {
     bool inDialogue;
     int dialogueOption;
     textBox dialogue;
+    PauseMenu pauseMenu;
+    bool inPause;
     int cameraX;
     int cameraY;
 

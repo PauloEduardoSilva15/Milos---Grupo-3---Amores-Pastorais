@@ -7,9 +7,11 @@ levelI Level_I_load(){
     l.map = load_tilemap("./maps/001/map001.txt"); // Carrega o mapa
     l.player = playerLoad(); // PLayer ou Dirceu
     l.npc = newEntity(190, 416 - 32, 0, 0, al_map_rgb(100, 0, 150), false); // Velho Desconhecido
+    //l.pauseMenu = createPauseMenu();
     l.inDialogue = false;
     l.dialogueOption = 0;
     l.dialogue = dialogueLoad();
+    l.inPause = false;
     l.cameraX = 0;
     l.cameraY = 0;
 
@@ -19,23 +21,31 @@ levelI Level_I_load(){
 
 void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
 
+
+    
+
     //Colisões
     if (al_key_down(keystate, ALLEGRO_KEY_E) && collisionEntityWithEntity(&l->player, &l->npc)) {
 		l->inDialogue = true;
 	}
 	if (al_key_down(keystate, ALLEGRO_KEY_R)) {
 		l->inDialogue = false;
+        l->inPause = false;
 	}
 
 
 	if (l->dialogueOption == 5 || l->dialogueOption == 9) {
 		l->inDialogue = false;
+        l->inPause = false;
 		l->dialogueOption = 0;
 	}
 
     if(l->player.x == 768){
         l->npc.x = 2988;
         l->dialogueOption = 6;
+    }
+    if(l->inDialogue){
+        l->inPause = true;
     }
 
 
@@ -58,7 +68,7 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
 	}
     if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_SPIN)) l->player.isDead = true;
     //Controles do player
-    if(!l->inDialogue){
+    if(!l->inPause){
 
         
         if (al_key_down(keystate, ALLEGRO_KEY_W) && l->player.can_jump) {
@@ -120,5 +130,5 @@ void Level_I_Draw(levelI  l, ALLEGRO_FONT* Font){
     if (l.inDialogue) drawDialogue(&l.dialogue, Font, l.dialogueOption);
     draw_entity_with_camera(&l.npc, l.cameraX);
     draw_entity_with_camera(&l.player, l.cameraX);
-    
+    if(l.inPause) al_clear_to_color(al_map_rgb(0, 0, 0));
 }
