@@ -18,7 +18,7 @@ GameOver createGameOver(ALLEGRO_FONT* font) {
 void drawGameOver(GameOver* over, ALLEGRO_MOUSE_STATE* mouseState) {
 
    
-
+    al_draw_text(over->font, TEXT_COLOR, (SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2)-70, ALLEGRO_ALIGN_CENTER, "Você Morreu");
 
     // Botões
     drawButton(&over->retryButton);

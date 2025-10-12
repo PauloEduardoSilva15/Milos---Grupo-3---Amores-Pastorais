@@ -101,7 +101,7 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
         printf("x = %d, y = %d ", l->player.x, l->player.y);
     }
    
-    if(l->player.isDead) *l = Level_I_load();
+    //if(l->player.isDead) *l = Level_I_load();
 
     //Camera segindo o player no eixo X
     l->cameraX = -(l->player.x - SCREEN_WIDTH / 2);

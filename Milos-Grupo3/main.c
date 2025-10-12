@@ -11,6 +11,7 @@
 #include "systemTileset.h"
 #include <stdio.h>
 #include "TitleMenu.h"
+#include "gameover.h"
 
 
 
@@ -47,6 +48,7 @@ int main() {
 	
 	
 	TitleMenu titleMenu = createTitleMenu(Font);
+	GameOver gameOver = createGameOver(Font);
 
 	ALLEGRO_MOUSE_STATE mouseState;
 	ALLEGRO_KEYBOARD_STATE keyState;
@@ -69,9 +71,10 @@ int main() {
 			al_get_mouse_state(&mouseState);
 			//titleMenu.selectedOption = ReturnMenuOption(titleMenu, &mouseState, &ev);
 				
-			if(titleMenu.selectedOption == 1) level_I_Update(&levelT, &keyState);
+			if(titleMenu.selectedOption == 1 && !levelT.player.isDead) level_I_Update(&levelT, &keyState);
 			if(titleMenu.selectedOption == 2) done = true;
 			draw = true;
+			if (levelT.player.isDead) gameOver.active = true;
 
 		}
 		if (draw) {
@@ -80,7 +83,9 @@ int main() {
 				
 
 			if(!titleMenu.runningLevel)drawTitleMenu(&titleMenu, &mouseState);
-			if (titleMenu.selectedOption == 1)Level_I_Draw(levelT, Font);
+			if (titleMenu.selectedOption == 1 && !gameOver.active)Level_I_Draw(levelT, Font);
+			if (gameOver.active) drawGameOver(&gameOver, &mouseState);
+
 
 				
 			al_draw_text(Font, TEXT_COLOR, 25, 25, 0, VERSION);
@@ -107,6 +112,17 @@ int main() {
 				if (button_contains_point(&titleMenu.exitButton, mouseState.x, mouseState.y))
 					titleMenu.selectedOption = 2; // Exit
 			}
+
+			if (button_contains_point(&gameOver.retryButton, mouseState.x, mouseState.y) && gameOver.active) {
+				gameOver.active = false;
+				titleMenu = createTitleMenu(Font);
+				levelT = Level_I_load();
+				gameOver = createGameOver(Font);
+			}
+			else {
+				if (button_contains_point(&gameOver.exitButton, mouseState.x, mouseState.y) && gameOver.active)
+					done = true;
+			}
 		}
 
 		if(ev.type ==  ALLEGRO_EVENT_KEY_DOWN){
@@ -117,9 +133,11 @@ int main() {
 
 			if (levelT.inDialogue && ev.keyboard.keycode == ALLEGRO_KEY_T && (levelT.dialogueOption != 5 || levelT.dialogueOption != 9))
 				levelT.dialogueOption++;
+			
+
+
 			}
 
-		
 
 		//if (levelT.puzzle_solved) puzzle_init();
 		/*if (levelT.puzzle_open)
