@@ -21,7 +21,20 @@ levelI Level_I_load(){
 
 void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
 
+    if (l->dialogueOption == 5 || l->dialogueOption == 9) {
+		l->inDialogue = false;
+        l->inPause = false;
+        if(l->dialogueOption == 5) l->dialogueOption = 0;
+        else l->dialogueOption = 6;
+	}
 
+    if(l->player.x == 768){
+        l->npc.x = 2988;
+        l->dialogueOption = 6;
+    }
+    if(l->inDialogue){
+        l->inPause = true;
+    }
     
 
     //Colisões
@@ -32,23 +45,6 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
 		l->inDialogue = false;
         l->inPause = false;
 	}
-
-
-	if (l->dialogueOption == 5 || l->dialogueOption == 9) {
-		l->inDialogue = false;
-        l->inPause = false;
-		l->dialogueOption = 0;
-	}
-
-    if(l->player.x == 768){
-        l->npc.x = 2988;
-        l->dialogueOption = 6;
-    }
-    if(l->inDialogue){
-        l->inPause = true;
-    }
-
-
     if(check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WALL_2) || check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD) || check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_FLOOR_2)){
 		l->player.y -= l->player.vY;
     }
@@ -66,11 +62,11 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
 		l->player.vY = 0;
 		l->player.can_jump = true;
 	}
-    if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_SPIN)) l->player.isDead = true;
+    if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_SPIN)) l->player.life -= 50;
+
+    if(l->player.life <= 0) l->player.isDead = true; 
     //Controles do player
     if(!l->inPause){
-
-        
         if (al_key_down(keystate, ALLEGRO_KEY_W) && l->player.can_jump) {
             l->player.y -= PLAYER_GRAVIDADE;
 		    l->player.vY = PLAYER_JUMP_FORCE;
@@ -100,8 +96,6 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
             if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD))
                 l->player.x -= l->player.v;
         } 
-        
-        
     }
 
     
