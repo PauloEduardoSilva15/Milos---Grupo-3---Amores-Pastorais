@@ -45,41 +45,48 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
     
    if(l->player.x == 3063)l->isDone = true;
 
-    //Colisões
-    if (al_key_down(keystate, ALLEGRO_KEY_E) && collisionEntityWithEntity(&l->player, &l->npc)) {
-		l->inDialogue = true;
-	}
-	if (al_key_down(keystate, ALLEGRO_KEY_R)) {
-		l->inDialogue = false;
-        l->inPause = false;
-	}
-    if (al_key_down(keystate, ALLEGRO_KEY_E) && collisionEntityMaker(&l->player, &l->maker)) {
-		l->getKey = true;
-
-	}
-    if((check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WALL_2) /*||(check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD))*/ || check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_FLOOR_2))){
-		l->player.y -= l->player.vY;
-    }
-    if (!check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_FLOOR)) {    
-        l->dirPlayer = 0;
-        l->player.vY += PLAYER_GRAVIDADE;
-		l->player.y += l->player.vY;
-    }
-    if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_FLOOR)|| (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD)&& l->dirPlayer !=1)){
-		l->player.y -= l->player.vY;
-		l->player.vY = 0;
-		l->player.can_jump = true;
-	}
-    if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_SPIN)){
-        l->player.life -= 30;
-    }
+    
 
     
 
 
-    if(l->player.life <= 0) l->player.isDead = true; 
-    //Controles do player
+    
+  
     if(!l->inPause){
+        if(l->player.life <= 0) l->player.isDead = true; 
+        if(al_key_down(keystate, ALLEGRO_KEY_A))l->PlayerFlip = ALLEGRO_FLIP_HORIZONTAL;
+	    if(al_key_down(keystate, ALLEGRO_KEY_D)) l->PlayerFlip = 0;
+        //Colisões
+        if (al_key_down(keystate, ALLEGRO_KEY_E) && collisionEntityWithEntity(&l->player, &l->npc)) {
+            l->inDialogue = true;
+        }
+        if (al_key_down(keystate, ALLEGRO_KEY_R)) {
+            l->inDialogue = false;
+            l->inPause = false;
+        }
+        if (al_key_down(keystate, ALLEGRO_KEY_E) && collisionEntityMaker(&l->player, &l->maker)) {
+            l->getKey = true;
+
+        }
+        if((check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WALL_2) /*||(check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD))*/ || check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_FLOOR_2))){
+            l->player.y -= l->player.vY;
+        }
+        if (!check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_FLOOR)) {    
+            l->dirPlayer = 0;
+            l->player.vY += PLAYER_GRAVIDADE;
+            l->player.y += l->player.vY;
+        }
+        if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_FLOOR)|| (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD)&& l->dirPlayer !=1)){
+            l->player.y -= l->player.vY;
+            l->player.vY = 0;
+            l->player.can_jump = true;
+        }
+        if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_SPIN)){
+            l->player.life -= 30;
+        }
+
+
+          //Controles do player
         if (al_key_down(keystate, ALLEGRO_KEY_W) && l->player.can_jump && !check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD)) {
 
             l->dirPlayer = 1;
@@ -120,10 +127,11 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
             if(collisionEntityObstacle(&l->player, &l->door)&& l->getKey) {
                 l->doorSpritePositionX = 32;
             }
+
+            
         } 
 
-        if(al_key_down(keystate, ALLEGRO_KEY_A))l->PlayerFlip = ALLEGRO_FLIP_HORIZONTAL;
-	    if(al_key_down(keystate, ALLEGRO_KEY_D)) l->PlayerFlip = 0;
+        
     }
 
     l->hud.displayLife.width = l->player.life;
