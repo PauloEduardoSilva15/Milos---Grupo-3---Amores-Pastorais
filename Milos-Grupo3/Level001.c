@@ -11,6 +11,7 @@ levelI Level_I_load(){
     l.inDialogue = false;
     l.dialogueOption = 0;
     l.dialogue = dialogueLoad();
+    l.dirPlayer = 0;
     l.inPause = false;
     l.cameraX = 0;
     l.cameraY = 0;
@@ -27,7 +28,6 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
         if(l->dialogueOption == 5) l->dialogueOption = 0;
         else l->dialogueOption = 6;
 	}
-
     if(l->player.x == 768){
         l->npc.x = 2988;
         l->dialogueOption = 6;
@@ -45,10 +45,11 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
 		l->inDialogue = false;
         l->inPause = false;
 	}
-    if(check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WALL_2) || check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD) || check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_FLOOR_2)){
+    if((check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WALL_2) ||(check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD)) || check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_FLOOR_2))){
 		l->player.y -= l->player.vY;
     }
-    if (!check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_FLOOR) || !check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD)) {
+    if (!check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_FLOOR) || (!check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD))) {
+        l->dirPlayer = 0;
         l->player.vY += PLAYER_GRAVIDADE;
 		l->player.y += l->player.vY;
     }
@@ -68,6 +69,8 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
     //Controles do player
     if(!l->inPause){
         if (al_key_down(keystate, ALLEGRO_KEY_W) && l->player.can_jump) {
+
+            l->dirPlayer = 1;
             l->player.y -= PLAYER_GRAVIDADE;
 		    l->player.vY = PLAYER_JUMP_FORCE;
 		    l->player.can_jump = false;
@@ -100,18 +103,12 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
 
     
     
-
-    if(al_key_down(keystate, ALLEGRO_KEY_X)){
-        printf("x = %d, y = %d ", l->player.x, l->player.y);
-    }
-   
-    //if(l->player.isDead) *l = Level_I_load();
+    //Isso é só para debug;
+    if(al_key_down(keystate, ALLEGRO_KEY_X))
+        printf("x = %d, y = %d \n", l->player.x, l->player.y);
 
     //Camera segindo o player no eixo X
     l->cameraX = -(l->player.x - SCREEN_WIDTH / 2);
-
-    
-    
 
 }
 

@@ -22,6 +22,7 @@ typedef struct {
     entity npc;
     bool inDialogue;
     int dialogueOption;
+    int dirPlayer; //Guarda a direção do player
     textBox dialogue;
     PauseMenu pauseMenu;
     bool inPause;
