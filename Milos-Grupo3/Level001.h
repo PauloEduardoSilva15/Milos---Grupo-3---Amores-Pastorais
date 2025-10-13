@@ -30,7 +30,7 @@ typedef struct {
     textBox dialogue;
     //DisplayLife displayLife;
     obstacle door;
-    int doorSpritePositionX, doorSpritePositionY;
+    int doorSpritePositionX;
     bool getKey;
     bool isDone; // verifica se terminou o level
     hud hud;

@@ -103,12 +103,13 @@ int main() {
 
 			// Tutorial Controls
 			al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 50, 0, "Controles:");
-			al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 60, 0, "W - Pular");
-			al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 70, 0, "A - Esquerda");
-			al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 80, 0, "D - Direita");
-			al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 90, 0, "E - Interagir");
-			al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 100, 0, "J - Ataque");
-			al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 110, 0, "K - Defesa");
+			al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 60, 0, "Esc - Pause");
+			al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 70, 0, "W - Pular");
+			al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 80, 0, "A - Esquerda");
+			al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 90, 0, "D - Direita");
+			al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 100, 0, "E - Interagir");
+			al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 110, 0, "J - Ataque");
+			al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 120, 0, "K - Defesa");
 
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0, 0, 0));
@@ -266,6 +267,7 @@ int main() {
 	}
 	destroy_tileset(levelT.tileset);
 	destroy_tilemap(levelT.map);
+	al_destroy_bitmap(levelT.door.sprite);
 	al_destroy_bitmap(levelT.player.sprite);
 	al_destroy_bitmap(levelT.npc.sprite);
 	al_destroy_bitmap(titleMenu.bg);
