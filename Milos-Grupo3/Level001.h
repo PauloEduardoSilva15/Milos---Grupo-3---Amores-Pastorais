@@ -14,6 +14,7 @@
 #include "systemTileset.h"
 #include "textBox.h"
 #include "gamePauseMenu.h"
+#include "lifeDisplay.h"
 
 typedef struct {
     Tileset * tileset;
@@ -24,6 +25,7 @@ typedef struct {
     int dialogueOption;
     int dirPlayer; //Guarda a direção do player
     textBox dialogue;
+    DisplayLife displayLife;
     PauseMenu pauseMenu;
     bool inPause;
     int cameraX;

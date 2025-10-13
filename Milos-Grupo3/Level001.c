@@ -11,11 +11,11 @@ levelI Level_I_load(){
     l.inDialogue = false;
     l.dialogueOption = 0;
     l.dialogue = dialogueLoad();
+    l.displayLife = displayLifeLoad(l.player.life);
     l.dirPlayer = 0;
     l.inPause = false;
     l.cameraX = 0;
     l.cameraY = 0;
-
     
     return l;
 }
@@ -58,7 +58,9 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
 		l->player.vY = 0;
 		l->player.can_jump = true;
 	}
-    if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_SPIN)) l->player.life -= 50;
+    if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_SPIN)){
+        l->player.life -= 50;
+    } 
 
     if(l->player.life <= 0) l->player.isDead = true; 
     //Controles do player
@@ -76,6 +78,7 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
             }
 	    }
         if (al_key_down(keystate, ALLEGRO_KEY_A)){
+            l->dirPlayer = 2;
             movEntity(&l->player, 0); 
             if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WALL))
                 l->player.x += l->player.v;
@@ -86,6 +89,7 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
     
         } 
         if (al_key_down(keystate, ALLEGRO_KEY_D)){
+            l->dirPlayer = 3;
             movEntity(&l->player, 1);
             if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WALL))
                 l->player.x -= l->player.v;
@@ -96,11 +100,16 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
         } 
     }
 
+    l->displayLife.width = l->player.life;
+
     
     
     //Isso é só para debug;
     if(al_key_down(keystate, ALLEGRO_KEY_X))
         printf("x = %d, y = %d \n", l->player.x, l->player.y);
+
+    
+
 
     //Camera segindo o player no eixo X
     l->cameraX = -(l->player.x - SCREEN_WIDTH / 2);
@@ -116,5 +125,6 @@ void Level_I_Draw(levelI  l, ALLEGRO_FONT* Font){
     if (l.inDialogue) drawDialogue(&l.dialogue, Font, l.dialogueOption);
     draw_entity_with_camera(&l.npc, l.cameraX);
     draw_entity_with_camera(&l.player, l.cameraX);
+    displayLifeDraw(&l.displayLife);
     //if(l.inPause) al_clear_to_color(al_map_rgb(0, 0, 0));
 }

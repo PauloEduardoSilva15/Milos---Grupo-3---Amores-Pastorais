@@ -143,7 +143,7 @@ int main() {
 		}
 
 		if(ev.type ==  ALLEGRO_EVENT_KEY_DOWN){
-			if (ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE && titleMenu.runningLevel) {
+			if (ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE && titleMenu.runningLevel&& !gameOver.active) {
 				levelT.inDialogue = false;
 				levelT.inPause = true;
 				//done = true; // Sai do jogo com ESC

@@ -58,7 +58,6 @@
 #define DISPLAY_LIFE_X (SCREEN_WIDTH - 700)
 #define DISPLAY_LIFE_Y 50
 #define DISPLAY_LIFE_W MAXLIFE_0
-#define DISPLAY_LIFE_H 32
 #define DISPLAY_LIFE_COLOR  al_map_rgb(0, 255, 0)
 
 
