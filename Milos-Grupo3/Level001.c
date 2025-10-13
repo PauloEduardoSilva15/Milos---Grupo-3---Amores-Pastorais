@@ -14,6 +14,8 @@ levelI Level_I_load(){
     l.getKey = false;
     //l.displayLife = displayLifeLoad(l.player.life);
     l.door = newObstacle(2693,320, "./imgs/sprites/door.png");
+    l.doorSpritePositionX = 0;
+    l.doorSpritePositionY = 0;
     l.hud = newHud(l.player.life, l.getKey);
     l.maker = newMarker(MARKER_X, MARKER_Y); // Carrega o marcador
     l.dirPlayer = 0;
@@ -54,6 +56,7 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
 	}
     if (al_key_down(keystate, ALLEGRO_KEY_E) && collisionEntityMaker(&l->player, &l->maker)) {
 		l->getKey = true;
+
 	}
     if((check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WALL_2) ||(check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD)) || check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_FLOOR_2))){
 		l->player.y -= l->player.vY;
@@ -70,7 +73,10 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
 	}
     if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_SPIN)){
         l->player.life -= 50;
-    } 
+    }
+
+    
+
 
     if(l->player.life <= 0) l->player.isDead = true; 
     //Controles do player
@@ -112,6 +118,11 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
             if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WALL_2))
                 l->player.x -= l->player.v;
             if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD))l->player.x -= l->player.v;
+            if(collisionEntityObstacle(&l->player, &l->door)&& !l->getKey) l->player.x -= l->player.v;
+            if(collisionEntityObstacle(&l->player, &l->door)&& l->getKey) {
+                l->doorSpritePositionX = 32;
+                l->doorSpritePositionY = 0;
+            }
         } 
 
         if(al_key_down(keystate, ALLEGRO_KEY_A))l->PlayerFlip = ALLEGRO_FLIP_HORIZONTAL;
@@ -147,7 +158,7 @@ void Level_I_Draw(levelI  l, ALLEGRO_FONT* Font){
     if (l.inDialogue) drawDialogue(&l.dialogue, Font, l.dialogueOption);
     draw_maker_with_camera(&l.maker, l.cameraX);
     draw_Enity_camera_andImage(&l.npc, l.cameraX);
-    drawObstacle(&l.door, l.cameraX, 0, 0);
+    drawObstacle(&l.door, l.cameraX, l.doorSpritePositionX, l.doorSpritePositionY);
     //draw_entity_with_camera(&l.player, l.cameraX);
     playerDraw(&l.player, l.cameraX, l.PlayerFlip);
     drawHud(&l.hud);
