@@ -21,6 +21,10 @@
 #define MAP1_TILE_WALL 14
 #define MAP1_TILE_WALL_2 24
 #define MAP1_TILE_SPIN 17
+#define MAP1_FINAL_LEVEL1 5
+#define MAP1_FINAL_LEVEL2 6
+#define MAP1_FINAL_LEVEL3 15
+#define MAP1_FINAL_LEVEL4 16
 
 //#define MAP1_TILE_CHEST 18
 
@@ -37,7 +41,7 @@
 #define PLAYER_Y_0 (SCREEN_HEIGHT / 2) - QUAD_SIZE
 #define PLAYER_VELOCITY_0 5
 #define PLAYER_VELOCITY_Y_0 0
-#define PLAYER_JUMP_FORCE -20.0
+#define PLAYER_JUMP_FORCE -17.0
 #define PLAYER_NORMAL_COLOR  al_map_rgb(0, 0, 255)
 #define PLAYER_ATACK_COLOR  al_map_rgb(100, 0, 200)
 #define PLAYER_DEFENSE_COLOR  al_map_rgb(180, 0, 200);

@@ -16,7 +16,8 @@ levelI Level_I_load(){
     l.hud = newHud(l.player.life, l.getKey);
     l.maker = newMarker(MARKER_X, MARKER_Y); // Carrega o marcador
     l.dirPlayer = 0;
-    
+    l.isDone = false;
+    l.PlayerFlip = 0;
     l.inPause = false;
     l.cameraX = 0;
     l.cameraY = 0;
@@ -40,6 +41,7 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
         l->inPause = true;
     }
     
+   if(l->player.x == 3063)l->isDone = true;
 
     //Colisões
     if (al_key_down(keystate, ALLEGRO_KEY_E) && collisionEntityWithEntity(&l->player, &l->npc)) {
@@ -108,6 +110,9 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
                 l->player.x -= l->player.v;
             if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD))l->player.x -= l->player.v;
         } 
+
+        if(al_key_down(keystate, ALLEGRO_KEY_A))l->PlayerFlip = ALLEGRO_FLIP_HORIZONTAL;
+	    if(al_key_down(keystate, ALLEGRO_KEY_D)) l->PlayerFlip = 0;
     }
 
     l->hud.displayLife.width = l->player.life;
@@ -124,6 +129,9 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
     //Camera segindo o player no eixo X
     l->cameraX = -(l->player.x - SCREEN_WIDTH / 2);
 
+    
+	
+
 }
 
 
@@ -136,8 +144,8 @@ void Level_I_Draw(levelI  l, ALLEGRO_FONT* Font){
     if (l.inDialogue) drawDialogue(&l.dialogue, Font, l.dialogueOption);
     draw_maker_with_camera(&l.maker, l.cameraX);
     draw_Enity_camera_andImage(&l.npc, l.cameraX);
-    draw_entity_with_camera(&l.player, l.cameraX);
-    
+    //draw_entity_with_camera(&l.player, l.cameraX);
+    playerDraw(&l.player, l.cameraX, l.PlayerFlip);
     drawHud(&l.hud);
     //if(l.inPause) al_clear_to_color(al_map_rgb(0, 0, 0));
 }

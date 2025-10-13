@@ -69,16 +69,24 @@ int main() {
 		al_wait_for_event(events, &ev);
 
 		if (ev.type == ALLEGRO_EVENT_TIMER) {
+			
 
 			al_get_keyboard_state(&keyState);
 			al_get_mouse_state(&mouseState);
 			//titleMenu.selectedOption = ReturnMenuOption(titleMenu, &mouseState, &ev);
-				
+			
 			if(titleMenu.selectedOption == 1 && !levelT.player.isDead) level_I_Update(&levelT, &keyState);
 			if(titleMenu.selectedOption == 2) done = true;
 			draw = true;
 			if (levelT.player.isDead) gameOver.active = true;
 			//if(levelT.inPause) drawPauseMenu(&pauseMenu);
+
+			if(levelT.isDone){
+				titleMenu = createTitleMenu(Font);
+				levelT = Level_I_load();
+				pauseMenu = createPauseMenu(Font);
+				gameOver = createGameOver(Font);
+			}
 		}
 		if (draw) {
 				
@@ -105,6 +113,8 @@ int main() {
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0, 0, 0));
 		}
+
+		
 
 		if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
 			if (button_contains_point(&titleMenu.startGameButton, mouseState.x, mouseState.y)) {

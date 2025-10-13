@@ -25,9 +25,11 @@ typedef struct {
     bool inDialogue;
     int dialogueOption;
     int dirPlayer; //Guarda a direção do player
+    int PlayerFlip;
     textBox dialogue;
     //DisplayLife displayLife;
     bool getKey;
+    bool isDone; // verifica se terminou o level
     hud hud;
     Marker maker;
     PauseMenu pauseMenu;
