@@ -32,12 +32,14 @@ void drawTitleMenu(TitleMenu* menu, ALLEGRO_MOUSE_STATE* mouseState) {
         menu->startGameButton.color = BUTTON_COLOR_HOVER;
         menu->exitButton.color = BUTTON_COLOR_NORMAL;
 
-    } else if(button_contains_point(&menu->exitButton, mouseState->x, mouseState->y)) {
+    } else{
+        if(button_contains_point(&menu->exitButton, mouseState->x, mouseState->y)) {
         menu->exitButton.color = BUTTON_COLOR_HOVER;
         menu->startGameButton.color = BUTTON_COLOR_NORMAL;
-    } else {
-        menu->startGameButton.color = BUTTON_COLOR_NORMAL;
-        menu->exitButton.color = BUTTON_COLOR_NORMAL;
-    }
+        }else{
+            menu->startGameButton.color = BUTTON_COLOR_NORMAL;
+            menu->exitButton.color = BUTTON_COLOR_NORMAL;
+        }
+    } 
     al_draw_text(menu->font, TEXT_COLOR, 25, 25, 0, VERSION);
 }

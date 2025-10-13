@@ -4,16 +4,20 @@
 
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_primitives.h>
+#include <stdbool.h>
 #include "gameConstants.h"
 #include "lifeDisplay.h"
+#include "item.h"
 
 typedef struct{
     DisplayLife displayLife;
+    bool getKey;
+    item key;
+   
 }hud;
 
-//void newHud(int x);
+hud newHud(int life, bool getKey);
 
-// Função para desenhar o HUD
-//void drawHud(void);
+void drawHud(hud * hud);
 
 #endif // HUD_H

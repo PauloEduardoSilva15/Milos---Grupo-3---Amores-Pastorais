@@ -11,7 +11,7 @@
 
 bool collisionEQ(entity* a, quad* b);
 bool collisionEI(entity* a, item* b);
-bool collisionEM(entity* a, Marker* b);
+bool collisionEntityMaker(entity* a, Marker* b);
 bool collisionEntityWithEntity(entity* a, entity* b);
 
 #endif 

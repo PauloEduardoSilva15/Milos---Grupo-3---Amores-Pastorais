@@ -1,6 +1,6 @@
 #include "collision.h"
 
-
+/*
 bool collisionEQ(entity * a, quad* b) {
 	return (a->x < b->x + b->w &&
 		a->x + a->size > b->x &&
@@ -16,19 +16,19 @@ bool collisionEI(entity* a, item* b) {
 		a->y + a->size > b->y);
 
 }
-
-bool collisionEM(entity* a, Marker* b) {
+*/
+bool collisionEntityMaker(entity* a, Marker* b) {
 	return (a->x < b->x + b->size &&
-		a->x + a->size > b->x &&
+		a->x + a->width > b->x &&
 		a->y < b->y + b->size &&
-		a->y + a->size > b->y);
+		a->y + a->height > b->y);
 
 }
 
 bool collisionEntityWithEntity(entity* a, entity* b) {
-	return (a->x < b->x + b->size &&
-		a->x + a->size > b->x &&
-		a->y < b->y + b->size &&
-		a->y + a->size > b->y);
+	return (a->x < b->x + b->width &&
+		a->x + a->width > b->x &&
+		a->y < b->y + b->height &&
+		a->y + a->height > b->y);
 
 }

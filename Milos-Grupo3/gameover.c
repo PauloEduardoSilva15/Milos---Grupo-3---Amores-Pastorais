@@ -29,14 +29,17 @@ void drawGameOver(GameOver* over, ALLEGRO_MOUSE_STATE* mouseState) {
         over->retryButton.color = BUTTON_COLOR_HOVER;
         over->exitButton.color = BUTTON_COLOR_NORMAL;
     }
-    else if (button_contains_point(&over->exitButton, mouseState->x, mouseState->y)) {
+    else{
+        if (button_contains_point(&over->exitButton, mouseState->x, mouseState->y)) {
         over->exitButton.color = BUTTON_COLOR_HOVER;
         over->retryButton.color = BUTTON_COLOR_NORMAL;
-    }
-    else {
+        }else {
         over->retryButton.color = BUTTON_COLOR_NORMAL;
         over->exitButton.color = BUTTON_COLOR_NORMAL;
-    }
+        }
+
+    } 
+    
 
 }
 

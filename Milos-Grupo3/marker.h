@@ -16,5 +16,5 @@ typedef struct {
 Marker newMarker(int x, int y);
 
 void MarkerDraw(Marker* m);
-
+void draw_maker_with_camera(Marker* m, int camera_x);
 #endif

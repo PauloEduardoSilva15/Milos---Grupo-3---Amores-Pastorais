@@ -5,13 +5,15 @@
 #include "quad.h"
 
 
-entity newEntity(int x, int y, int v, float vY,ALLEGRO_COLOR color, bool can_jump) {
+entity newEntity(int x, int y, int v, float vY,ALLEGRO_COLOR color, const char* filename, bool can_jump) {
 	entity e;
+	e.sprite= al_load_bitmap(filename);
 	e.x = x;
 	e.y = y;
 	e.v = v;
 	e.vY = vY;
-	e.size = QUAD_SIZE;
+	e.width = QUAD_SIZE;
+	e.height = QUAD_SIZE*2;
 	e.life = MAXLIFE_0;
 	e.color = color;
 	e.can_jump = can_jump;
@@ -35,11 +37,15 @@ void movEntity(entity* e, int dir) {
 }
 
 void drawEntity(entity* e) {
-	al_draw_filled_rectangle(e->x, e->y, e->x + e->size, e->y + e->size, e->color);
+	al_draw_filled_rectangle(e->x, e->y, e->x + e->width, e->y + e->height, e->color);
 }
 
 
 void draw_entity_with_camera(entity* p, int camera_x) {
     al_draw_filled_rectangle(p->x + camera_x, p->y,
-        p->x + p->size + camera_x, p->y + p->size, p->color);
+        p->x + p->width+ camera_x, p->y + p->height, p->color);
+}
+
+void draw_Enity_camera_andImage(entity* e, int camera_x){
+	al_draw_bitmap(e->sprite, e->x + camera_x, e->y, 0);
 }

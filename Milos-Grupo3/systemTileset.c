@@ -130,8 +130,8 @@ bool check_entity_tile_collision(const entity* e, const Tilemap* map, const Tile
     // 1. Calcular as coordenadas do canto superior esquerdo e inferior direito da entidade
     int entity_left = e->x;
     int entity_top = e->y;
-    int entity_right = e->x + e->size;
-    int entity_bottom = e->y + e->size;
+    int entity_right = e->x + e->width;
+    int entity_bottom = e->y + e->height;
 
     // 2. Determinar o range de tiles que a entidade está ocupando
     // Converte coordenadas do mundo para coordenadas do mapa (índices de tile)

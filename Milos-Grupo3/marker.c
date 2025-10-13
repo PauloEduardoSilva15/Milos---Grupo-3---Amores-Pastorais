@@ -12,3 +12,8 @@ Marker newMarker(int x, int y) {
 void MarkerDraw(Marker* m) {
     al_draw_filled_rectangle(m->x, m->y, m->x + m->size, m->y + m->size, m->color);
 }
+
+void draw_maker_with_camera(Marker* m, int camera_x) {
+    al_draw_filled_rectangle(m->x + camera_x, m->y,
+        m->x + m->size + camera_x, m->y + m->size, m->color);
+}
