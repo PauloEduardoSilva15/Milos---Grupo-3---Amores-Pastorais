@@ -13,6 +13,7 @@ levelI Level_I_load(){
     l.dialogue = dialogueLoad();
     l.getKey = false;
     //l.displayLife = displayLifeLoad(l.player.life);
+    l.door = newObstacle(2693,320, "./imgs/sprites/door.png");
     l.hud = newHud(l.player.life, l.getKey);
     l.maker = newMarker(MARKER_X, MARKER_Y); // Carrega o marcador
     l.dirPlayer = 0;
@@ -98,6 +99,8 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
                 l->player.x += l->player.v;
             if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WALL_2))
                 l->player.x += l->player.v;
+            if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WALL_3))
+                l->player.x += l->player.v;
             if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD))l->player.x += l->player.v;
     
         } 
@@ -144,6 +147,7 @@ void Level_I_Draw(levelI  l, ALLEGRO_FONT* Font){
     if (l.inDialogue) drawDialogue(&l.dialogue, Font, l.dialogueOption);
     draw_maker_with_camera(&l.maker, l.cameraX);
     draw_Enity_camera_andImage(&l.npc, l.cameraX);
+    drawObstacle(&l.door, l.cameraX, 0, 0);
     //draw_entity_with_camera(&l.player, l.cameraX);
     playerDraw(&l.player, l.cameraX, l.PlayerFlip);
     drawHud(&l.hud);

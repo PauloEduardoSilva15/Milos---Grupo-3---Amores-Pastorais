@@ -16,6 +16,7 @@
 #include "gamePauseMenu.h"
 #include "hud.h"
 #include "marker.h"
+#include "obstacle.h"
 
 typedef struct {
     Tileset * tileset;
@@ -28,6 +29,7 @@ typedef struct {
     int PlayerFlip;
     textBox dialogue;
     //DisplayLife displayLife;
+    obstacle door;
     bool getKey;
     bool isDone; // verifica se terminou o level
     hud hud;
