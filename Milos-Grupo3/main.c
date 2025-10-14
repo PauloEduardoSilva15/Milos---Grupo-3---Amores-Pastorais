@@ -37,10 +37,7 @@ int main() {
 
 	bool done = false, draw = true; // Verifica se o jogo está rodando e declara se pode desenhar na tela
 	
-
-
-	// No início do programa
-	//puzzle_init();
+	puzzle_init();
 
 	levelI level1 = Level_I_load();
 
@@ -68,53 +65,87 @@ int main() {
 		ALLEGRO_EVENT ev;
 		al_wait_for_event(events, &ev);
 
-		if (ev.type == ALLEGRO_EVENT_TIMER) {
-			
+		if (level1.puzzle_isSolved) puzzle_init();
 
-			al_get_keyboard_state(&keyState);
-			al_get_mouse_state(&mouseState);
-			//titleMenu.selectedOption = ReturnMenuOption(titleMenu, &mouseState, &ev);
+		if (level1.puzzle_open)
+		{
+			// Se puzzle está aberto, envia eventos apenas para o puzzle
 			
-			if(titleMenu.selectedOption == 1 && !level1.player.isDead) level_I_Update(&level1, &keyState);
-			if(titleMenu.selectedOption == 2) done = true;
-			draw = true;
-			if (level1.player.isDead) gameOver.active = true;
-			//if(level1.inPause) drawPauseMenu(&pauseMenu);
-
-			if(level1.isDone){
-				titleMenu = createTitleMenu(Font);
-				level1 = Level_I_load();
-				pauseMenu = createPauseMenu(Font);
-				gameOver = createGameOver(Font);
+			puzzle_handle_event(&ev);
+			if (ev.type == ALLEGRO_EVENT_TIMER) {
+				if (level1.puzzle_open) {
+				// O puzzle será atualizado no main loop através de puzzle_handle_event
+					if (puzzle_is_solved()) {
+						level1.puzzle_open = false;
+						level1.puzzle_isSolved = puzzle_is_solved();
+						puzzle_destroy(); // Limpa o puzzle após resolver
+						level1.getKey = true;
+						level1.inPause = false;
+					
+					}
+				}
+				draw = true;
 			}
+			if (draw) {
+				if(!puzzle_is_solved())puzzle_draw(SCREEN_WIDTH, SCREEN_HEIGHT);
+				al_draw_text(Font, TEXT_COLOR, 50, SCREEN_HEIGHT-100, 0, "Controles:");
+				al_draw_text(Font, TEXT_COLOR, 50, SCREEN_HEIGHT-80, 0, "R - Sair do Puzzle");
+				al_flip_display();
+				al_clear_to_color(al_map_rgb(0, 0, 0));
+				draw = false;
+			}
+		} else {
+			if (ev.type == ALLEGRO_EVENT_TIMER) {
+
+
+				al_get_keyboard_state(&keyState);
+				al_get_mouse_state(&mouseState);
+				//titleMenu.selectedOption = ReturnMenuOption(titleMenu, &mouseState, &ev);
+
+				if (titleMenu.selectedOption == 1 && !level1.player.isDead) level_I_Update(&level1, &keyState);
+				if (titleMenu.selectedOption == 2) done = true;
+				draw = true;
+				if (level1.player.isDead) gameOver.active = true;
+				//if(level1.inPause) drawPauseMenu(&pauseMenu);
+
+				if (level1.isDone) {
+					titleMenu = createTitleMenu(Font);
+					level1 = Level_I_load();
+					pauseMenu = createPauseMenu(Font);
+					gameOver = createGameOver(Font);
+				}
+			}
+			if (draw) {
+
+				draw = false;
+
+
+				if (!titleMenu.runningLevel)drawTitleMenu(&titleMenu, &mouseState);
+				if (titleMenu.selectedOption == 1 && !gameOver.active)Level_I_Draw(level1, Font);
+				if (gameOver.active) drawGameOver(&gameOver, &mouseState);
+
+
+
+				if (level1.inPause && !level1.inDialogue) drawPauseMenu(&pauseMenu, &mouseState);
+
+				// Tutorial Controls
+				al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 50, 0, "Controles:");
+				al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 60, 0, "Esc - Pause");
+				al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 70, 0, "W - Pular");
+				al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 80, 0, "A - Esquerda");
+				al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 90, 0, "D - Direita");
+				al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 100, 0, "E - Interagir");
+				al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 110, 0, "J - Ataque");
+				al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 120, 0, "K - Defesa");
+
+				al_flip_display();
+				al_clear_to_color(al_map_rgb(0, 0, 0));
+			}
+
+
 		}
-		if (draw) {
-				
-			draw = false;
-				
 
-			if(!titleMenu.runningLevel)drawTitleMenu(&titleMenu, &mouseState);
-			if (titleMenu.selectedOption == 1 && !gameOver.active)Level_I_Draw(level1, Font);
-			if (gameOver.active) drawGameOver(&gameOver, &mouseState);
-			
-
-				
-			if(level1.inPause && !level1.inDialogue) drawPauseMenu(&pauseMenu, &mouseState);
-
-			// Tutorial Controls
-			al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 50, 0, "Controles:");
-			al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 60, 0, "Esc - Pause");
-			al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 70, 0, "W - Pular");
-			al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 80, 0, "A - Esquerda");
-			al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 90, 0, "D - Direita");
-			al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 100, 0, "E - Interagir");
-			al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 110, 0, "J - Ataque");
-			al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 120, 0, "K - Defesa");
-
-			al_flip_display();
-			al_clear_to_color(al_map_rgb(0, 0, 0));
-		}
-
+		
 		
 
 		if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
@@ -157,6 +188,9 @@ int main() {
 			if (ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE && titleMenu.runningLevel&& !gameOver.active) {
 				level1.inDialogue = false;
 				level1.inPause = true;
+				if (level1.puzzle_open) {
+					level1.puzzle_open = false;
+				}
 				//done = true; // Sai do jogo com ESC
 			}
 
@@ -166,6 +200,11 @@ int main() {
 			if (level1.inDialogue && ev.keyboard.keycode == ALLEGRO_KEY_R){
 				level1.inDialogue = false;
             	level1.inPause = false;
+			}
+
+			if (level1.puzzle_open && ev.keyboard.keycode == ALLEGRO_KEY_R){
+				level1.puzzle_open = false; 
+				level1.inPause = false;
 			}
 				
 			

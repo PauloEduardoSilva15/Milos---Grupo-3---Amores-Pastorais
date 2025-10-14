@@ -30,6 +30,8 @@ levelI Level_I_load(){
     l.guard2_Folowing = false;
     l.dirPlayer = 0;
     l.isDone = false;
+    l.puzzle_open = false;
+    l.puzzle_isSolved = false;
     l.PlayerFlip = 0;
     l.inPause = false;
     l.cameraX = 0;
@@ -114,8 +116,9 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
             l->inDialogue = false;
             l->inPause = false;
         }*/
-        if (al_key_down(keystate, ALLEGRO_KEY_E) && collisionEntityMaker(&l->player, &l->maker)) {
-            l->getKey = true;
+        if (al_key_down(keystate, ALLEGRO_KEY_E) && collisionEntityMaker(&l->player, &l->maker)&&!l->puzzle_isSolved) {
+            l->inPause = true;
+            l->puzzle_open = true;
 
         }
         if((check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WALL_2) /*||(check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD))*/ || check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_FLOOR_2))){
