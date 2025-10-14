@@ -42,7 +42,7 @@ int main() {
 	// No início do programa
 	//puzzle_init();
 
-	levelI levelT = Level_I_load();
+	levelI level1 = Level_I_load();
 
 	ALLEGRO_FONT* Font = al_create_builtin_font();
 
@@ -75,15 +75,15 @@ int main() {
 			al_get_mouse_state(&mouseState);
 			//titleMenu.selectedOption = ReturnMenuOption(titleMenu, &mouseState, &ev);
 			
-			if(titleMenu.selectedOption == 1 && !levelT.player.isDead) level_I_Update(&levelT, &keyState);
+			if(titleMenu.selectedOption == 1 && !level1.player.isDead) level_I_Update(&level1, &keyState);
 			if(titleMenu.selectedOption == 2) done = true;
 			draw = true;
-			if (levelT.player.isDead) gameOver.active = true;
-			//if(levelT.inPause) drawPauseMenu(&pauseMenu);
+			if (level1.player.isDead) gameOver.active = true;
+			//if(level1.inPause) drawPauseMenu(&pauseMenu);
 
-			if(levelT.isDone){
+			if(level1.isDone){
 				titleMenu = createTitleMenu(Font);
-				levelT = Level_I_load();
+				level1 = Level_I_load();
 				pauseMenu = createPauseMenu(Font);
 				gameOver = createGameOver(Font);
 			}
@@ -94,12 +94,12 @@ int main() {
 				
 
 			if(!titleMenu.runningLevel)drawTitleMenu(&titleMenu, &mouseState);
-			if (titleMenu.selectedOption == 1 && !gameOver.active)Level_I_Draw(levelT, Font);
+			if (titleMenu.selectedOption == 1 && !gameOver.active)Level_I_Draw(level1, Font);
 			if (gameOver.active) drawGameOver(&gameOver, &mouseState);
 			
 
 				
-			if(levelT.inPause && !levelT.inDialogue) drawPauseMenu(&pauseMenu, &mouseState);
+			if(level1.inPause && !level1.inDialogue) drawPauseMenu(&pauseMenu, &mouseState);
 
 			// Tutorial Controls
 			al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 50, 0, "Controles:");
@@ -130,7 +130,7 @@ int main() {
 			if (button_contains_point(&gameOver.retryButton, mouseState.x, mouseState.y) && gameOver.active) {
 				//gameOver.active = false;
 				titleMenu = createTitleMenu(Font);
-				levelT = Level_I_load();
+				level1 = Level_I_load();
 				pauseMenu = createPauseMenu(Font);
 				gameOver = createGameOver(Font);
 			}
@@ -139,15 +139,15 @@ int main() {
 					done = true;
 			}
 
-			if (button_contains_point(&pauseMenu.retriviedbutton, mouseState.x, mouseState.y) && levelT.inPause) {
+			if (button_contains_point(&pauseMenu.retriviedbutton, mouseState.x, mouseState.y) && level1.inPause) {
 				titleMenu = createTitleMenu(Font);
-				levelT = Level_I_load();
+				level1 = Level_I_load();
 				gameOver = createGameOver(Font);
 			}
 			else {
-				if (button_contains_point(&pauseMenu.ContinuePlaybutton, mouseState.x, mouseState.y) && levelT.inPause)
-					levelT.inPause = false;
-				if (button_contains_point(&pauseMenu.exitButton, mouseState.x, mouseState.y) && levelT.inPause)
+				if (button_contains_point(&pauseMenu.ContinuePlaybutton, mouseState.x, mouseState.y) && level1.inPause)
+					level1.inPause = false;
+				if (button_contains_point(&pauseMenu.exitButton, mouseState.x, mouseState.y) && level1.inPause)
 					done = true;
 			}
 			
@@ -155,31 +155,37 @@ int main() {
 
 		if(ev.type ==  ALLEGRO_EVENT_KEY_DOWN){
 			if (ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE && titleMenu.runningLevel&& !gameOver.active) {
-				levelT.inDialogue = false;
-				levelT.inPause = true;
+				level1.inDialogue = false;
+				level1.inPause = true;
 				//done = true; // Sai do jogo com ESC
 			}
 
-			if (levelT.inDialogue && ev.keyboard.keycode == ALLEGRO_KEY_T && (levelT.dialogueOption != 5 || levelT.dialogueOption != 9))
-				levelT.dialogueOption++;
+			if (level1.inDialogue && ev.keyboard.keycode == ALLEGRO_KEY_T && (level1.dialogueOption != 5 || level1.dialogueOption != 9))
+				level1.dialogueOption++;
+
+			if (level1.inDialogue && ev.keyboard.keycode == ALLEGRO_KEY_R){
+				level1.inDialogue = false;
+            	level1.inPause = false;
+			}
+				
 			
 		}
 
 
-		//if (levelT.puzzle_solved) puzzle_init();
-		/*if (levelT.puzzle_open)
+		//if (level1.puzzle_solved) puzzle_init();
+		/*if (level1.puzzle_open)
 		{
 			// Se puzzle está aberto, envia eventos apenas para o puzzle
 			
 			puzzle_handle_event(&ev);
 			if (ev.type == ALLEGRO_EVENT_TIMER) {
-				if (levelT.puzzle_open) {
+				if (level1.puzzle_open) {
 				// O puzzle será atualizado no main loop através de puzzle_handle_event
 					if (puzzle_is_solved()) {
-						levelT.puzzle_open = false;
-						levelT.puzzle_solved = puzzle_is_solved();
+						level1.puzzle_open = false;
+						level1.puzzle_solved = puzzle_is_solved();
 						puzzle_destroy(); // Limpa o puzzle após resolver
-						levelT.k.get = true;
+						level1.k.get = true;
 					
 					}
 				}
@@ -206,7 +212,7 @@ int main() {
 				al_get_mouse_state(&mouseState);
 				//titleMenu.selectedOption = ReturnMenuOption(titleMenu, &mouseState, &ev);
 				
-				if(titleMenu.selectedOption == 1) level_Update(&levelT, &keyState);
+				if(titleMenu.selectedOption == 1) level_Update(&level1, &keyState);
 				if(titleMenu.selectedOption == 2) done = true;
 				draw = true;
 
@@ -217,7 +223,7 @@ int main() {
 				
 
 				if(!titleMenu.runningLevel)drawTitleMenu(&titleMenu, &mouseState);
-				if (titleMenu.selectedOption == 1)Level_Draw(levelT, Font);
+				if (titleMenu.selectedOption == 1)Level_Draw(level1, Font);
 
 				
 				al_draw_text(Font, TEXT_COLOR, 25, 25, 0, VERSION);
@@ -238,16 +244,16 @@ int main() {
 
 		if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
 
-			if (levelT.puzzle_open && ev.keyboard.keycode == ALLEGRO_KEY_R) {
-				levelT.puzzle_open = false; 
+			if (level1.puzzle_open && ev.keyboard.keycode == ALLEGRO_KEY_R) {
+				level1.puzzle_open = false; 
 			}
 			
 			if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) done = true; // Fecha o jogo se clicar no X da janela
 		
 			if (ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
 				
-				if (levelT.puzzle_open) {
-					levelT.puzzle_open = false;
+				if (level1.puzzle_open) {
+					level1.puzzle_open = false;
 				}
 				done = true; // Sai do jogo com ESC
 			}
@@ -265,12 +271,16 @@ int main() {
 		}
 	*/
 	}
-	destroy_tileset(levelT.tileset);
-	destroy_tilemap(levelT.map);
-	al_destroy_bitmap(levelT.door.sprite);
-	al_destroy_bitmap(levelT.hud.key.sprite);
-	al_destroy_bitmap(levelT.player.sprite);
-	al_destroy_bitmap(levelT.npc.sprite);
+	destroy_tileset(level1.tileset);
+	destroy_tilemap(level1.map);
+	al_destroy_bitmap(level1.door.sprite);
+	al_destroy_bitmap(level1.hud.key.sprite);
+	al_destroy_bitmap(level1.guard1.sprite);
+	al_destroy_bitmap(level1.guard2.sprite);
+	al_destroy_bitmap(level1.guard3.sprite);
+	al_destroy_bitmap(level1.guard4.sprite);
+	al_destroy_bitmap(level1.player.sprite);
+	al_destroy_bitmap(level1.npc.sprite);
 	al_destroy_bitmap(titleMenu.bg);
 	al_destroy_bitmap(titleMenu.logo);
 	al_destroy_display(window);

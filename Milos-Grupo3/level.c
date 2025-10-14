@@ -113,7 +113,7 @@ void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState) {
 
 	l->dL.w = l->p.life; //atualiza a barra de vida do player
 
-	//verifica colisao entre player e inimigo
+	//verifica colisao entre player e inimigo e tira a vida
 	if (collisionE(&l->e, &l->p) && l->p.life > 0) {
 		if (!l->p.modoAtaque) {
 			if (!l->p.modoDefesa)

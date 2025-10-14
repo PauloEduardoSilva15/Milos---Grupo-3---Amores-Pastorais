@@ -17,12 +17,21 @@
 #include "hud.h"
 #include "marker.h"
 #include "obstacle.h"
+#include "enemy.h"
 
 typedef struct {
     Tileset * tileset;
     Tilemap * map;
     entity player;
     entity npc;
+    entity guard1;
+    entity guard2;
+    entity guard3;
+    entity guard4;
+    bool guard1_Folowing;
+    bool guard2_Folowing;
+    bool guard3_Folowing;
+    bool guard4_Folowing;
     bool inDialogue;
     int dialogueOption;
     int dirPlayer; //Guarda a direção do player
@@ -33,10 +42,10 @@ typedef struct {
     int doorSpritePositionX;
     bool getKey;
     bool isDone; // verifica se terminou o level
+    int playerSpritepositionX, playerSpritepositionY;
     hud hud;
     Marker maker;
     PauseMenu pauseMenu;
-    
     bool inPause;
     int cameraX;
     int cameraY;

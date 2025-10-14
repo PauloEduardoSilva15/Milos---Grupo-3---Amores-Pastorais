@@ -8,6 +8,6 @@
 
 entity playerLoad();
 
-void playerDraw(entity * player, int Camerax, int flip);
+void playerDraw(entity * player, int Camerax, int flip, int sX, int sY);
 
 #endif // !PLAYER_H

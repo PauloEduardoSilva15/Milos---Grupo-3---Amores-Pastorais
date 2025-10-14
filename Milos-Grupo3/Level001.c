@@ -6,17 +6,24 @@ levelI Level_I_load(){
     l.tileset = load_tileset("./imgs/tilesets/Tileset_Map_001.png", QUAD_SIZE, QUAD_SIZE); // Carrega Tileset
     l.map = load_tilemap("./maps/001/map001.txt"); // Carrega o mapa
     l.player = playerLoad(); // PLayer (Dirceu)
-    l.npc = newEntity(190, 416 - 64, 0, 0, al_map_rgb(100, 0, 150),"./imgs/sprites/sprite_oldMan.png", false); // Velho Desconhecido
+    l.npc = newEntity(190, 354, 0, 0, al_map_rgb(100, 0, 150),"./imgs/sprites/sprite_oldMan.png", false); // Velho Desconhecido
+    l.guard1 = enemyLoad(1088, 128);
+    l.guard2 = enemyLoad(1348, 128);
+    l.guard3 = enemyLoad(2398, 354);
+    l.guard4 = enemyLoad(2588, 354);
     //l.pauseMenu = createPauseMenu();
     l.inDialogue = false;
     l.dialogueOption = 0;
     l.dialogue = dialogueLoad();
     l.getKey = false;
-    //l.displayLife = displayLifeLoad(l.player.life);
     l.door = newObstacle(2693,320, "./imgs/sprites/door.png");
     l.doorSpritePositionX = 0;
     l.hud = newHud(l.player.life, l.getKey);
     l.maker = newMarker(MARKER_X, MARKER_Y); // Carrega o marcador
+    l.playerSpritepositionX = 0;
+    l.playerSpritepositionY = 0;
+    l.guard1_Folowing = false;
+    l.guard2_Folowing = false;
     l.dirPlayer = 0;
     l.isDone = false;
     l.PlayerFlip = 0;
@@ -44,26 +51,65 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
     }
     
    if(l->player.x == 3063)l->isDone = true;
-
-    
-
-    
-
-
     
   
     if(!l->inPause){
         if(l->player.life <= 0) l->player.isDead = true; 
+        if (l->guard1.life <= 0) l->guard1.isDead = true;
+        if (l->guard1.isDead) {
+		    l->guard1.x = 0;
+		    l->guard1.y = 0;
+	    }
+        if (l->guard2.life <= 0) l->guard2.isDead = true;
+        if (l->guard2.isDead) {
+		    l->guard2.x = 0;
+		    l->guard2.y = 0;
+	    }
+        if (l->guard3.life <= 0) l->guard3.isDead = true;
+        if (l->guard3.isDead) {
+		    l->guard3.x = 0;
+		    l->guard3.y = 0;
+	    }
+
+        if (l->guard4.life <= 0) l->guard4.isDead = true;
+        if (l->guard4.isDead) {
+		    l->guard4.x = 0;
+		    l->guard4.y = 0;
+	    }
+        
+
+
         if(al_key_down(keystate, ALLEGRO_KEY_A))l->PlayerFlip = ALLEGRO_FLIP_HORIZONTAL;
 	    if(al_key_down(keystate, ALLEGRO_KEY_D)) l->PlayerFlip = 0;
+
+        if (al_key_down(keystate, ALLEGRO_KEY_J)) l->player.modoAtaque = true;
+		    else l->player.modoAtaque = false;
+		    if (al_key_down(keystate, ALLEGRO_KEY_K)) l->player.modoDefesa = true;
+		    else l->player.modoDefesa = false;
+
+        if(l->player.modoAtaque){
+            l->playerSpritepositionX = 64;
+            l->playerSpritepositionY = 64;
+        }
+        if(l->player.modoDefesa){
+            l->playerSpritepositionX = 32;
+            l->playerSpritepositionY = 128;
+        }
+        if(!l->player.modoAtaque && !l->player.modoDefesa){
+            l->playerSpritepositionX = 0;
+            l->playerSpritepositionY = 0;
+        }
+
+
+
         //Colisões
         if (al_key_down(keystate, ALLEGRO_KEY_E) && collisionEntityWithEntity(&l->player, &l->npc)) {
             l->inDialogue = true;
         }
-        if (al_key_down(keystate, ALLEGRO_KEY_R)) {
+        /*if (al_key_down(keystate, ALLEGRO_KEY_R)&& l->inDialogue) {
             l->inDialogue = false;
             l->inPause = false;
-        }
+        }*/
         if (al_key_down(keystate, ALLEGRO_KEY_E) && collisionEntityMaker(&l->player, &l->maker)) {
             l->getKey = true;
 
@@ -81,9 +127,215 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
             l->player.vY = 0;
             l->player.can_jump = true;
         }
+
+        if (!check_entity_tile_collision(&l->guard1, l->map, l->tileset, MAP1_TILE_FLOOR) && !l->guard1.isDead) {    
+            //l->dirguard1 = 0;
+            l->guard1.vY += PLAYER_GRAVIDADE;
+            l->guard1.y += l->guard1.vY;
+        }
+        if (check_entity_tile_collision(&l->guard1, l->map, l->tileset, MAP1_TILE_FLOOR)|| (check_entity_tile_collision(&l->guard1, l->map, l->tileset, MAP1_TILE_WOOD))&& !l->guard1.isDead){
+            l->guard1.y -= l->guard1.vY;
+            l->guard1.vY = 0;
+            l->guard1.can_jump = true;
+        }
+
+        if (!check_entity_tile_collision(&l->guard2, l->map, l->tileset, MAP1_TILE_FLOOR) && !l->guard2.isDead) {    
+            //l->dirguard1 = 0;
+            l->guard2.vY += PLAYER_GRAVIDADE;
+            l->guard2.y += l->guard2.vY;
+        }
+        if (check_entity_tile_collision(&l->guard2, l->map, l->tileset, MAP1_TILE_FLOOR)|| (check_entity_tile_collision(&l->guard2, l->map, l->tileset, MAP1_TILE_WOOD))&& !l->guard2.isDead){
+            l->guard2.y -= l->guard2.vY;
+            l->guard2.vY = 0;
+            l->guard2.can_jump = true;
+        }
+
+
         if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_SPIN)){
             l->player.life -= 30;
         }
+        if (check_entity_tile_collision(&l->guard1, l->map, l->tileset, MAP1_TILE_SPIN)){
+            l->guard1.life -= 30;
+        }
+        if (check_entity_tile_collision(&l->guard2, l->map, l->tileset, MAP1_TILE_SPIN)){
+            l->guard2.life -= 30;
+        }
+        if (check_entity_tile_collision(&l->guard3, l->map, l->tileset, MAP1_TILE_SPIN)){
+            l->guard3.life -= 30;
+        }
+        if (check_entity_tile_collision(&l->guard4, l->map, l->tileset, MAP1_TILE_SPIN)){
+            l->guard4.life -= 30;
+        }
+
+        if(l->player.x >= 583) l->guard1_Folowing = true;
+
+        if(l->guard1_Folowing){
+            if (!collisionEntityWithEntity(&l->player, &l->guard1)) {
+		        if (l->guard1.x > l->player.x) {
+			        if (!collisionEntityObstacle(&l->guard1, &l->door)) movEntity(&l->guard1, 0);//esquerda
+		    }
+		    else if (!collisionEntityObstacle(&l->guard1, &l->door) && !l->getKey) movEntity(&l->guard1, 1);//direita
+	        }
+        }
+
+        if(l->player.x >= 1218) l->guard2_Folowing = true;
+        if(l->guard2_Folowing){
+            if (!collisionEntityWithEntity(&l->player, &l->guard2)) {
+		        if (l->guard2.x > l->player.x) {
+			        if (!collisionEntityObstacle(&l->guard2, &l->door)&&!check_entity_tile_collision(&l->guard2, l->map, l->tileset, MAP1_TILE_WOOD)) movEntity(&l->guard2, 0);//esquerda
+                    else{
+                        if(check_entity_tile_collision(&l->guard2, l->map, l->tileset, MAP1_TILE_WOOD))
+                            l->guard2.x -= l->guard2.v;
+                    }
+		        }
+		        else{
+                    if (!collisionEntityObstacle(&l->guard2, &l->door) && !l->getKey &&!check_entity_tile_collision(&l->guard2, l->map, l->tileset, MAP1_TILE_WOOD)){
+                        movEntity(&l->guard2, 1);//direita
+                    } else{
+                        if(check_entity_tile_collision(&l->guard2, l->map, l->tileset, MAP1_TILE_WOOD))
+                            l->guard2.x += l->guard2.v;
+                    }
+
+                } 
+	        }
+        }
+        if(l->player.x >= 1988) l->guard3_Folowing = true;
+        if(l->guard3_Folowing){
+            if (!collisionEntityWithEntity(&l->player, &l->guard3)) {
+		        if (l->guard3.x > l->player.x) {
+			        if (!collisionEntityObstacle(&l->guard3, &l->door)) movEntity(&l->guard3, 0);//esquerda
+		    }
+		    else if (!collisionEntityObstacle(&l->guard3, &l->door) && !l->getKey) movEntity(&l->guard3, 1);//direita
+	        }
+        }
+        if(l->player.x >= 1988) l->guard4_Folowing = true;
+        if(l->guard4_Folowing){
+            if (!collisionEntityWithEntity(&l->player, &l->guard4)) {
+		        if (l->guard4.x > l->player.x) {
+			        if (!collisionEntityObstacle(&l->guard4, &l->door)) movEntity(&l->guard4, 0);//esquerda
+		    }
+		    else if (!collisionEntityObstacle(&l->guard4, &l->door) && !l->getKey) movEntity(&l->guard4, 1);//direita
+	        }
+            if(collisionEntityWithEntity(&l->guard4, &l->guard3)) l->guard4.x += 10;
+        }
+        
+
+
+        if (collisionEntityWithEntity(&l->guard1, &l->player) && l->player.life > 0) {
+		    if (!l->player.modoAtaque) {
+			    if (!l->player.modoDefesa)
+				    if (!l->guard1.isDead)l->player.life -= 3; //tira vida do player
+		    }
+		    else {
+			    if (!l->player.modoDefesa)
+				    if (l->guard1.life > 0) l->guard1.life -= 3; //tira vida do inimigo
+		    }
+	    }
+
+        if (collisionEntityWithEntity(&l->guard2, &l->player) && l->player.life > 0) {
+		    if (!l->player.modoAtaque) {
+			    if (!l->player.modoDefesa)
+				    if (!l->guard2.isDead)l->player.life -= 3; //tira vida do player
+		    }
+		    else {
+			    if (!l->player.modoDefesa)
+				    if (l->guard2.life > 0) l->guard2.life -= 3; //tira vida do inimigo
+		    }
+	    }
+
+        if (collisionEntityWithEntity(&l->guard3, &l->player) && l->player.life > 0) {
+		    if (!l->player.modoAtaque) {
+			    if (!l->player.modoDefesa)
+				    if (!l->guard3.isDead)l->player.life -= 3; //tira vida do player
+		    }
+		    else {
+			    if (!l->player.modoDefesa)
+				    if (l->guard3.life > 0) l->guard3.life -= 3; //tira vida do inimigo
+		    }
+	    }
+
+        if (collisionEntityWithEntity(&l->guard4, &l->player) && l->player.life > 0) {
+		    if (!l->player.modoAtaque) {
+			    if (!l->player.modoDefesa)
+				    if (!l->guard4.isDead)l->player.life -= 3; //tira vida do player
+		    }
+		    else {
+			    if (!l->player.modoDefesa)
+				    if (l->guard4.life > 0) l->guard4.life -= 3; //tira vida do inimigo
+		    }
+	    }
+
+        //Os personagens andam para trás quando colidem
+	    if (collisionEntityWithEntity(&l->player, &l->guard1)) {
+		    if (l->guard1.x > l->player.x)
+		    {
+			    l->guard1.x += 10;
+			    l->player.x -= 10;
+		    }
+		    else {
+			    if (!(l->player.y > l->guard1.y)) {
+				    l->guard1.x -= 10;
+				    l->player.x += 10;
+			    }
+			    else
+				    l->guard1.x += 10;
+		    }
+	    }
+
+        if (collisionEntityWithEntity(&l->player, &l->guard2)) {
+		    if (l->guard2.x > l->player.x)
+		    {
+			    l->guard2.x += 10;
+			    l->player.x -= 10;
+		    }
+		    else {
+			    if (!(l->player.y > l->guard2.y)) {
+				    l->guard2.x -= 10;
+				    l->player.x += 10;
+			    }
+			    else
+				    l->guard2.x += 10;
+		    }
+	    }
+
+        if (collisionEntityWithEntity(&l->player, &l->guard3)) {
+		    if (l->guard3.x > l->player.x)
+		    {
+			    l->guard3.x += 10;
+			    l->player.x -= 10;
+		    }
+		    else {
+			    if (!(l->player.y > l->guard3.y)) {
+				    l->guard3.x -= 10;
+				    l->player.x += 10;
+			    }
+			    else
+				    l->guard3.x += 10;
+		    }
+	    }
+
+        if (collisionEntityWithEntity(&l->player, &l->guard4)) {
+		    if (l->guard4.x > l->player.x)
+		    {
+			    l->guard4.x += 10;
+			    l->player.x -= 10;
+		    }
+		    else {
+			    if (!(l->player.y > l->guard4.y)) {
+				    l->guard4.x -= 10;
+				    l->player.x += 10;
+			    }
+			    else
+				    l->guard4.x += 10;
+		    }
+	    }
+
+
+        if ((l->player.x) < 33) l->player.x = 33;
+	    if ((l->guard1.x) < 33 && !l->guard1.isDead) l->guard1.x = 33;
+
+        
+        
 
 
           //Controles do player
@@ -126,46 +378,47 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
             if(collisionEntityObstacle(&l->player, &l->door)&& !l->getKey) l->player.x -= l->player.v;
             if(collisionEntityObstacle(&l->player, &l->door)&& l->getKey) {
                 l->doorSpritePositionX = 32;
-            }
-
-            
+            }            
         } 
-
-        
     }
 
     l->hud.displayLife.width = l->player.life;
     l->hud.getKey = l->getKey;
     
-    
     //Isso é só para debug;
     if(al_key_down(keystate, ALLEGRO_KEY_X))
         printf("x = %d, y = %d \n", l->player.x, l->player.y);
-
-    
-
-
     //Camera segindo o player no eixo X
     l->cameraX = -(l->player.x - SCREEN_WIDTH / 2);
-
-    
-	
-
 }
 
 
 
 void Level_I_Draw(levelI  l, ALLEGRO_FONT* Font){
+    //desenha o tileMap
     draw_tilemap(l.map, l.tileset, l.cameraX, l.cameraY);
     //drawEntity(&l.player);
+    //desenha o texto em cima do npc
     if (collisionEntityWithEntity(&l.player, &l.npc))al_draw_text(Font, TEXT_COLOR, (l.npc.x + l.cameraX)-l.npc.width/2, l.npc.y - 25, 0, "[E] Falar");
+    //desenha o texto em cima do maker
     if (collisionEntityMaker(&l.player, &l.maker))al_draw_text(Font, TEXT_COLOR, (l.maker.x + l.cameraX)-l.maker.size/2, l.maker.y - 25, 0, "[E] Interagir");
+    //desenha o dialogo;
     if (l.inDialogue) drawDialogue(&l.dialogue, Font, l.dialogueOption);
+    //desenha o maker
     draw_maker_with_camera(&l.maker, l.cameraX);
+    //desenha o npc
     draw_Enity_camera_andImage(&l.npc, l.cameraX);
+    // desenha a porta
     drawObstacle(&l.door, l.cameraX, l.doorSpritePositionX, 0);
+    //desenha o guarda 1
+    if(!l.guard1.isDead)draw_entity_with_camera(&l.guard1, l.cameraX);
+    if(!l.guard2.isDead)draw_entity_with_camera(&l.guard2, l.cameraX);
+    if(!l.guard3.isDead)draw_entity_with_camera(&l.guard3, l.cameraX);
+    if(!l.guard4.isDead)draw_entity_with_camera(&l.guard4, l.cameraX);
+    //desenha a hitbox do player
     draw_entity_with_camera(&l.player, l.cameraX);
-    playerDraw(&l.player, l.cameraX, l.PlayerFlip);
+    //desenha o player
+    playerDraw(&l.player, l.cameraX, l.PlayerFlip, l.playerSpritepositionX, l.playerSpritepositionY);
+    //desenha a hud
     drawHud(&l.hud);
-    //if(l.inPause) al_clear_to_color(al_map_rgb(0, 0, 0));
 }

@@ -5,6 +5,6 @@
 #include "quad.h"
 #include "entity.h"
 
-entity enemyLoad();
+entity enemyLoad(int x, int y);
 
 #endif

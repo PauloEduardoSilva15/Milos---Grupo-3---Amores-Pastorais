@@ -9,7 +9,9 @@ entity playerLoad() {
 }
 
 
-void playerDraw(entity * player, int Camerax, int flip){
+void playerDraw(entity * player, int Camerax, int flip, int sX, int sY){
 	
-	al_draw_bitmap_region(player->sprite, 0, 0, player->width, player->height, player->x +Camerax, player->y, flip);
+
+
+	al_draw_bitmap_region(player->sprite, sX, sY, player->width, player->height, player->x +Camerax, player->y, flip);
 }
