@@ -24,3 +24,4 @@ void drawDialogue(textBox * text, ALLEGRO_FONT* font, int textOption);
 
 #endif // !TEXTBOX_H
 
+

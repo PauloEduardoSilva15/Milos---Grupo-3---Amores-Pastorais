@@ -45,3 +45,4 @@ void drawGameOver(GameOver* over, ALLEGRO_MOUSE_STATE* mouseState) {
 
 //GameOver gameOver_global; // variável global acessível de qualquer lugar || Isso deveria ser colocado na main
 
+

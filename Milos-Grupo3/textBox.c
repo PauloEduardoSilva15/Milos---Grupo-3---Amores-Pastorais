@@ -59,4 +59,3 @@ void drawDialogue(textBox * text, ALLEGRO_FONT* font, int textOption) {
 	al_draw_text(text->font, TEXT_COLOR, text->width - 125, text->y + 70, 0, "Pressione T ->");
 	al_draw_text(text->font, TEXT_COLOR, text->x + 25, text->y + 70, 0, "Pressione R para fechar o dialogo");
 }
-
