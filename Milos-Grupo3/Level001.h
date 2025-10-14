@@ -43,6 +43,10 @@ typedef struct {
     bool getKey;
     bool isDone; // verifica se terminou o level
     int playerSpritepositionX, playerSpritepositionY;
+    int guard1flip;
+    int guard2flip;
+    int guard3flip;
+    int guard4flip;
     hud hud;
     Marker maker;
     PauseMenu pauseMenu;
