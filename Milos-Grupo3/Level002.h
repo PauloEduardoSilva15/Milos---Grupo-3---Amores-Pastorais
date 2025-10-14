@@ -21,8 +21,15 @@
 
 typedef struct {
 
-	entity Player;
-
+	entity player;
+	Tileset * tileset;
+	Tilemap * map;
+	int cameraX;
+    int cameraY;
+	int playerSpritepositionX, playerSpritepositionY;
+	int playerflip;
+	bool inPause;
+	hud hud;
 }levelII;
 
 levelII Level_II_load();

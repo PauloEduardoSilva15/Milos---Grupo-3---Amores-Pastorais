@@ -406,6 +406,8 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
         printf("x = %d, y = %d \n", l->player.x, l->player.y);
     //Camera segindo o player no eixo X
     l->cameraX = -(l->player.x - SCREEN_WIDTH / 2);
+
+    if(al_key_down(keystate, ALLEGRO_KEY_B)) l->isDone = true;
 }
 
 

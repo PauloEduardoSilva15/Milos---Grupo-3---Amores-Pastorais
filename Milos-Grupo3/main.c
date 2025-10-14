@@ -7,6 +7,7 @@
 #include <stdio.h>
 //#include "level.h"
 #include "Level001.h"
+#include "Level002.h"
 #include "puzzle.h"
 #include "systemTileset.h"
 #include <stdio.h>
@@ -40,6 +41,7 @@ int main() {
 	puzzle_init();
 
 	levelI level1 = Level_I_load();
+	levelII level2 = Level_II_load();
 
 	ALLEGRO_FONT* Font = al_create_builtin_font();
 
@@ -102,18 +104,13 @@ int main() {
 				al_get_mouse_state(&mouseState);
 				//titleMenu.selectedOption = ReturnMenuOption(titleMenu, &mouseState, &ev);
 
-				if (titleMenu.selectedOption == 1 && !level1.player.isDead) level_I_Update(&level1, &keyState);
+				if (titleMenu.selectedOption == 1 && !level1.player.isDead && !level1.isDone) level_I_Update(&level1, &keyState);
 				if (titleMenu.selectedOption == 2) done = true;
 				draw = true;
-				if (level1.player.isDead) gameOver.active = true;
+				if (level1.player.isDead || level2.player.isDead) gameOver.active = true;
 				//if(level1.inPause) drawPauseMenu(&pauseMenu);
 
-				if (level1.isDone) {
-					titleMenu = createTitleMenu(Font);
-					level1 = Level_I_load();
-					pauseMenu = createPauseMenu(Font);
-					gameOver = createGameOver(Font);
-				}
+				if (level1.isDone&& !level2.player.isDead)level_II_Update(&level2, &keyState);
 			}
 			if (draw) {
 
@@ -121,12 +118,15 @@ int main() {
 
 
 				if (!titleMenu.runningLevel)drawTitleMenu(&titleMenu, &mouseState);
-				if (titleMenu.selectedOption == 1 && !gameOver.active)Level_I_Draw(level1, Font);
+				if (titleMenu.selectedOption == 1 && !gameOver.active && !level1.isDone)Level_I_Draw(level1, Font);
+				
+				if(level1.isDone && !gameOver.active && titleMenu.selectedOption == 1 && !level2.player.isDead)Level_II_Draw(level2, Font);
 				if (gameOver.active) drawGameOver(&gameOver, &mouseState);
 
+				//
 
 
-				if (level1.inPause && !level1.inDialogue) drawPauseMenu(&pauseMenu, &mouseState);
+				if (level1.inPause&& !level1.inDialogue && !level1.puzzle_open) drawPauseMenu(&pauseMenu, &mouseState);
 
 				// Tutorial Controls
 				al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 50, 0, "Controles:");
@@ -162,6 +162,7 @@ int main() {
 				//gameOver.active = false;
 				titleMenu = createTitleMenu(Font);
 				level1 = Level_I_load();
+				level2 = Level_II_load();
 				pauseMenu = createPauseMenu(Font);
 				gameOver = createGameOver(Font);
 			}
@@ -173,11 +174,14 @@ int main() {
 			if (button_contains_point(&pauseMenu.retriviedbutton, mouseState.x, mouseState.y) && level1.inPause) {
 				titleMenu = createTitleMenu(Font);
 				level1 = Level_I_load();
+				level2 = Level_II_load();
 				gameOver = createGameOver(Font);
 			}
 			else {
-				if (button_contains_point(&pauseMenu.ContinuePlaybutton, mouseState.x, mouseState.y) && level1.inPause)
+				if (button_contains_point(&pauseMenu.ContinuePlaybutton, mouseState.x, mouseState.y) && level1.inPause){
 					level1.inPause = false;
+					level2.inPause = false;
+				}
 				if (button_contains_point(&pauseMenu.exitButton, mouseState.x, mouseState.y) && level1.inPause)
 					done = true;
 			}
@@ -188,6 +192,7 @@ int main() {
 			if (ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE && titleMenu.runningLevel&& !gameOver.active) {
 				level1.inDialogue = false;
 				level1.inPause = true;
+				if(level1.isDone) level2.inPause = true;
 				if (level1.puzzle_open) {
 					level1.puzzle_open = false;
 				}
@@ -312,13 +317,17 @@ int main() {
 	}
 	destroy_tileset(level1.tileset);
 	destroy_tilemap(level1.map);
+	destroy_tileset(level2.tileset);
+	destroy_tilemap(level2.map);
+	al_destroy_bitmap(level2.hud.key.sprite);
+	al_destroy_bitmap(level1.player.sprite);
 	al_destroy_bitmap(level1.door.sprite);
 	al_destroy_bitmap(level1.hud.key.sprite);
 	al_destroy_bitmap(level1.guard1.sprite);
 	al_destroy_bitmap(level1.guard2.sprite);
 	al_destroy_bitmap(level1.guard3.sprite);
 	al_destroy_bitmap(level1.guard4.sprite);
-	al_destroy_bitmap(level1.player.sprite);
+	al_destroy_bitmap(level2.player.sprite);
 	al_destroy_bitmap(level1.npc.sprite);
 	al_destroy_bitmap(titleMenu.bg);
 	al_destroy_bitmap(titleMenu.logo);
