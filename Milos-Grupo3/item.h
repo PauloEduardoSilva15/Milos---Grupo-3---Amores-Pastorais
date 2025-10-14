@@ -2,11 +2,13 @@
 #define ITEM_H
 
 #include <allegro5/allegro5.h>
+#include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
 #include "gameConstants.h"
 #include <stdbool.h>
 
 typedef struct {
+	ALLEGRO_BITMAP * sprite;
 	int x;
 	int y;
 	int size;
@@ -14,7 +16,7 @@ typedef struct {
 	ALLEGRO_COLOR color;
 }item;
 
-item newItem(int x, int y, bool get);
+item newItem(const char * filepath, int x, int y, bool get);
 
 void itemDraw(item* i);
 

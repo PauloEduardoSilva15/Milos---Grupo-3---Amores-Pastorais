@@ -1,8 +1,9 @@
 #include "item.h"
 
 
-item newItem(int x, int y, bool get) {
+item newItem(const char * filepath, int x, int y, bool get) {
 	item i;
+	i.sprite = al_load_bitmap(filepath);
 	i.x = x;
 	i.y = y;
 	i.size = ITENS_QUAD_SIZE;
@@ -12,5 +13,6 @@ item newItem(int x, int y, bool get) {
 }
 
 void itemDraw(item* i) {
-	al_draw_filled_rectangle(i->x, i->y, i->x + i->size, i->y + i->size, i->color);
+	al_draw_bitmap(i->sprite, i->x, i->y, 0);
+	//al_draw_filled_rectangle(i->x, i->y, i->x + i->size, i->y + i->size, i->color);
 }

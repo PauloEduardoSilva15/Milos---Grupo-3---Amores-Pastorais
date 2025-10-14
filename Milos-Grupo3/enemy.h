@@ -5,6 +5,8 @@
 #include "quad.h"
 #include "entity.h"
 
-entity enemyLoad();
+entity enemyLoad(int x, int y);
+
+void enemyDraw(entity * enemy, int Camerax, int flip, int sX, int sY);
 
 #endif

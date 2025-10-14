@@ -1,4 +1,4 @@
-#include "level.h"
+/*#include "level.h"
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_primitives.h>
 #include <stdbool.h>
@@ -136,7 +136,7 @@ void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState, ALLEGRO_EVENT* ev)
 
 	l->dL.w = l->p.life; //atualiza a barra de vida do player
 
-	//verifica colisao entre player e inimigo
+	//verifica colisao entre player e inimigo e tira a vida
 	if (collisionE(&l->e, &l->p) && l->p.life > 0) {
 		if (!l->p.modoAtaque) {
 			if (!l->p.modoDefesa)
@@ -200,6 +200,4 @@ void Level_Draw(level l, ALLEGRO_FONT* Font) {
 	draw_quad(&l.dL);
 	draw_quad(&l.f);
 	draw_quad(&l.d);
-	itemDraw(&l.k);
-	if (l.inDialogue) drawDialogue(&l.textBox, Font, l.dialogueOption);
-}
+	itemDraw(&l*/

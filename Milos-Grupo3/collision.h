@@ -5,12 +5,16 @@
 #include "entity.h"
 #include "item.h"
 #include "marker.h"
+#include "systemTileset.h"
+#include "gameConstants.h"
+#include "obstacle.h"
 #include <stdbool.h>
 
 bool collisionEQ(entity* a, quad* b);
 bool collisionEI(entity* a, item* b);
-bool collisionEM(entity* a, Marker* b);
-bool collisionE(entity* a, entity* b);
+bool collisionEntityObstacle(entity * a, obstacle* b);
+bool collisionEntityMaker(entity* a, Marker* b);
+bool collisionEntityWithEntity(entity* a, entity* b);
 
 #endif 
 

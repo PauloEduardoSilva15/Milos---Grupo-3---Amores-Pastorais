@@ -2,10 +2,14 @@
 
 
 
-entity enemyLoad() {
+entity enemyLoad(int x, int y) {
 
 
-	entity enemy = newEntity(ENEMY_X_0 - QUAD_SIZE, ENEMY_Y_0, ENEMY_VELOCITY_0, 0, ENEMY_COLOR, true);
+	entity enemy = newEntity(x - QUAD_SIZE, y, ENEMY_VELOCITY_0, 0, ENEMY_COLOR, "./imgs/sprites/guard.png", true);
 	return enemy;
 }
 
+void enemyDraw(entity * enemy, int Camerax, int flip, int sX, int sY){
+	
+	al_draw_bitmap_region(enemy->sprite, sX, sY, enemy->width, enemy->height, enemy->x +Camerax, enemy->y, flip);
+}

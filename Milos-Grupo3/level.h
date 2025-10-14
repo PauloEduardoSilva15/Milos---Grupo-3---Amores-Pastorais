@@ -1,4 +1,4 @@
-#ifndef LEVEL_H
+/*#ifndef LEVEL_H
 #define LEVEL_H
 
 #include <allegro5/allegro5.h>
@@ -41,4 +41,9 @@ void level_Update(level* l, ALLEGRO_KEYBOARD_STATE* keyState, ALLEGRO_EVENT* ev)
 void Level_Draw(level l, ALLEGRO_FONT* Font);
 
 
+
 #endif 
+
+
+*/
+

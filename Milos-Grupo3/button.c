@@ -8,8 +8,6 @@ button newButton(int x, int y, char text[], ALLEGRO_FONT * font) {
 	b.w = BUTTON_X;
 	b.h = QUAD_SIZE;
 	strcpy(b.text, text);
-
-	//b.text = text; // Garantir que a string termina com null
 	b.font = font;
 	b.color = BUTTON_COLOR_NORMAL;
 	b.font_color = TEXT_COLOR;

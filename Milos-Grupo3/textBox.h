@@ -15,7 +15,7 @@ typedef struct {
 	int width, height;
 	int dialogueOption;
 	char personagem[16];
-	char texto[50];
+	char texto[100];
 	ALLEGRO_COLOR boxColor;
 }textBox;
 
@@ -23,4 +23,5 @@ textBox dialogueLoad();
 void drawDialogue(textBox * text, ALLEGRO_FONT* font, int textOption);
 
 #endif // !TEXTBOX_H
+
 

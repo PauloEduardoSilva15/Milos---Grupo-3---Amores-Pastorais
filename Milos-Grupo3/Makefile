@@ -3,16 +3,16 @@ CC = gcc
 CFLAGS = -Wall -g `pkg-config --cflags allegro-5 allegro_font-5 allegro_ttf-5 allegro_primitives-5 allegro_image-5`
 LDFLAGS = `pkg-config --libs allegro-5 allegro_font-5 allegro_ttf-5 allegro_primitives-5 allegro_image-5` -lm
 
-SRCDIR = Milos-Grupo3
+
 OBJDIR = obj
-SOURCES = $(wildcard $(SRCDIR)/*.c)
-OBJECTS = $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
+SOURCES = $(wildcard ./*.c)
+OBJECTS = $(SOURCES: ./%.c=$(OBJDIR)/%.o)
 TARGET = Pastoral_Loves
 
 $(TARGET): $(OBJECTS)
 	$(CC) -o $@ $(OBJECTS) $(LDFLAGS)
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
+$(OBJDIR)/%.o: $(.)/%.c
 	@mkdir -p $(OBJDIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
