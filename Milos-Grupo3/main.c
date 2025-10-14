@@ -268,6 +268,7 @@ int main() {
 	destroy_tileset(levelT.tileset);
 	destroy_tilemap(levelT.map);
 	al_destroy_bitmap(levelT.door.sprite);
+	al_destroy_bitmap(levelT.hud.key.sprite);
 	al_destroy_bitmap(levelT.player.sprite);
 	al_destroy_bitmap(levelT.npc.sprite);
 	al_destroy_bitmap(titleMenu.bg);

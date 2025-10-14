@@ -43,7 +43,7 @@
 #define PLAYER_VELOCITY_0 5
 #define PLAYER_VELOCITY_Y_0 0
 #define PLAYER_JUMP_FORCE -17.0
-#define PLAYER_NORMAL_COLOR  al_map_rgb(0, 0, 255)
+#define PLAYER_NORMAL_COLOR  al_map_rgba(0, 0, 255, 50)
 #define PLAYER_ATACK_COLOR  al_map_rgb(100, 0, 200)
 #define PLAYER_DEFENSE_COLOR  al_map_rgb(180, 0, 200);
 #define PLAYER_ATACK_DAMAGE 2

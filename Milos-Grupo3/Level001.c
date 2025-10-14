@@ -164,7 +164,7 @@ void Level_I_Draw(levelI  l, ALLEGRO_FONT* Font){
     draw_maker_with_camera(&l.maker, l.cameraX);
     draw_Enity_camera_andImage(&l.npc, l.cameraX);
     drawObstacle(&l.door, l.cameraX, l.doorSpritePositionX, 0);
-    //draw_entity_with_camera(&l.player, l.cameraX);
+    draw_entity_with_camera(&l.player, l.cameraX);
     playerDraw(&l.player, l.cameraX, l.PlayerFlip);
     drawHud(&l.hud);
     //if(l.inPause) al_clear_to_color(al_map_rgb(0, 0, 0));
