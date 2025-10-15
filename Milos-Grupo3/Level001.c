@@ -136,7 +136,6 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
         }
 
         if (!check_entity_tile_collision(&l->guard1, l->map, l->tileset, MAP1_TILE_FLOOR) && !l->guard1.isDead) {    
-            //l->dirguard1 = 0;
             l->guard1.vY += PLAYER_GRAVIDADE;
             l->guard1.y += l->guard1.vY;
         }

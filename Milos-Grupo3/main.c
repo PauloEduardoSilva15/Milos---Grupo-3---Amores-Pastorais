@@ -222,110 +222,13 @@ int main() {
 			
 		}
 
-
-		//if (level1.puzzle_solved) puzzle_init();
-		/*if (level1.puzzle_open)
-		{
-			// Se puzzle está aberto, envia eventos apenas para o puzzle
-			
-			puzzle_handle_event(&ev);
-			if (ev.type == ALLEGRO_EVENT_TIMER) {
-				if (level1.puzzle_open) {
-				// O puzzle será atualizado no main loop através de puzzle_handle_event
-					if (puzzle_is_solved()) {
-						level1.puzzle_open = false;
-						level1.puzzle_solved = puzzle_is_solved();
-						puzzle_destroy(); // Limpa o puzzle após resolver
-						level1.k.get = true;
-					
-					}
-				}
-				draw = true;
-			}
-			if (draw) {
-				//al_draw_text(Font, TEXT_COLOR, 25, 25, 0, VERSION);
-				if(!puzzle_is_solved())puzzle_draw(SCREEN_WIDTH, SCREEN_HEIGHT);
-
-				al_draw_text(Font, TEXT_COLOR, 50, SCREEN_HEIGHT-100, 0, "Controles:");
-				al_draw_text(Font, TEXT_COLOR, 50, SCREEN_HEIGHT-80, 0, "R - Sair do Puzzle");
-
-
-				al_flip_display();
-				al_clear_to_color(al_map_rgb(0, 0, 0));
-				draw = false;
-			}
-		}
-		else {
-			// Se puzzle não está aberto, processa eventos normais do jogo
-			if (ev.type == ALLEGRO_EVENT_TIMER) {
-
-				al_get_keyboard_state(&keyState);
-				al_get_mouse_state(&mouseState);
-				//titleMenu.selectedOption = ReturnMenuOption(titleMenu, &mouseState, &ev);
-				
-				if(titleMenu.selectedOption == 1) level_Update(&level1, &keyState);
-				if(titleMenu.selectedOption == 2) done = true;
-				draw = true;
-
-			}
-			if (draw) {
-				
-				draw = false;
-				
-
-				if(!titleMenu.runningLevel)drawTitleMenu(&titleMenu, &mouseState);
-				if (titleMenu.selectedOption == 1)Level_Draw(level1, Font);
-
-				
-				al_draw_text(Font, TEXT_COLOR, 25, 25, 0, VERSION);
-
-				// Tutorial Controls
-				al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 50, 0, "Controles:");
-				al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 60, 0, "W - Pular");
-				al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 70, 0, "A - Esquerda");
-				al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 80, 0, "D - Direita");
-				al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 90, 0, "E - Interagir");
-				al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 100, 0, "J - Ataque");
-				al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 110, 0, "K - Defesa");
-
-				al_flip_display();
-				al_clear_to_color(al_map_rgb(0, 0, 0));
-			}
-		}
-
-		if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
-
-			if (level1.puzzle_open && ev.keyboard.keycode == ALLEGRO_KEY_R) {
-				level1.puzzle_open = false; 
-			}
-			
-			if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) done = true; // Fecha o jogo se clicar no X da janela
-		
-			if (ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
-				
-				if (level1.puzzle_open) {
-					level1.puzzle_open = false;
-				}
-				done = true; // Sai do jogo com ESC
-			}
-		}
-
-		if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
-			if (button_contains_point(&titleMenu.startGameButton, mouseState.x, mouseState.y)) {
-				titleMenu.runningLevel = true;
-				titleMenu.selectedOption = 1; // Start Game
-			}
-			else {
-				if (button_contains_point(&titleMenu.exitButton, mouseState.x, mouseState.y))
-					titleMenu.selectedOption = 2; // Exit
-			}
-		}
-	*/
 	}
 	destroy_tileset(level1.tileset);
 	destroy_tilemap(level1.map);
 	destroy_tileset(level2.tileset);
 	destroy_tilemap(level2.map);
+	al_destroy_bitmap(level2.guard1.sprite);
+	al_destroy_bitmap(level2.guard2.sprite);
 	al_destroy_bitmap(level2.npc1.sprite);
 	al_destroy_bitmap(level2.npc2.sprite);
 	al_destroy_bitmap(level2.hud.key.sprite);
