@@ -8,6 +8,7 @@
 //#include "level.h"
 #include "Level001.h"
 #include "Level002.h"
+#include "level003.h"
 #include "puzzle.h"
 #include "systemTileset.h"
 #include <stdio.h>
@@ -42,6 +43,7 @@ int main() {
 
 	levelI level1 = Level_I_load();
 	levelII level2 = Level_II_load();
+	levelIII level3 = Level_III_load();
 
 	ALLEGRO_FONT* Font = al_create_builtin_font();
 
@@ -110,7 +112,16 @@ int main() {
 				if (level1.player.isDead || level2.player.isDead) gameOver.active = true;
 				//if(level1.inPause) drawPauseMenu(&pauseMenu);
 
-				if (level1.isDone&& !level2.player.isDead)level_II_Update(&level2, &keyState);
+				if (level1.isDone&& !level2.player.isDead && !level2.isDone)level_II_Update(&level2, &keyState);
+				if(level1.isDone &&level2.isDone&& !level3.player.isDead)level_III_Update(&level3, &keyState);
+				if(level3.isDone){
+					titleMenu = createTitleMenu(Font);
+					level1 = Level_I_load();
+					level2 = Level_II_load();
+					level3 = Level_III_load();
+					pauseMenu = pauseMenu = createPauseMenu(Font);
+					gameOver = createGameOver(Font);
+				}
 			}
 			if (draw) {
 
@@ -121,15 +132,10 @@ int main() {
 				if (titleMenu.selectedOption == 1 && !gameOver.active && !level1.isDone)Level_I_Draw(level1, Font);
 				
 				if(level1.isDone && !gameOver.active && titleMenu.selectedOption == 1 && !level2.player.isDead && !level2.isDone)Level_II_Draw(level2, Font);
+				if(level1.isDone &&level2.isDone && !gameOver.active && titleMenu.selectedOption == 1 && !level3.player.isDead && !level3.isDone)Level_III_Draw(level3, Font);
 				if (gameOver.active) drawGameOver(&gameOver, &mouseState);
 
-				if(level2.isDone){
-					titleMenu = createTitleMenu(Font);
-					level1 = Level_I_load();
-					level2 = Level_II_load();
-					pauseMenu = pauseMenu = createPauseMenu(Font);
-					gameOver = createGameOver(Font);
-				}
+				
 
 
 				if (level1.inPause&& !level1.inDialogue && !level1.puzzle_open) drawPauseMenu(&pauseMenu, &mouseState);
@@ -181,6 +187,7 @@ int main() {
 				titleMenu = createTitleMenu(Font);
 				level1 = Level_I_load();
 				level2 = Level_II_load();
+				level3 = Level_III_load();
 				gameOver = createGameOver(Font);
 			}
 			else {
@@ -198,7 +205,8 @@ int main() {
 			if (ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE && titleMenu.runningLevel&& !gameOver.active) {
 				level1.inDialogue = false;
 				level1.inPause = true;
-				if(level1.isDone) level2.inPause = true;
+				if(level1.isDone && !level2.isDone) level2.inPause = true;
+				if(level1.isDone && level2.isDone && !level3.isDone) level3.inPause = true;
 				if (level1.puzzle_open) {
 					level1.puzzle_open = false;
 				}
@@ -214,9 +222,13 @@ int main() {
 					level1.inDialogue = false;
             		level1.inPause = false;
 				}
-				if(level1.isDone){
+				if(level1.isDone && !level2.isDone){
 					level2.inDialogue = false;
             		level2.inPause = false;
+				}
+				if(level1.isDone && level2.isDone && !level3.isDone){
+					//level3.inDialogue = false;
+            		level3.inPause = false;
 				}
 			}
 
@@ -233,6 +245,9 @@ int main() {
 	destroy_tilemap(level1.map);
 	destroy_tileset(level2.tileset);
 	destroy_tilemap(level2.map);
+	destroy_tileset(level3.tileset);
+	destroy_tilemap(level3.map);
+	al_destroy_bitmap(level3.player.sprite);
 	al_destroy_bitmap(level2.guard1.sprite);
 	al_destroy_bitmap(level2.guard2.sprite);
 	al_destroy_bitmap(level2.npc1.sprite);
