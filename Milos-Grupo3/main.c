@@ -120,10 +120,16 @@ int main() {
 				if (!titleMenu.runningLevel)drawTitleMenu(&titleMenu, &mouseState);
 				if (titleMenu.selectedOption == 1 && !gameOver.active && !level1.isDone)Level_I_Draw(level1, Font);
 				
-				if(level1.isDone && !gameOver.active && titleMenu.selectedOption == 1 && !level2.player.isDead)Level_II_Draw(level2, Font);
+				if(level1.isDone && !gameOver.active && titleMenu.selectedOption == 1 && !level2.player.isDead && !level2.isDone)Level_II_Draw(level2, Font);
 				if (gameOver.active) drawGameOver(&gameOver, &mouseState);
 
-				//
+				if(level2.isDone){
+					titleMenu = createTitleMenu(Font);
+					level1 = Level_I_load();
+					level2 = Level_II_load();
+					pauseMenu = pauseMenu = createPauseMenu(Font);
+					gameOver = createGameOver(Font);
+				}
 
 
 				if (level1.inPause&& !level1.inDialogue && !level1.puzzle_open) drawPauseMenu(&pauseMenu, &mouseState);
@@ -171,18 +177,18 @@ int main() {
 					done = true;
 			}
 
-			if (button_contains_point(&pauseMenu.retriviedbutton, mouseState.x, mouseState.y) && level1.inPause) {
+			if (button_contains_point(&pauseMenu.retriviedbutton, mouseState.x, mouseState.y) && level1.inPause && !level1.puzzle_open) {
 				titleMenu = createTitleMenu(Font);
 				level1 = Level_I_load();
 				level2 = Level_II_load();
 				gameOver = createGameOver(Font);
 			}
 			else {
-				if (button_contains_point(&pauseMenu.ContinuePlaybutton, mouseState.x, mouseState.y) && level1.inPause){
+				if (button_contains_point(&pauseMenu.ContinuePlaybutton, mouseState.x, mouseState.y) && level1.inPause && !level1.puzzle_open){
 					level1.inPause = false;
 					level2.inPause = false;
 				}
-				if (button_contains_point(&pauseMenu.exitButton, mouseState.x, mouseState.y) && level1.inPause)
+				if (button_contains_point(&pauseMenu.exitButton, mouseState.x, mouseState.y) && level1.inPause && !level1.puzzle_open)
 					done = true;
 			}
 			

@@ -13,8 +13,8 @@ levelII Level_II_load(){
     l.dialogueOption = 10;
     l.playerSpritepositionX = 0;
     l.playerSpritepositionY = 0;
-    l.npc1 = newEntity(605, 320, 0, 0, al_map_rgb(100, 0, 150),"./imgs/sprites/sprite_oldMan.png", false);
-    l.npc2 = newEntity(625, 320, 0, 0, al_map_rgb(100, 0, 150),"./imgs/sprites/sprite_oldMan.png", false);
+    l.npc1 = newEntity(605, 320, 0, 0, al_map_rgb(100, 0, 150),"./imgs/sprites/senhora.png", false);
+    l.npc2 = newEntity(625, 320, 0, 0, al_map_rgb(100, 0, 150),"./imgs/sprites/senhora.png", false);
     l.guard1 = enemyLoad(1230, 0);
     l.guard2 = enemyLoad(1740, -64);
     l.guard3 = enemyLoad(2495, 320);
@@ -23,6 +23,7 @@ levelII Level_II_load(){
     l.guard2_Folowing = false;
     l.guard3_Folowing = false;
     l.guard4_Folowing = false;
+    l.isDone = false;
     l.guard1flip = true;
     l.guard2flip = true;
     l.guard3flip = true;
@@ -127,7 +128,7 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
         } 
 
         if(l->player.x < 400) l->player.x = 400;
-        if(l->player.x > 2800-l->player.width) l->player.x = 2800-l->player.width;
+        if(l->player.x > 2800-l->player.width) l->isDone = true;
 
         if (check_entity_tile_collision(&l->player, l->map, l->tileset, 4)){
             l->player.life -= 30;
@@ -158,8 +159,10 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
 			            movEntity(&l->guard1, 0);//esquerda
 		        }
 		        else{
-                    if(l->guard1.x < l->player.x) l->guard1flip = ALLEGRO_FLIP_HORIZONTAL;
-                    movEntity(&l->guard1, 1);//direita
+                    if(l->guard1.x < l->player.x){
+                        l->guard1flip = 0;
+                        movEntity(&l->guard1, 1);//direita
+                    } 
 	            }
             }
         }
@@ -183,8 +186,10 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
 			        movEntity(&l->guard2, 0);//esquerda
 		        }
 		        else{
-                    if(l->guard2.x < l->player.x) l->guard1flip = ALLEGRO_FLIP_HORIZONTAL;
-                    movEntity(&l->guard2, 1);//direita
+                    if(l->guard2.x < l->player.x){
+                        l->guard2flip = 0;
+                        movEntity(&l->guard2, 1);//direita
+                    } 
 	            }
             }
         }
@@ -199,7 +204,10 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
                     l->guard3flip = ALLEGRO_FLIP_HORIZONTAL;
 			        movEntity(&l->guard3, 0);//esquerda
 		        }
-		        else movEntity(&l->guard3, 1);//direita
+		        else{
+                    l->guard3flip = 0;
+                    movEntity(&l->guard3, 1);//direita
+                } 
 	        }
         }
         if(l->guard4_Folowing){
@@ -208,7 +216,10 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
                     l->guard4flip = ALLEGRO_FLIP_HORIZONTAL;
 			        movEntity(&l->guard4, 0);//esquerda
 		        }
-		        else movEntity(&l->guard4, 1);//direita
+		        else{
+                    l->guard4flip = 0;
+                    movEntity(&l->guard4, 1);//direita
+                } 
 	        }
             if(collisionEntityWithEntity(&l->guard4, &l->guard3)) l->guard4.x += 10;
         }
@@ -336,12 +347,13 @@ void Level_II_Draw(levelII l, ALLEGRO_FONT* Font){
     draw_tilemap(l.map, l.tileset, l.cameraX, l.cameraY);
     drawHud(&l.hud);
     if (collisionEntityWithEntity(&l.player, &l.npc1)|| collisionEntityWithEntity(&l.player, &l.npc2))al_draw_text(Font, TEXT_COLOR, (l.npc1.x + l.cameraX)-l.npc1.width/2, l.npc1.y - 25, 0, "[E] Falar");
+    draw_Enity_camera_andImage(&l.npc1, l.cameraX, 0);
+    draw_Enity_camera_andImage(&l.npc2, l.cameraX, ALLEGRO_FLIP_HORIZONTAL);
     if (l.inDialogue) drawDialogue(&l.dialogue, Font, l.dialogueOption);
+    if(check_entity_tile_collision(&l.player, l.map, l.tileset, 8)) al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH/2-50, 530, 0, "A cidade é logo ali ->->");
     if(!l.guard1.isDead)enemyDraw(&l.guard1, l.cameraX, l.guard1flip, 0, 0);
     if(!l.guard2.isDead)enemyDraw(&l.guard2, l.cameraX, l.guard2flip, 0, 0);
     if(!l.guard3.isDead)enemyDraw(&l.guard3, l.cameraX, l.guard3flip, 0, 0);
     if(!l.guard4.isDead)enemyDraw(&l.guard4, l.cameraX, l.guard4flip, 0, 0);
-    draw_Enity_camera_andImage(&l.npc1, l.cameraX);
-    draw_Enity_camera_andImage(&l.npc2, l.cameraX);
     playerDraw(&l.player, l.cameraX, l.playerflip, l.playerSpritepositionX, l.playerSpritepositionY);
 }

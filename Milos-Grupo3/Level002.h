@@ -41,6 +41,7 @@ typedef struct {
 	int guard3flip;
 	bool guard4_Folowing;
 	int guard4flip;
+	bool isDone;
 	int cameraX;
     int cameraY;
 	int playerSpritepositionX, playerSpritepositionY;
