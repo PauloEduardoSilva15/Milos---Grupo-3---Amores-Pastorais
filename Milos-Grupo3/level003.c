@@ -23,9 +23,10 @@ levelIII Level_III_load(){
 void level_III_Update(levelIII* l, ALLEGRO_KEYBOARD_STATE* keystate){
 
     if (l->dialogueOption == 19) {
-		l->inDialogue = false;
+		/*l->inDialogue = false;
         l->inPause = false;
-        l->dialogueOption = 15;
+        l->dialogueOption = 15;*/
+        l->isDone = true;
 	}
     if(l->inDialogue){
         l->inPause = true;

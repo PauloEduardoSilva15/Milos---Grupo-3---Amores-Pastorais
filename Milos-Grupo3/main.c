@@ -15,6 +15,7 @@
 #include "TitleMenu.h"
 #include "gameover.h"
 #include "gamePauseMenu.h"
+#include "minigame.h"
 
 
 
@@ -51,6 +52,8 @@ int main() {
 	
 	TitleMenu titleMenu = createTitleMenu(Font);
 	GameOver gameOver = createGameOver(Font);
+	minigame minigame = loadMinigame(Font);
+	
 
 	PauseMenu pauseMenu = createPauseMenu(Font);
 
@@ -114,13 +117,16 @@ int main() {
 
 				if (level1.isDone&& !level2.player.isDead && !level2.isDone)level_II_Update(&level2, &keyState);
 				if(level1.isDone &&level2.isDone&& !level3.player.isDead)level_III_Update(&level3, &keyState);
-				if(level3.isDone){
+				
+				if(minigame.marcou == true && al_key_down(&keyState, ALLEGRO_KEY_E)){
 					titleMenu = createTitleMenu(Font);
 					level1 = Level_I_load();
 					level2 = Level_II_load();
 					level3 = Level_III_load();
 					pauseMenu = pauseMenu = createPauseMenu(Font);
 					gameOver = createGameOver(Font);
+					minigame = loadMinigame(Font);
+
 				}
 			}
 			if (draw) {
@@ -135,10 +141,12 @@ int main() {
 				if(level1.isDone &&level2.isDone && !gameOver.active && titleMenu.selectedOption == 1 && !level3.player.isDead && !level3.isDone)Level_III_Draw(level3, Font);
 				if (gameOver.active) drawGameOver(&gameOver, &mouseState);
 
-				
+				if(level3.isDone){
+					drawMinigame(&minigame, &mouseState);
+				}
 
 
-				if (level1.inPause&& !level1.inDialogue && !level1.puzzle_open) drawPauseMenu(&pauseMenu, &mouseState);
+				if (level1.inPause&& !level1.inDialogue && !level1.puzzle_open && !level3.isDone) drawPauseMenu(&pauseMenu, &mouseState);
 
 				// Tutorial Controls
 				al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 50, 0, "Controles:");
@@ -198,7 +206,15 @@ int main() {
 				if (button_contains_point(&pauseMenu.exitButton, mouseState.x, mouseState.y) && level1.inPause && !level1.puzzle_open)
 					done = true;
 			}
-			
+			if(button_contains_point(&minigame.resposta1, mouseState.x, mouseState.y)){
+				minigame.respostaMarcada = 1;
+			}
+			if(button_contains_point(&minigame.resposta2, mouseState.x, mouseState.y)){
+				minigame.respostaMarcada = 2;
+			}
+			if(button_contains_point(&minigame.resposta3, mouseState.x, mouseState.y)){
+				minigame.respostaMarcada = 3;
+			}
 		}
 
 		if(ev.type ==  ALLEGRO_EVENT_KEY_DOWN){
