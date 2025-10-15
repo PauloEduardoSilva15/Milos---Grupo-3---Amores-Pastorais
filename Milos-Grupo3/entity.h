@@ -35,4 +35,5 @@ void movEntity(entity* e, int dir);
 void drawEntity(entity* e);
 void draw_entity_with_camera(entity* p, int camera_x);
 void draw_Enity_camera_andImage(entity* p, int camera_x, int flip);
+void draw_Enity_camera_andImage_region(entity* e, int camera_x, int flip, int sx, int sy);
 #endif // !ENTITY_H

@@ -30,9 +30,11 @@
     <ClCompile Include="level.c" />
     <ClCompile Include="Level001.c" />
     <ClCompile Include="Level002.c" />
+    <ClCompile Include="level003.c" />
     <ClCompile Include="lifeDisplay.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="marker.c" />
+    <ClCompile Include="minigame.c" />
     <ClCompile Include="obstacle.c" />
     <ClCompile Include="player.c" />
     <ClCompile Include="puzzle.c" />
@@ -57,8 +59,10 @@
     <ClInclude Include="level.h" />
     <ClInclude Include="Level001.h" />
     <ClInclude Include="Level002.h" />
+    <ClInclude Include="level003.h" />
     <ClInclude Include="lifeDisplay.h" />
     <ClInclude Include="marker.h" />
+    <ClInclude Include="minigame.h" />
     <ClInclude Include="obstacle.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="puzzle.h" />

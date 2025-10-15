@@ -67,6 +67,22 @@ void drawDialogue(textBox * text, ALLEGRO_FONT* font, int textOption) {
 		strcpy(text->personagem, "Dirceu-Pensamentos");
 		strcpy(text->texto, "Descanse em paz amigo.");
 		break;
+	case 15:
+		strcpy(text->personagem, "Marcelos");
+		strcpy(text->texto, "Pelo visto você não desiste mesmo da minha filha...");
+		break;
+	case 16:
+		strcpy(text->personagem, "Marcelos");
+		strcpy(text->texto, "Mas dessa vês eu lhe darei uma chance...");
+		break;
+	case 17:
+		strcpy(text->personagem, "Marcelos");
+		strcpy(text->texto, "Eu te deixo casar com minha filha!!!");
+		break;
+	case 18:
+		strcpy(text->personagem, "Marcelos");
+		strcpy(text->texto, "Mas apenas se você completar esse poema");
+		break;
 	}
 
 	al_draw_filled_rectangle(text->x, text->y, text->x + text->width, text->y + text->height, text->boxColor);
