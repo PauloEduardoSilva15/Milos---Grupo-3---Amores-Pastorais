@@ -49,3 +49,7 @@ void draw_entity_with_camera(entity* p, int camera_x) {
 void draw_Enity_camera_andImage(entity* e, int camera_x, int flip){
 	al_draw_bitmap(e->sprite, e->x + camera_x, e->y, flip);
 }
+
+void draw_Enity_camera_andImage_region(entity* e, int camera_x, int flip, int sx, int sy){
+	al_draw_bitmap_region(e->sprite, sx, sy, e->width, e->height, e->x + camera_x, e->y, flip);
+}

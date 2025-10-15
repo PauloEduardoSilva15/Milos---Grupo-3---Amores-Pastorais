@@ -24,10 +24,15 @@ typedef struct {
     Tilemap * map;
 
     entity player;
+    entity npc1;
+    entity npc2;
     int cameraX;
     int cameraY;
 	int playerSpritepositionX, playerSpritepositionY;
 	int playerflip;
+    bool inDialogue;
+	int dialogueOption;
+	textBox dialogue;
     bool isDone;
     bool inPause;
     //hud hud;

@@ -205,19 +205,27 @@ int main() {
 			if (ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE && titleMenu.runningLevel&& !gameOver.active) {
 				level1.inDialogue = false;
 				level1.inPause = true;
-				if(level1.isDone && !level2.isDone) level2.inPause = true;
-				if(level1.isDone && level2.isDone && !level3.isDone) level3.inPause = true;
+				if(level1.isDone && !level2.isDone){
+					level2.inPause = true;
+					level2.inDialogue = false;
+				} 
+				if(level1.isDone && level2.isDone && !level3.isDone){
+
+					level3.inPause = true;
+					level2.inDialogue = false;
+				} 
 				if (level1.puzzle_open) {
 					level1.puzzle_open = false;
 				}
 				//done = true; // Sai do jogo com ESC
 			}
 
-			if ((level1.inDialogue || level2.inDialogue) && ev.keyboard.keycode == ALLEGRO_KEY_T && (level1.dialogueOption != 5 || level1.dialogueOption != 9 || level2.dialogueOption != 14)){
+			if ((level1.inDialogue || level2.inDialogue || level3.inDialogue) && ev.keyboard.keycode == ALLEGRO_KEY_T && (level1.dialogueOption != 5 || level1.dialogueOption != 9 || level2.dialogueOption != 14 || level3.dialogueOption !=19)){
 				if(!level1.isDone) level1.dialogueOption++;
-				if(level1.isDone) level2.dialogueOption++;
+				if(level1.isDone && !level2.isDone) level2.dialogueOption++;
+				if(level1.isDone && level2.isDone && !level3.isDone) level3.dialogueOption++;
 			}
-			if ((level1.inDialogue || level2.inDialogue) && ev.keyboard.keycode == ALLEGRO_KEY_R){
+			if ((level1.inDialogue || level2.inDialogue || level3.inDialogue) && ev.keyboard.keycode == ALLEGRO_KEY_R){
 				if(!level1.isDone){
 					level1.inDialogue = false;
             		level1.inPause = false;
@@ -227,7 +235,7 @@ int main() {
             		level2.inPause = false;
 				}
 				if(level1.isDone && level2.isDone && !level3.isDone){
-					//level3.inDialogue = false;
+					level3.inDialogue = false;
             		level3.inPause = false;
 				}
 			}
@@ -251,6 +259,8 @@ int main() {
 	al_destroy_bitmap(level2.guard1.sprite);
 	al_destroy_bitmap(level2.guard2.sprite);
 	al_destroy_bitmap(level2.npc1.sprite);
+	al_destroy_bitmap(level3.npc1.sprite);
+	al_destroy_bitmap(level3.npc2.sprite);
 	al_destroy_bitmap(level2.npc2.sprite);
 	al_destroy_bitmap(level2.hud.key.sprite);
 	al_destroy_bitmap(level1.player.sprite);

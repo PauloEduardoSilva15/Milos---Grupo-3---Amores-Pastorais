@@ -8,6 +8,11 @@ levelIII Level_III_load(){
     l.playerflip = 0;
     l.playerSpritepositionX = 0;
     l.playerSpritepositionY = 0;
+    l.npc1 = newEntity(1233, 352, 0, 0, al_map_rgb(100, 0, 150),"./imgs/sprites/Thebos.png", false);
+    l.npc2 = newEntity(1198, 352, 0, 0, al_map_rgb(100, 0, 150),"./imgs/sprites/marilia.png", false);
+    l.dialogue = dialogueLoad();
+    l.inDialogue = false;
+    l.dialogueOption = 15;
     l.cameraX = 0;
     l.cameraY = 0;
     l.inPause = false;
@@ -16,6 +21,15 @@ levelIII Level_III_load(){
 
 }
 void level_III_Update(levelIII* l, ALLEGRO_KEYBOARD_STATE* keystate){
+
+    if (l->dialogueOption == 19) {
+		l->inDialogue = false;
+        l->inPause = false;
+        l->dialogueOption = 15;
+	}
+    if(l->inDialogue){
+        l->inPause = true;
+    }
 
     if(!l->inPause){
         if(l->player.life <= 0) l->player.isDead = true; 
@@ -51,6 +65,9 @@ void level_III_Update(levelIII* l, ALLEGRO_KEYBOARD_STATE* keystate){
         }
         if(al_key_down(keystate, ALLEGRO_KEY_A))l->playerflip = ALLEGRO_FLIP_HORIZONTAL;
 	    if(al_key_down(keystate, ALLEGRO_KEY_D)) l->playerflip = 0;
+        if (al_key_down(keystate, ALLEGRO_KEY_E) && collisionEntityWithEntity(&l->player, &l->npc1)) {
+            l->inDialogue = true;
+        }
     }
 
     if(al_key_down(keystate, ALLEGRO_KEY_X))
@@ -63,5 +80,9 @@ void level_III_Update(levelIII* l, ALLEGRO_KEYBOARD_STATE* keystate){
 }
 void Level_III_Draw(levelIII l, ALLEGRO_FONT* Font){
     draw_tilemap(l.map, l.tileset, l.cameraX, l.cameraY);
+    draw_Enity_camera_andImage(&l.npc1, l.cameraX, 0);
+    if (l.inDialogue) drawDialogue(&l.dialogue, Font, l.dialogueOption);
+    draw_Enity_camera_andImage_region(&l.npc2, l.cameraX, 0, 0, 0);
+    if (collisionEntityWithEntity(&l.player, &l.npc1))al_draw_text(Font, TEXT_COLOR, (l.npc1.x + l.cameraX)-l.npc1.width/2, l.npc1.y - 25, 0, "[E] Falar");
     playerDraw(&l.player, l.cameraX, l.playerflip, l.playerSpritepositionX, l.playerSpritepositionY);
 }
