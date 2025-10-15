@@ -49,6 +49,8 @@ void level_III_Update(levelIII* l, ALLEGRO_KEYBOARD_STATE* keystate){
             if (check_entity_tile_collision(&l->player, l->map, l->tileset, 0))
                 l->player.x -= l->player.v;
         }
+        if(al_key_down(keystate, ALLEGRO_KEY_A))l->playerflip = ALLEGRO_FLIP_HORIZONTAL;
+	    if(al_key_down(keystate, ALLEGRO_KEY_D)) l->playerflip = 0;
     }
 
     if(al_key_down(keystate, ALLEGRO_KEY_X))
