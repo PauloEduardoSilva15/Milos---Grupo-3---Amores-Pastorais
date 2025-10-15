@@ -199,12 +199,19 @@ int main() {
 				//done = true; // Sai do jogo com ESC
 			}
 
-			if (level1.inDialogue && ev.keyboard.keycode == ALLEGRO_KEY_T && (level1.dialogueOption != 5 || level1.dialogueOption != 9))
-				level1.dialogueOption++;
-
-			if (level1.inDialogue && ev.keyboard.keycode == ALLEGRO_KEY_R){
-				level1.inDialogue = false;
-            	level1.inPause = false;
+			if ((level1.inDialogue || level2.inDialogue) && ev.keyboard.keycode == ALLEGRO_KEY_T && (level1.dialogueOption != 5 || level1.dialogueOption != 9 || level2.dialogueOption != 14)){
+				if(!level1.isDone) level1.dialogueOption++;
+				if(level1.isDone) level2.dialogueOption++;
+			}
+			if ((level1.inDialogue || level2.inDialogue) && ev.keyboard.keycode == ALLEGRO_KEY_R){
+				if(!level1.isDone){
+					level1.inDialogue = false;
+            		level1.inPause = false;
+				}
+				if(level1.isDone){
+					level2.inDialogue = false;
+            		level2.inPause = false;
+				}
 			}
 
 			if (level1.puzzle_open && ev.keyboard.keycode == ALLEGRO_KEY_R){
@@ -319,6 +326,8 @@ int main() {
 	destroy_tilemap(level1.map);
 	destroy_tileset(level2.tileset);
 	destroy_tilemap(level2.map);
+	al_destroy_bitmap(level2.npc1.sprite);
+	al_destroy_bitmap(level2.npc2.sprite);
 	al_destroy_bitmap(level2.hud.key.sprite);
 	al_destroy_bitmap(level1.player.sprite);
 	al_destroy_bitmap(level1.door.sprite);

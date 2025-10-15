@@ -129,7 +129,7 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
             l->player.vY += PLAYER_GRAVIDADE;
             l->player.y += l->player.vY;
         }
-        if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_FLOOR)|| (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD)&& l->dirPlayer !=1)){
+        if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_FLOOR)|| (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD))){
             l->player.y -= l->player.vY;
             l->player.vY = 0;
             l->player.can_jump = true;

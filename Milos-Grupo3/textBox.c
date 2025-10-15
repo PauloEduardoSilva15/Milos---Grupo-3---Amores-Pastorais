@@ -51,6 +51,22 @@ void drawDialogue(textBox * text, ALLEGRO_FONT* font, int textOption) {
 		strcpy(text->personagem, "Dirceu");
 		strcpy(text->texto, "Como você chegou aqui?");
 		break;
+	case 10:
+		strcpy(text->personagem, "Audine");
+		strcpy(text->texto, "Você ficou sabendo daquele homen que decaptaram em praça pública?");
+		break;
+	case 11:
+		strcpy(text->personagem, "Araminta");
+		strcpy(text->texto, "Sim fiquei, sabe quem é sabe o nome dele?");
+		break;
+	case 12:
+		strcpy(text->personagem, "Audine");
+		strcpy(text->texto, "Acho que era Tiradendes o apelido dele.");
+		break;
+	case 13:
+		strcpy(text->personagem, "Dirceu-Pensamentos");
+		strcpy(text->texto, "Descanse em paz amigo.");
+		break;
 	}
 
 	al_draw_filled_rectangle(text->x, text->y, text->x + text->width, text->y + text->height, text->boxColor);

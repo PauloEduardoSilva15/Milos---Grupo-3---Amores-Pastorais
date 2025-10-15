@@ -22,8 +22,13 @@
 typedef struct {
 
 	entity player;
+	entity npc1;
+	entity npc2;
 	Tileset * tileset;
 	Tilemap * map;
+	bool inDialogue;
+	int dialogueOption;
+	textBox dialogue;
 	int cameraX;
     int cameraY;
 	int playerSpritepositionX, playerSpritepositionY;
