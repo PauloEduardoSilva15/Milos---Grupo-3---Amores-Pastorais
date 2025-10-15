@@ -42,6 +42,8 @@ typedef struct {
     int doorSpritePositionX;
     bool getKey;
     bool isDone; // verifica se terminou o level
+    bool puzzle_open;
+    bool puzzle_isSolved;
     int playerSpritepositionX, playerSpritepositionY;
     int guard1flip;
     int guard2flip;

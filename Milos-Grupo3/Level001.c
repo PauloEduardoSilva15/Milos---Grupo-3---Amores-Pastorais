@@ -30,6 +30,8 @@ levelI Level_I_load(){
     l.guard2_Folowing = false;
     l.dirPlayer = 0;
     l.isDone = false;
+    l.puzzle_open = false;
+    l.puzzle_isSolved = false;
     l.PlayerFlip = 0;
     l.inPause = false;
     l.cameraX = 0;
@@ -114,8 +116,9 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
             l->inDialogue = false;
             l->inPause = false;
         }*/
-        if (al_key_down(keystate, ALLEGRO_KEY_E) && collisionEntityMaker(&l->player, &l->maker)) {
-            l->getKey = true;
+        if (al_key_down(keystate, ALLEGRO_KEY_E) && collisionEntityMaker(&l->player, &l->maker)&&!l->puzzle_isSolved) {
+            l->inPause = true;
+            l->puzzle_open = true;
 
         }
         if((check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WALL_2) /*||(check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD))*/ || check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_FLOOR_2))){
@@ -126,14 +129,13 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
             l->player.vY += PLAYER_GRAVIDADE;
             l->player.y += l->player.vY;
         }
-        if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_FLOOR)|| (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD)&& l->dirPlayer !=1)){
+        if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_FLOOR)|| (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD))){
             l->player.y -= l->player.vY;
             l->player.vY = 0;
             l->player.can_jump = true;
         }
 
         if (!check_entity_tile_collision(&l->guard1, l->map, l->tileset, MAP1_TILE_FLOOR) && !l->guard1.isDead) {    
-            //l->dirguard1 = 0;
             l->guard1.vY += PLAYER_GRAVIDADE;
             l->guard1.y += l->guard1.vY;
         }
@@ -180,7 +182,7 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
 			        if (!collisionEntityObstacle(&l->guard1, &l->door)) movEntity(&l->guard1, 0);//esquerda
 		        }
 		        else{
-                    if(l->guard1.x < l->player.x) l->guard1flip = ALLEGRO_FLIP_HORIZONTAL;
+                    if(l->guard1.x < l->player.x) l->guard1flip = 0;
                     if (!collisionEntityObstacle(&l->guard1, &l->door) && !l->getKey){
                         movEntity(&l->guard1, 1);//direita
                     } 
@@ -196,7 +198,7 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
 			        if (!collisionEntityObstacle(&l->guard2, &l->door)&&!check_entity_tile_collision(&l->guard2, l->map, l->tileset, MAP1_TILE_WOOD)) movEntity(&l->guard2, 0);//esquerda 
 		        }
 		        else{
-                    l->guard2flip = ALLEGRO_FLIP_HORIZONTAL;
+                    l->guard2flip = 0;
                     if (!collisionEntityObstacle(&l->guard2, &l->door) && !l->getKey &&!check_entity_tile_collision(&l->guard2, l->map, l->tileset, MAP1_TILE_WOOD)){
                         movEntity(&l->guard2, 1);//direita
                         
@@ -216,18 +218,27 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
             if (!collisionEntityWithEntity(&l->player, &l->guard3)) {
 		        if (l->guard3.x > l->player.x) {
                     l->guard3flip = ALLEGRO_FLIP_HORIZONTAL;
-			        if (!collisionEntityObstacle(&l->guard3, &l->door)) movEntity(&l->guard3, 0);//esquerda
+			        if (!collisionEntityObstacle(&l->guard3, &l->door)){
+                        movEntity(&l->guard3, 0);//esquerda
+                    } 
 		        }
-		        else if (!collisionEntityObstacle(&l->guard3, &l->door) && !l->getKey) movEntity(&l->guard3, 1);//direita
+		        else{
+                    l->guard3flip = 0;
+                    movEntity(&l->guard3, 1);//direita
+                } 
+                    
 	        }
         }
         if(l->guard4_Folowing){
             if (!collisionEntityWithEntity(&l->player, &l->guard4)) {
 		        if (l->guard4.x > l->player.x) {
                     l->guard4flip = ALLEGRO_FLIP_HORIZONTAL;
-			        if (!collisionEntityObstacle(&l->guard4, &l->door)) movEntity(&l->guard4, 0);//esquerda
+			        movEntity(&l->guard4, 0);//esquerda
 		        }
-		        else if (!collisionEntityObstacle(&l->guard4, &l->door) && !l->getKey) movEntity(&l->guard4, 1);//direita
+		        else{ 
+                    l->guard4flip = 0;
+                    movEntity(&l->guard4, 1);//direita
+                } 
 	        }
             if(collisionEntityWithEntity(&l->guard4, &l->guard3)) l->guard4.x += 10;
         }
@@ -403,6 +414,8 @@ void level_I_Update(levelI * l, ALLEGRO_KEYBOARD_STATE * keystate){
         printf("x = %d, y = %d \n", l->player.x, l->player.y);
     //Camera segindo o player no eixo X
     l->cameraX = -(l->player.x - SCREEN_WIDTH / 2);
+
+    if(al_key_down(keystate, ALLEGRO_KEY_B)) l->isDone = true;
 }
 
 
@@ -423,7 +436,7 @@ void Level_I_Draw(levelI  l, ALLEGRO_FONT* Font){
     //desenha o maker
     draw_maker_with_camera(&l.maker, l.cameraX);
     //desenha o npc
-    draw_Enity_camera_andImage(&l.npc, l.cameraX);
+    draw_Enity_camera_andImage(&l.npc, l.cameraX, 0);
     // desenha a porta
     drawObstacle(&l.door, l.cameraX, l.doorSpritePositionX, 0);
     //desenha o guarda 1

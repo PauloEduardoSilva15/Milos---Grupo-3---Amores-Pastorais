@@ -34,5 +34,5 @@ entity newEntity(int x, int y, int v, float vY, ALLEGRO_COLOR color, const char*
 void movEntity(entity* e, int dir);
 void drawEntity(entity* e);
 void draw_entity_with_camera(entity* p, int camera_x);
-void draw_Enity_camera_andImage(entity* p, int camera_x);
+void draw_Enity_camera_andImage(entity* p, int camera_x, int flip);
 #endif // !ENTITY_H
