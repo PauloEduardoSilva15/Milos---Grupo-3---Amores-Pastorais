@@ -11,7 +11,7 @@
 
 typedef struct {
     ALLEGRO_FONT* font;
-
+    ALLEGRO_BITMAP * poema;
     button resposta1;
     button resposta2;
     button resposta3;
