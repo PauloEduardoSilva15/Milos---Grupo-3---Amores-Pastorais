@@ -36,16 +36,8 @@ void drawMinigame(minigame * menu,  ALLEGRO_MOUSE_STATE* mouseState){
         }
     } 
     if(menu->respostaMarcada != 0 && !menu->marcou){
-        if(menu->respostaMarcada == 1){
-            menu->marcou = true;
-            strcpy(menu->texto, "Você acertou, Dirceu se casou com marília e viveram felizes para sempre");
-            al_draw_text(menu->font, TEXT_COLOR, (SCREEN_WIDTH/2), (SCREEN_WIDTH/2) + 200, ALLEGRO_ALIGN_CENTER, "Clique em E para voltar no menu ->>");
-        }else{
-            menu->marcou = true;
-            strcpy(menu->texto, "Você perdeu, mas o npc aletório da primeira fase encontrou o cajado!");
-            
-            
-        }
+        if(menu->respostaMarcada == 1) menu->marcou = true;
+        else menu->marcou = true;
 
         
 
@@ -62,7 +54,9 @@ void drawMinigame(minigame * menu,  ALLEGRO_MOUSE_STATE* mouseState){
     
     
     if(menu->marcou){
-        al_draw_text(menu->font, TEXT_COLOR, (SCREEN_WIDTH/2), (SCREEN_WIDTH/2) - 100, ALLEGRO_ALIGN_CENTER, menu->texto);
+        if(menu->respostaMarcada == 1) al_draw_text(menu->font, TEXT_COLOR, (SCREEN_WIDTH/2), (SCREEN_WIDTH/2) - 100, ALLEGRO_ALIGN_CENTER, "Você acertou, Dirceu se casou com marília e viveram felizes para sempre");
+        else al_draw_text(menu->font, TEXT_COLOR, (SCREEN_WIDTH/2), (SCREEN_WIDTH/2) - 100, ALLEGRO_ALIGN_CENTER, "Você perdeu, mas o npc aletório da primeira fase encontrou o cajado!");
+        
         al_draw_text(menu->font, TEXT_COLOR, (SCREEN_WIDTH/2), (SCREEN_WIDTH/2), ALLEGRO_ALIGN_CENTER, "[E] Tela de título->>");
     }
     
