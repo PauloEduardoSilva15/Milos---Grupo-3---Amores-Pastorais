@@ -141,7 +141,7 @@ int main() {
 				if(level1.isDone &&level2.isDone && !gameOver.active && titleMenu.selectedOption == 1 && !level3.player.isDead && !level3.isDone)Level_III_Draw(level3, Font);
 				if (gameOver.active) drawGameOver(&gameOver, &mouseState);
 
-				if(level3.isDone){
+				if(level1.isDone&&level2.isDone&&level3.isDone){
 					drawMinigame(&minigame, &mouseState);
 				}
 
@@ -157,6 +157,8 @@ int main() {
 				al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 100, 0, "E - Interagir");
 				al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 110, 0, "J - Ataque");
 				al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 120, 0, "K - Defesa");
+
+				//printf("x = %d, y = %d\n", mouseState.x, mouseState.y);
 
 				al_flip_display();
 				al_clear_to_color(al_map_rgb(0, 0, 0));
@@ -206,13 +208,13 @@ int main() {
 				if (button_contains_point(&pauseMenu.exitButton, mouseState.x, mouseState.y) && level1.inPause && !level1.puzzle_open)
 					done = true;
 			}
-			if(button_contains_point(&minigame.resposta1, mouseState.x, mouseState.y)){
+			if(button_contains_point(&minigame.resposta1, mouseState.x, mouseState.y) && level1.isDone&& level2.isDone && level3.isDone){
 				minigame.respostaMarcada = 1;
 			}
-			if(button_contains_point(&minigame.resposta2, mouseState.x, mouseState.y)){
+			if(button_contains_point(&minigame.resposta2, mouseState.x, mouseState.y)&& level1.isDone&& level2.isDone && level3.isDone){
 				minigame.respostaMarcada = 2;
 			}
-			if(button_contains_point(&minigame.resposta3, mouseState.x, mouseState.y)){
+			if(button_contains_point(&minigame.resposta3, mouseState.x, mouseState.y)&& level1.isDone&& level2.isDone && level3.isDone){
 				minigame.respostaMarcada = 3;
 			}
 		}
@@ -271,6 +273,7 @@ int main() {
 	destroy_tilemap(level2.map);
 	destroy_tileset(level3.tileset);
 	destroy_tilemap(level3.map);
+	al_destroy_bitmap(minigame.poema);
 	al_destroy_bitmap(level3.player.sprite);
 	al_destroy_bitmap(level2.guard1.sprite);
 	al_destroy_bitmap(level2.guard2.sprite);
