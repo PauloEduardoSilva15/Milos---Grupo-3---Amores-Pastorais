@@ -5,7 +5,6 @@ minigame loadMinigame(ALLEGRO_FONT* font){
     m.font = font;
     m.poema = al_load_bitmap("./imgs/poema.png");
     m.respostaMarcada = 0;
-    m.respostaMarcada = 0;
     m.resposta1 = newButton(((SCREEN_WIDTH / 2)-100)-200, (SCREEN_HEIGHT / 2)+200, "prendada", font);
     m.resposta2 = newButton(((SCREEN_WIDTH / 2)-100), (SCREEN_HEIGHT / 2)+200, "chão", font);
     m.resposta3 = newButton(((SCREEN_WIDTH / 2)-100)+200, (SCREEN_HEIGHT / 2)+200, "semblante", font);
@@ -36,8 +35,7 @@ void drawMinigame(minigame * menu,  ALLEGRO_MOUSE_STATE* mouseState){
         }
     } 
     if(menu->respostaMarcada != 0 && !menu->marcou){
-        if(menu->respostaMarcada == 1) menu->marcou = true;
-        else menu->marcou = true;
+        menu->marcou = true;
 
         
 
@@ -53,7 +51,7 @@ void drawMinigame(minigame * menu,  ALLEGRO_MOUSE_STATE* mouseState){
 
     
     
-    if(menu->marcou){
+    if(menu->marcou && menu->respostaMarcada !=0){
         if(menu->respostaMarcada == 1) al_draw_text(menu->font, TEXT_COLOR, (SCREEN_WIDTH/2), (SCREEN_WIDTH/2) - 100, ALLEGRO_ALIGN_CENTER, "Você acertou, Dirceu se casou com marília e viveram felizes para sempre");
         else al_draw_text(menu->font, TEXT_COLOR, (SCREEN_WIDTH/2), (SCREEN_WIDTH/2) - 100, ALLEGRO_ALIGN_CENTER, "Você perdeu, mas o npc aletório da primeira fase encontrou o cajado!");
         
