@@ -5,6 +5,7 @@ minigame loadMinigame(ALLEGRO_FONT* font){
     m.font = font;
     m.poema = al_load_bitmap("./imgs/poema.png");
     m.respostaMarcada = 0;
+    m.marcou = false;
     m.resposta1 = newButton(((SCREEN_WIDTH / 2)-100)-200, (SCREEN_HEIGHT / 2)+200, "prendada", font);
     m.resposta2 = newButton(((SCREEN_WIDTH / 2)-100), (SCREEN_HEIGHT / 2)+200, "chão", font);
     m.resposta3 = newButton(((SCREEN_WIDTH / 2)-100)+200, (SCREEN_HEIGHT / 2)+200, "semblante", font);
