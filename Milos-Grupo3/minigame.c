@@ -72,7 +72,7 @@ void drawMinigame(minigame * menu,  ALLEGRO_MOUSE_STATE* mouseState){
         al_draw_text(menu->font, TEXT_COLOR, (SCREEN_WIDTH/2)-200, 340, 0, "Cupido, se tens dó de um triste amante,");
         al_draw_text(menu->font, TEXT_COLOR, (SCREEN_WIDTH/2)-200, 350, 0, "Ou forma de Lorino dois sujeitos,");
         al_draw_text(menu->font, TEXT_COLOR, (SCREEN_WIDTH/2)-200, 360, 0, "Ou forma desses dois um só semblante.");
-
+        
         
     }
     

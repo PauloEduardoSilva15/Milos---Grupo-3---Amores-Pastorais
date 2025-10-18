@@ -141,7 +141,7 @@ int main() {
 				if(level1.isDone &&level2.isDone && !gameOver.active && titleMenu.selectedOption == 1 && !level3.player.isDead && !level3.isDone)Level_III_Draw(level3, Font);
 				if (gameOver.active) drawGameOver(&gameOver, &mouseState);
 
-				if(level3.isDone){
+				if(level1.isDone&&level2.isDone&&level3.isDone){
 					drawMinigame(&minigame, &mouseState);
 				}
 
@@ -206,13 +206,13 @@ int main() {
 				if (button_contains_point(&pauseMenu.exitButton, mouseState.x, mouseState.y) && level1.inPause && !level1.puzzle_open)
 					done = true;
 			}
-			if(button_contains_point(&minigame.resposta1, mouseState.x, mouseState.y)){
+			if(button_contains_point(&minigame.resposta1, mouseState.x, mouseState.y) && level1.isDone&& level2.isDone && level3.isDone){
 				minigame.respostaMarcada = 1;
 			}
-			if(button_contains_point(&minigame.resposta2, mouseState.x, mouseState.y)){
+			if(button_contains_point(&minigame.resposta2, mouseState.x, mouseState.y)&& level1.isDone&& level2.isDone && level3.isDone){
 				minigame.respostaMarcada = 2;
 			}
-			if(button_contains_point(&minigame.resposta3, mouseState.x, mouseState.y)){
+			if(button_contains_point(&minigame.resposta3, mouseState.x, mouseState.y)&& level1.isDone&& level2.isDone && level3.isDone){
 				minigame.respostaMarcada = 3;
 			}
 		}
