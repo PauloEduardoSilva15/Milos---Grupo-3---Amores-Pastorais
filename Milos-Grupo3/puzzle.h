@@ -1,4 +1,3 @@
-// puzzle.h
 #ifndef PUZZLE_H
 #define PUZZLE_H
 
@@ -6,7 +5,6 @@
 #include <allegro5/allegro_image.h>
 #include "quad.h"
 #include "gameConstants.h"
-
 
 typedef enum {
     PIECE_STRAIGHT = 0,
@@ -17,16 +15,14 @@ typedef enum {
 
 typedef struct {
     PieceType type;
-    int rot;        // 0..3 (multiplo de 90 graus)
-    int locked;     // 1 = im�vel
-    int isStart;    // 1 = in�cio
+    int rot;        // 0..3 (múltiplos de 90 graus)
+    int locked;     // 1 = imóvel
+    int isStart;    // 1 = início
     int isEnd;      // 1 = final
-    int connected;  // 1 = fluxo chegou at� aqui
-    int x, y;
+    int connected;  // 1 = fluxo chegou até aqui
+    int x, y;       // posição de desenho
     int size;
 } Piece;
-
-
 
 void puzzle_init(void);
 void puzzle_handle_event(ALLEGRO_EVENT* ev);
