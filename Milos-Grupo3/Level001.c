@@ -456,4 +456,4 @@ void Level_I_Draw(levelI  l, ALLEGRO_FONT* Font){
     
     //desenha a hud
     drawHud(&l.hud);
-}
+} 
