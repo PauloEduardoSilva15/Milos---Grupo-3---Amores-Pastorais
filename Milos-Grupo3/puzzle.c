@@ -162,7 +162,7 @@ void puzzle_draw(int screen_w, int screen_h) {
 
     ALLEGRO_FONT* f = al_create_builtin_font();
     if (f) {
-        const char* msg = solved ? "✅ Puzzle resolvido!" : "Conecte o início ao final! Clique para girar";
+        const char* msg = solved ? "Puzzle resolvido!" : "Conecte o início ao final! Clique para girar";
         al_draw_text(f, al_map_rgb(255, 255, 255), screen_w / 2, startY - 36,
             ALLEGRO_ALIGN_CENTRE, msg);
         al_destroy_font(f);
