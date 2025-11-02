@@ -6,7 +6,6 @@
 #include <allegro5/allegro_image.h>
 #include <stdbool.h>
 #include "gameConstants.h"
-#include "quad.h"
 
 //Entitys ou entidade s�o todos os personagens. Essa estrutura serve para o jogador, pro inimigo e para os npcs
 
@@ -20,7 +19,6 @@ typedef struct {
 	int width, height;
 	int life;
 	ALLEGRO_COLOR color;
-	quad q;
 	bool can_jump;
 	bool modoAtaque; 
 	bool modoDefesa;

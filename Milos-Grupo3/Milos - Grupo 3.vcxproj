@@ -27,7 +27,6 @@
     <ClCompile Include="gamePauseMenu.c" />
     <ClCompile Include="hud.c" />
     <ClCompile Include="item.c" />
-    <ClCompile Include="level.c" />
     <ClCompile Include="Level001.c" />
     <ClCompile Include="Level002.c" />
     <ClCompile Include="level003.c" />
@@ -38,7 +37,6 @@
     <ClCompile Include="obstacle.c" />
     <ClCompile Include="player.c" />
     <ClCompile Include="puzzle.c" />
-    <ClCompile Include="quad.c" />
     <ClCompile Include="systemTileset.c" />
     <ClCompile Include="textBox.c" />
     <ClCompile Include="TitleMenu.c" />
@@ -56,7 +54,6 @@
     <ClInclude Include="gamePauseMenu.h" />
     <ClInclude Include="hud.h" />
     <ClInclude Include="item.h" />
-    <ClInclude Include="level.h" />
     <ClInclude Include="Level001.h" />
     <ClInclude Include="Level002.h" />
     <ClInclude Include="level003.h" />
@@ -66,7 +63,6 @@
     <ClInclude Include="obstacle.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="puzzle.h" />
-    <ClInclude Include="quad.h" />
     <ClInclude Include="textBox.h" />
     <ClInclude Include="TitleMenu.h" />
   </ItemGroup>

@@ -3,7 +3,6 @@
 
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_image.h>
-#include "quad.h"
 #include "gameConstants.h"
 
 typedef enum {

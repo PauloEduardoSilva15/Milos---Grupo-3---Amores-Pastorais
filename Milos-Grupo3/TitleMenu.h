@@ -9,7 +9,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
-#include "quad.h"
 #include "button.h"
 #include "gameConstants.h"
 
