@@ -6,7 +6,7 @@
 
 
 #define TITLE "Pastoral Loves" // Titulo da Janela
-#define VERSION "Betha 1.1"// versão do jogo
+#define VERSION "Betha 1.2"// versão do jogo
 #define SCREEN_WIDTH 800 // Largura da Janela
 #define SCREEN_HEIGHT 600 // Altura da Janela
 #define FPS 60
