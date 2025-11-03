@@ -2,7 +2,6 @@
 #include <allegro5/allegro_primitives.h>
 #include "entity.h"
 #include "gameConstants.h"
-#include "quad.h"
 
 
 entity newEntity(int x, int y, int v, float vY,ALLEGRO_COLOR color, const char* filename, bool can_jump) {
