@@ -82,8 +82,8 @@
 #define GRID_COLS 5
 
 #define BUTTON_X 200
-#define BUTTON_COLOR_NORMAL al_map_rgb(64, 25, 22) 
-#define BUTTON_COLOR_HOVER al_map_rgb(115, 72, 47) 
+#define BUTTON_COLOR_NORMAL al_map_rgb(26, 81, 115) 
+#define BUTTON_COLOR_HOVER al_map_rgb(36, 91, 125) 
 //#define BUTTON_COLOR_CLICKED al_map_rgb(150, 150, 0)
 
 

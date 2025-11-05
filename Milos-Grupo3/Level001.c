@@ -150,6 +150,7 @@ void level_I_Update(levelI* l, ALLEGRO_KEYBOARD_STATE* keystate) {
             //l->dirguard1 = 0;
             l->guard2.vY += PLAYER_GRAVIDADE;
             l->guard2.y += l->guard2.vY;
+            l->guard2.can_jump = false;
         }
         if ((check_entity_tile_collision(&l->guard2, l->map, l->tileset, MAP1_TILE_FLOOR) || check_entity_tile_collision(&l->guard2, l->map, l->tileset, MAP1_TILE_WOOD)) && !l->guard2.isDead) {
             l->guard2.y -= l->guard2.vY;
@@ -175,7 +176,7 @@ void level_I_Update(levelI* l, ALLEGRO_KEYBOARD_STATE* keystate) {
 
         if (l->player.x >= 583) l->guard1_Folowing = true;
 
-        if (l->guard1_Folowing) {
+        if (l->guard1_Folowing && l->guard1.x != l->player.x) {
             if (!collisionEntityWithEntity(&l->player, &l->guard1)) {
                 if (l->guard1.x > l->player.x) {
                     l->guard1flip = ALLEGRO_FLIP_HORIZONTAL;
@@ -189,17 +190,20 @@ void level_I_Update(levelI* l, ALLEGRO_KEYBOARD_STATE* keystate) {
                 }
             }
         }
+        if(l->guard1.x == l->player.x) l->guard1flip = 0;
+        
 
         if (l->player.x >= 1218) l->guard2_Folowing = true;
-        if (l->guard2_Folowing) {
+        if (l->guard2_Folowing && l->guard2.can_jump) {
+            if(l->guard2.x == l->player.x) l->guard2flip = 0;
             if (!collisionEntityWithEntity(&l->player, &l->guard2)) {
                 if (l->guard2.x > l->player.x) {
                     l->guard2flip = ALLEGRO_FLIP_HORIZONTAL;
-                    if (!collisionEntityObstacle(&l->guard2, &l->door) && !check_entity_tile_collision(&l->guard2, l->map, l->tileset, MAP1_TILE_WOOD)) movEntity(&l->guard2, 0);//esquerda 
+                    if (!collisionEntityObstacle(&l->guard2, &l->door) && !check_entity_tile_collision(&l->guard2, l->map, l->tileset, MAP1_TILE_WOOD) && l->guard2.can_jump) movEntity(&l->guard2, 0);//esquerda 
                 }
                 else {
                     l->guard2flip = 0;
-                    if (!collisionEntityObstacle(&l->guard2, &l->door) && !l->getKey && !check_entity_tile_collision(&l->guard2, l->map, l->tileset, MAP1_TILE_WOOD)) {
+                    if (!collisionEntityObstacle(&l->guard2, &l->door) && !l->getKey && !check_entity_tile_collision(&l->guard2, l->map, l->tileset, MAP1_TILE_WOOD)&& l->guard2.can_jump) {
                         movEntity(&l->guard2, 1);//direita
 
                     }
@@ -217,6 +221,7 @@ void level_I_Update(levelI* l, ALLEGRO_KEYBOARD_STATE* keystate) {
         }
         if (l->guard3_Folowing) {
             if (!collisionEntityWithEntity(&l->player, &l->guard3)) {
+                if(l->guard3.x == l->player.x) l->guard3flip = 0;
                 if (l->guard3.x > l->player.x) {
                     l->guard3flip = ALLEGRO_FLIP_HORIZONTAL;
                     if (!collisionEntityObstacle(&l->guard3, &l->door)) {
@@ -232,6 +237,7 @@ void level_I_Update(levelI* l, ALLEGRO_KEYBOARD_STATE* keystate) {
         }
         if (l->guard4_Folowing) {
             if (!collisionEntityWithEntity(&l->player, &l->guard4)) {
+                if(l->guard4.x == l->player.x) l->guard4flip = 0;
                 if (l->guard4.x > l->player.x) {
                     l->guard4flip = ALLEGRO_FLIP_HORIZONTAL;
                     movEntity(&l->guard4, 0);//esquerda
@@ -454,5 +460,5 @@ void Level_I_Draw(levelI  l, ALLEGRO_FONT* Font) {
 
 
     //desenha a hud
-    drawHud(&l.hud);
+    drawHud(&l.hud, Font);
 }
