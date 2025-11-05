@@ -139,20 +139,28 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
         if (check_entity_tile_collision(&l->guard2, l->map, l->tileset, 4)){
             l->guard2.life -= 30;
         }
+        if (check_entity_tile_collision(&l->guard3, l->map, l->tileset, 4)){
+            l->guard3.life -= 30;
+        }
+        if (check_entity_tile_collision(&l->guard4, l->map, l->tileset, 4)){
+            l->guard4.life -= 30;
+        }
 
-        if (!check_entity_tile_collision(&l->guard1, l->map, l->tileset, 1) && !l->guard1.isDead) {    
-            l->guard1.vY += PLAYER_GRAVIDADE;
-            l->guard1.y += l->guard1.vY;
-        }
-        if ((check_entity_tile_collision(&l->guard1, l->map, l->tileset, 1)|| check_entity_tile_collision(&l->guard1, l->map, l->tileset, 3) || check_entity_tile_collision(&l->guard1, l->map, l->tileset, 7))&& !l->guard1.isDead){
-            l->guard1.y -= l->guard1.vY;
-            l->guard1.vY = 0;
-        }
+
+        
 
 
         if(l->player.x >= 750) l->guard1_Folowing = true;
 
-        if(l->guard1_Folowing){
+            if(l->guard1_Folowing){
+                if (!check_entity_tile_collision(&l->guard1, l->map, l->tileset, 1) && !l->guard1.isDead) {    
+                l->guard1.vY += PLAYER_GRAVIDADE;
+                l->guard1.y += l->guard1.vY;
+            }
+            if ((check_entity_tile_collision(&l->guard1, l->map, l->tileset, 1)|| check_entity_tile_collision(&l->guard1, l->map, l->tileset, 3) || check_entity_tile_collision(&l->guard1, l->map, l->tileset, 7))&& !l->guard1.isDead){
+                l->guard1.y -= l->guard1.vY;
+                l->guard1.vY = 0;
+            }
             if (!collisionEntityWithEntity(&l->player, &l->guard1)) {
 		        if (l->guard1.x > l->player.x) {
                     l->guard1flip = ALLEGRO_FLIP_HORIZONTAL;
@@ -199,6 +207,14 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
             l->guard4_Folowing = true;
         } 
         if(l->guard3_Folowing){
+            if (!check_entity_tile_collision(&l->guard3, l->map, l->tileset, 1) && !l->guard3.isDead) {    
+                l->guard3.vY += PLAYER_GRAVIDADE;
+                l->guard3.y += l->guard3.vY;
+            }
+            if ((check_entity_tile_collision(&l->guard3, l->map, l->tileset, 1)|| check_entity_tile_collision(&l->guard3, l->map, l->tileset, 3) || check_entity_tile_collision(&l->guard3, l->map, l->tileset, 7))&& !l->guard3.isDead){
+                l->guard3.y -= l->guard3.vY;
+                l->guard3.vY = 0;
+            }
             if (!collisionEntityWithEntity(&l->player, &l->guard3)) {
 		        if (l->guard3.x > l->player.x) {
                     l->guard3flip = ALLEGRO_FLIP_HORIZONTAL;
@@ -211,6 +227,14 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
 	        }
         }
         if(l->guard4_Folowing){
+            if (!check_entity_tile_collision(&l->guard4, l->map, l->tileset, 1) && !l->guard4.isDead) {    
+                l->guard4.vY += PLAYER_GRAVIDADE;
+                l->guard4.y += l->guard4.vY;
+            }
+                if ((check_entity_tile_collision(&l->guard4, l->map, l->tileset, 1)|| check_entity_tile_collision(&l->guard4, l->map, l->tileset, 3) || check_entity_tile_collision(&l->guard4, l->map, l->tileset, 7))&& !l->guard4.isDead){
+                    l->guard4.y -= l->guard4.vY;
+                    l->guard4.vY = 0;
+            }
             if (!collisionEntityWithEntity(&l->player, &l->guard4)) {
 		        if (l->guard4.x > l->player.x) {
                     l->guard4flip = ALLEGRO_FLIP_HORIZONTAL;

@@ -361,10 +361,6 @@ void level_I_Update(levelI* l, ALLEGRO_KEYBOARD_STATE* keystate) {
         if ((l->player.x) < 33) l->player.x = 33;
         if ((l->guard1.x) < 33 && !l->guard1.isDead) l->guard1.x = 33;
 
-
-
-
-
         //Controles do player
         if (al_key_down(keystate, ALLEGRO_KEY_W) && l->player.can_jump && !check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD)) {
 
