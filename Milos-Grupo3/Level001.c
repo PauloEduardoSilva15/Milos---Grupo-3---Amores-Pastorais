@@ -191,6 +191,8 @@ void level_I_Update(levelI* l, ALLEGRO_KEYBOARD_STATE* keystate) {
             }
         }
         if(l->guard1.x == l->player.x) l->guard1flip = 0;
+
+        if(collisionEntityObstacle(&l->player, &l->door)&& !l->getKey)l->player.x -= 10;
         
 
         if (l->player.x >= 1218) l->guard2_Folowing = true;
@@ -220,13 +222,11 @@ void level_I_Update(levelI* l, ALLEGRO_KEYBOARD_STATE* keystate) {
             l->guard4_Folowing = true;
         }
         if (l->guard3_Folowing) {
-            if (!collisionEntityWithEntity(&l->player, &l->guard3)) {
+            if (!collisionEntityWithEntity(&l->player, &l->guard3) && !collisionEntityObstacle(&l->guard4, &l->door)) {
                 if(l->guard3.x == l->player.x) l->guard3flip = 0;
                 if (l->guard3.x > l->player.x) {
                     l->guard3flip = ALLEGRO_FLIP_HORIZONTAL;
-                    if (!collisionEntityObstacle(&l->guard3, &l->door)) {
-                        movEntity(&l->guard3, 0);//esquerda
-                    }
+                    movEntity(&l->guard3, 0);//esquerda
                 }
                 else {
                     l->guard3flip = 0;
@@ -235,8 +235,9 @@ void level_I_Update(levelI* l, ALLEGRO_KEYBOARD_STATE* keystate) {
 
             }
         }
+        if(collisionEntityObstacle(&l->guard3, &l->door) || collisionEntityWithEntity(&l->guard3, &l->guard4))l->guard3.x -=10;
         if (l->guard4_Folowing) {
-            if (!collisionEntityWithEntity(&l->player, &l->guard4)) {
+            if (!collisionEntityWithEntity(&l->player, &l->guard4) && !collisionEntityObstacle(&l->guard4, &l->door)) {
                 if(l->guard4.x == l->player.x) l->guard4flip = 0;
                 if (l->guard4.x > l->player.x) {
                     l->guard4flip = ALLEGRO_FLIP_HORIZONTAL;
@@ -249,6 +250,7 @@ void level_I_Update(levelI* l, ALLEGRO_KEYBOARD_STATE* keystate) {
             }
             if (collisionEntityWithEntity(&l->guard4, &l->guard3)) l->guard4.x += 10;
         }
+        if(collisionEntityObstacle(&l->guard4, &l->door))l->guard4.x -=10;
 
 
 
