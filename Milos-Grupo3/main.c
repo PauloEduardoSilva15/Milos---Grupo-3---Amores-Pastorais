@@ -118,33 +118,46 @@ int main() {
 				if (level1.isDone && level2.isDone && !level3.player.isDead)level_III_Update(&level3, &keyState);
 
 				if (minigame.marcou == true && al_key_down(&keyState, ALLEGRO_KEY_E)) {
-					destroy_tileset(level1.tileset);
+					puzzle_destroy();
+					destroy_tileset(level1.tileset);	
 					destroy_tilemap(level1.map);
 					destroy_tileset(level2.tileset);
 					destroy_tilemap(level2.map);
 					destroy_tileset(level3.tileset);
 					destroy_tilemap(level3.map);
 					al_destroy_bitmap(minigame.poema);
-					al_destroy_bitmap(level3.player.sprite);
-					al_destroy_bitmap(level2.guard1.sprite);
-					al_destroy_bitmap(level2.guard2.sprite);
-					al_destroy_bitmap(level2.npc1.sprite);
-					al_destroy_bitmap(level3.npc1.sprite);
-					al_destroy_bitmap(level3.npc2.sprite);
-					al_destroy_bitmap(level2.npc2.sprite);
-					al_destroy_bitmap(level2.hud.key.sprite);
+					
 					al_destroy_bitmap(level1.player.sprite);
-					al_destroy_bitmap(level1.door.sprite);
-					al_destroy_bitmap(level1.hud.key.sprite);
+					al_destroy_bitmap(level2.player.sprite);
+					al_destroy_bitmap(level3.player.sprite);
+
 					al_destroy_bitmap(level1.guard1.sprite);
 					al_destroy_bitmap(level1.guard2.sprite);
 					al_destroy_bitmap(level1.guard3.sprite);
 					al_destroy_bitmap(level1.guard4.sprite);
-					al_destroy_bitmap(level2.player.sprite);
+					al_destroy_bitmap(level2.guard1.sprite);
+					al_destroy_bitmap(level2.guard2.sprite);
+					al_destroy_bitmap(level2.guard3.sprite);
+					al_destroy_bitmap(level2.guard4.sprite);
+
 					al_destroy_bitmap(level1.npc.sprite);
+					al_destroy_bitmap(level2.npc1.sprite);
+					al_destroy_bitmap(level3.npc1.sprite);
+					al_destroy_bitmap(level3.npc2.sprite);
+					al_destroy_bitmap(level2.npc2.sprite);
+
+					al_destroy_bitmap(level1.hud.key.sprite);
+					al_destroy_bitmap(level2.hud.key.sprite);
+	
+					al_destroy_bitmap(level1.door.sprite);
+	
 					al_destroy_bitmap(titleMenu.bg);
 					al_destroy_bitmap(titleMenu.logo);
-					puzzle_destroy();
+
+					al_destroy_font(Font);
+
+
+					Font = al_create_builtin_font();
 					titleMenu = createTitleMenu(Font);
 					puzzle_init();
 					level1 = Level_I_load();
@@ -200,33 +213,50 @@ int main() {
 
 			if (button_contains_point(&gameOver.retryButton, mouseState.x, mouseState.y) && gameOver.active) {
 
+				puzzle_destroy();
 				destroy_tileset(level1.tileset);
 				destroy_tilemap(level1.map);
 				destroy_tileset(level2.tileset);
 				destroy_tilemap(level2.map);
 				destroy_tileset(level3.tileset);
 				destroy_tilemap(level3.map);
+
 				al_destroy_bitmap(minigame.poema);
-				al_destroy_bitmap(level3.player.sprite);
-				al_destroy_bitmap(level2.guard1.sprite);
-				al_destroy_bitmap(level2.guard2.sprite);
-				al_destroy_bitmap(level2.npc1.sprite);
-				al_destroy_bitmap(level3.npc1.sprite);
-				al_destroy_bitmap(level3.npc2.sprite);
-				al_destroy_bitmap(level2.npc2.sprite);
-				al_destroy_bitmap(level2.hud.key.sprite);
+				
 				al_destroy_bitmap(level1.player.sprite);
-				al_destroy_bitmap(level1.door.sprite);
-				al_destroy_bitmap(level1.hud.key.sprite);
+				al_destroy_bitmap(level2.player.sprite);
+				al_destroy_bitmap(level3.player.sprite);
+
 				al_destroy_bitmap(level1.guard1.sprite);
 				al_destroy_bitmap(level1.guard2.sprite);
 				al_destroy_bitmap(level1.guard3.sprite);
 				al_destroy_bitmap(level1.guard4.sprite);
-				al_destroy_bitmap(level2.player.sprite);
+				al_destroy_bitmap(level2.guard1.sprite);
+				al_destroy_bitmap(level2.guard2.sprite);
+				al_destroy_bitmap(level2.guard3.sprite);
+				al_destroy_bitmap(level2.guard4.sprite);
+
 				al_destroy_bitmap(level1.npc.sprite);
+				al_destroy_bitmap(level2.npc1.sprite);
+				al_destroy_bitmap(level2.npc2.sprite);
+				al_destroy_bitmap(level3.npc1.sprite);
+				al_destroy_bitmap(level3.npc2.sprite);
+				
+
+				al_destroy_bitmap(level1.hud.key.sprite);
+				al_destroy_bitmap(level2.hud.key.sprite);
+	
+				al_destroy_bitmap(level1.door.sprite);
+
+	
 				al_destroy_bitmap(titleMenu.bg);
 				al_destroy_bitmap(titleMenu.logo);
-				puzzle_destroy();
+
+				al_destroy_font(Font);
+
+
+				
+				Font = al_create_builtin_font();
 				puzzle_init();
 				titleMenu = createTitleMenu(Font);
 				level1 = Level_I_load();
@@ -247,36 +277,50 @@ int main() {
 				// Limpa todos os dados dos níveis e volta para o menu principal
 
 				// Desaloca a memória usada pelos recursos dos níveis
+				puzzle_destroy();
 				destroy_tileset(level1.tileset);
 				destroy_tilemap(level1.map);
 				destroy_tileset(level2.tileset);
 				destroy_tilemap(level2.map);
 				destroy_tileset(level3.tileset);
 				destroy_tilemap(level3.map);
+
 				al_destroy_bitmap(minigame.poema);
-				al_destroy_bitmap(level3.player.sprite);
-				al_destroy_bitmap(level2.guard1.sprite);
-				al_destroy_bitmap(level2.guard2.sprite);
-				al_destroy_bitmap(level2.npc1.sprite);
-				al_destroy_bitmap(level3.npc1.sprite);
-				al_destroy_bitmap(level3.npc2.sprite);
-				al_destroy_bitmap(level2.npc2.sprite);
-				al_destroy_bitmap(level2.hud.key.sprite);
+				
 				al_destroy_bitmap(level1.player.sprite);
-				al_destroy_bitmap(level1.door.sprite);
-				al_destroy_bitmap(level1.hud.key.sprite);
+				al_destroy_bitmap(level2.player.sprite);
+				al_destroy_bitmap(level3.player.sprite);
+
 				al_destroy_bitmap(level1.guard1.sprite);
 				al_destroy_bitmap(level1.guard2.sprite);
 				al_destroy_bitmap(level1.guard3.sprite);
 				al_destroy_bitmap(level1.guard4.sprite);
-				al_destroy_bitmap(level2.player.sprite);
+				al_destroy_bitmap(level2.guard1.sprite);
+				al_destroy_bitmap(level2.guard2.sprite);
+				al_destroy_bitmap(level2.guard3.sprite);
+				al_destroy_bitmap(level2.guard4.sprite);
+
 				al_destroy_bitmap(level1.npc.sprite);
+				al_destroy_bitmap(level2.npc1.sprite);
+				al_destroy_bitmap(level2.npc2.sprite);
+				al_destroy_bitmap(level3.npc1.sprite);
+				al_destroy_bitmap(level3.npc2.sprite);
+				
+
+				al_destroy_bitmap(level1.hud.key.sprite);
+				al_destroy_bitmap(level2.hud.key.sprite);
+	
+				al_destroy_bitmap(level1.door.sprite);
+	
 				al_destroy_bitmap(titleMenu.bg);
 				al_destroy_bitmap(titleMenu.logo);
-				puzzle_destroy();
+
+				al_destroy_font(Font);
+
 
 				// Reinicia as variáveis do jogo
 				// Reseta o menu de título, os níveis, o menu de pausa e o game over
+				Font = al_create_builtin_font();
 				titleMenu = createTitleMenu(Font);
 				puzzle_init();
 				level1 = Level_I_load();
@@ -362,26 +406,39 @@ int main() {
 	destroy_tilemap(level2.map);
 	destroy_tileset(level3.tileset);
 	destroy_tilemap(level3.map);
+
 	al_destroy_bitmap(minigame.poema);
-	al_destroy_bitmap(level3.player.sprite);
-	al_destroy_bitmap(level2.guard1.sprite);
-	al_destroy_bitmap(level2.guard2.sprite);
-	al_destroy_bitmap(level2.npc1.sprite);
-	al_destroy_bitmap(level3.npc1.sprite);
-	al_destroy_bitmap(level3.npc2.sprite);
-	al_destroy_bitmap(level2.npc2.sprite);
-	al_destroy_bitmap(level2.hud.key.sprite);
+
 	al_destroy_bitmap(level1.player.sprite);
-	al_destroy_bitmap(level1.door.sprite);
-	al_destroy_bitmap(level1.hud.key.sprite);
+	al_destroy_bitmap(level2.player.sprite);
+	al_destroy_bitmap(level3.player.sprite);
+
 	al_destroy_bitmap(level1.guard1.sprite);
 	al_destroy_bitmap(level1.guard2.sprite);
 	al_destroy_bitmap(level1.guard3.sprite);
 	al_destroy_bitmap(level1.guard4.sprite);
-	al_destroy_bitmap(level2.player.sprite);
+	al_destroy_bitmap(level2.guard1.sprite);
+	al_destroy_bitmap(level2.guard2.sprite);
+	al_destroy_bitmap(level2.guard3.sprite);
+	al_destroy_bitmap(level2.guard4.sprite);
+
 	al_destroy_bitmap(level1.npc.sprite);
+	al_destroy_bitmap(level2.npc1.sprite);
+	al_destroy_bitmap(level3.npc1.sprite);
+	al_destroy_bitmap(level3.npc2.sprite);
+	al_destroy_bitmap(level2.npc2.sprite);
+
+	al_destroy_bitmap(level1.hud.key.sprite);
+	al_destroy_bitmap(level2.hud.key.sprite);
+	
+	al_destroy_bitmap(level1.door.sprite);
+	
 	al_destroy_bitmap(titleMenu.bg);
 	al_destroy_bitmap(titleMenu.logo);
+	
+
+	al_destroy_font(Font);
+
 	al_destroy_display(window);
 	al_destroy_timer(timer);
 	al_destroy_event_queue(events);
