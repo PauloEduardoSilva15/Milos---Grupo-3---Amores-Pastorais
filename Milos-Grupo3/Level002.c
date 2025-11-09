@@ -71,10 +71,10 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
         if(al_key_down(keystate, ALLEGRO_KEY_A))l->playerflip = ALLEGRO_FLIP_HORIZONTAL;
 	    if(al_key_down(keystate, ALLEGRO_KEY_D)) l->playerflip = 0;
 
-        if (al_key_down(keystate, ALLEGRO_KEY_J)) l->player.modoAtaque = true;
-		    else l->player.modoAtaque = false;
-		    if (al_key_down(keystate, ALLEGRO_KEY_K)) l->player.modoDefesa = true;
-		    else l->player.modoDefesa = false;
+        if (al_key_down(keystate, ALLEGRO_KEY_J)&&!l->player.modoDefesa) l->player.modoAtaque = true;
+		else l->player.modoAtaque = false;
+		if (al_key_down(keystate, ALLEGRO_KEY_K)&&!l->player.modoAtaque) l->player.modoDefesa = true;
+		else l->player.modoDefesa = false;
 
 
         if (al_key_down(keystate, ALLEGRO_KEY_E) && (collisionEntityWithEntity(&l->player, &l->npc1)|| collisionEntityWithEntity(&l->player, &l->npc2))) {
@@ -97,10 +97,13 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
             l->player.vY += PLAYER_GRAVIDADE;
             l->player.y += l->player.vY;
         }
+        //if (check_entity_tile_collision(&l->player, l->map, l->tileset, 1) && l->player.y > 320)l->player.y = 320;
         if (check_entity_tile_collision(&l->player, l->map, l->tileset, 1) || check_entity_tile_collision(&l->player, l->map, l->tileset, 3) || check_entity_tile_collision(&l->player, l->map, l->tileset, 7)){
             l->player.y -= l->player.vY;
             l->player.vY = 0;
             l->player.can_jump = true;
+            if(check_entity_tile_collision(&l->player, l->map, l->tileset, 1))
+                l->player.y = ((int)(l->player.y / QUAD_SIZE*2)) * QUAD_SIZE;
         }
 
          if (al_key_down(keystate, ALLEGRO_KEY_W) && l->player.can_jump ) {
@@ -202,7 +205,7 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
 
         if(l->player.x >= 1550) l->guard2_Folowing = true;
 
-        if(l->guard2_Folowing){
+        if(l->guard2_Folowing ){
 
             
             if (!collisionEntityWithEntity(&l->player, &l->guard2)) {
@@ -215,7 +218,12 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
                         l->guard2flip = 0;
                         movEntity(&l->guard2, 1);//direita
                     } 
+                    
 	            }
+            
+            }
+            if (check_entity_tile_collision(&l->guard2, l->map, l->tileset, 3)) {
+                l->guard2.y += 10;
             }
         }
 
@@ -267,11 +275,24 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
 		    {
 			    l->guard1.x += 10;
 			    l->player.x -= 10;
+                if(check_entity_tile_collision(&l->player, l->map, l->tileset, 3)){
+                    l->player.y = 320;
+                }
+                if(check_entity_tile_collision(&l->guard1, l->map, l->tileset, 3)){
+                    l->guard1.y = 320;
+                }
+                
 		    }
 		    else {
 			    if (!(l->player.y > l->guard1.y)) {
 				    l->guard1.x -= 10;
 				    l->player.x += 10;
+                    if(check_entity_tile_collision(&l->player, l->map, l->tileset, 3)){
+                        l->player.y = 320;
+                    }
+                    if(check_entity_tile_collision(&l->guard1, l->map, l->tileset, 3))
+                        l->guard1.y = 320;
+                        
 			    }
 			    else
 				    l->guard1.x += 10;
@@ -292,11 +313,15 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
 		    {
 			    l->guard2.x += 10;
 			    l->player.x -= 10;
+                if(check_entity_tile_collision(&l->player, l->map, l->tileset, 3))
+                l->player.y += 10;
 		    }
 		    else {
 			    if (!(l->player.y > l->guard2.y)) {
 				    l->guard2.x -= 10;
 				    l->player.x += 10;
+                    if(check_entity_tile_collision(&l->player, l->map, l->tileset, 3))
+                        l->player.y += 10;
 			    }
 			    else
 				    l->guard2.x += 10;
@@ -366,7 +391,7 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
     //Camera segindo o player no eixo X
     l->cameraX = -(l->player.x - SCREEN_WIDTH / 2);
 
-    if(al_key_down(keystate, ALLEGRO_KEY_B)) l->isDone = true;
+    //if(al_key_down(keystate, ALLEGRO_KEY_B)) l->isDone = true;
 
 }
 
