@@ -6,7 +6,7 @@
 
 
 #define TITLE "Pastoral Loves" // Titulo da Janela
-#define VERSION "Betha 1.3"// versão do jogo
+#define VERSION "Betha 1.4"// versão do jogo
 #define SCREEN_WIDTH 800 // Largura da Janela
 #define SCREEN_HEIGHT 600 // Altura da Janela
 #define FPS 60
@@ -82,8 +82,8 @@
 #define GRID_COLS 5
 
 #define BUTTON_X 200
-#define BUTTON_COLOR_NORMAL al_map_rgb(64, 25, 22) 
-#define BUTTON_COLOR_HOVER al_map_rgb(115, 72, 47) 
+#define BUTTON_COLOR_NORMAL al_map_rgb(26, 81, 115) 
+#define BUTTON_COLOR_HOVER al_map_rgb(36, 91, 125) 
 //#define BUTTON_COLOR_CLICKED al_map_rgb(150, 150, 0)
 
 

@@ -10,7 +10,16 @@ hud newHud(int life, bool getKey){
     return hud;
 }
 
-void drawHud(hud * hud){
+void drawHud(hud * hud, ALLEGRO_FONT * Font){
+    // Tutorial Controls
+	al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 50, 0, "Controles:");
+	al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 60, 0, "Esc - Pause");
+	al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 70, 0, "W - Pular");
+	al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 80, 0, "A - Esquerda");
+	al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 90, 0, "D - Direita");
+	al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 100, 0, "E - Interagir");
+	al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 110, 0, "J - Ataque");
+	al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 120, 0, "K - Defesa");
     displayLifeDraw(&hud->displayLife);
     if(hud->getKey) itemDraw(&hud->key);
 }

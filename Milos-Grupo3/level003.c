@@ -42,17 +42,7 @@ void level_III_Update(levelIII* l, ALLEGRO_KEYBOARD_STATE* keystate){
         if (check_entity_tile_collision(&l->player, l->map, l->tileset, 1)){
             l->player.y -= l->player.vY;
             l->player.vY = 0;
-            l->player.can_jump = true;
         }
-
-        if (al_key_down(keystate, ALLEGRO_KEY_W) && l->player.can_jump && !check_entity_tile_collision(&l->player, l->map, l->tileset, 0) ) {
-            l->player.y -= PLAYER_GRAVIDADE;
-		    l->player.vY = PLAYER_JUMP_FORCE;
-		    l->player.can_jump = false;
-            if (check_entity_tile_collision(&l->player, l->map, l->tileset, 0)){
-                l->player.vY = 0;
-            }
-	    }
 
         if (al_key_down(keystate, ALLEGRO_KEY_A)){
             movEntity(&l->player, 0); 

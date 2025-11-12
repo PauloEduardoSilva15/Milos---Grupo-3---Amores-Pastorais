@@ -4,6 +4,8 @@
 
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
 #include <stdbool.h>
 #include "gameConstants.h"
 #include "lifeDisplay.h"
@@ -18,6 +20,6 @@ typedef struct{
 
 hud newHud(int life, bool getKey);
 
-void drawHud(hud * hud);
+void drawHud(hud * hud, ALLEGRO_FONT * Font);
 
 #endif // HUD_H

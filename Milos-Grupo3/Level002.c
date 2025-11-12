@@ -71,10 +71,10 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
         if(al_key_down(keystate, ALLEGRO_KEY_A))l->playerflip = ALLEGRO_FLIP_HORIZONTAL;
 	    if(al_key_down(keystate, ALLEGRO_KEY_D)) l->playerflip = 0;
 
-        if (al_key_down(keystate, ALLEGRO_KEY_J)) l->player.modoAtaque = true;
-		    else l->player.modoAtaque = false;
-		    if (al_key_down(keystate, ALLEGRO_KEY_K)) l->player.modoDefesa = true;
-		    else l->player.modoDefesa = false;
+        if (al_key_down(keystate, ALLEGRO_KEY_J)&&!l->player.modoDefesa) l->player.modoAtaque = true;
+		else l->player.modoAtaque = false;
+		if (al_key_down(keystate, ALLEGRO_KEY_K)&&!l->player.modoAtaque) l->player.modoDefesa = true;
+		else l->player.modoDefesa = false;
 
 
         if (al_key_down(keystate, ALLEGRO_KEY_E) && (collisionEntityWithEntity(&l->player, &l->npc1)|| collisionEntityWithEntity(&l->player, &l->npc2))) {
@@ -97,10 +97,13 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
             l->player.vY += PLAYER_GRAVIDADE;
             l->player.y += l->player.vY;
         }
+        //if (check_entity_tile_collision(&l->player, l->map, l->tileset, 1) && l->player.y > 320)l->player.y = 320;
         if (check_entity_tile_collision(&l->player, l->map, l->tileset, 1) || check_entity_tile_collision(&l->player, l->map, l->tileset, 3) || check_entity_tile_collision(&l->player, l->map, l->tileset, 7)){
             l->player.y -= l->player.vY;
             l->player.vY = 0;
             l->player.can_jump = true;
+            if(check_entity_tile_collision(&l->player, l->map, l->tileset, 1))
+                l->player.y = ((int)(l->player.y / QUAD_SIZE*2)) * QUAD_SIZE;
         }
 
          if (al_key_down(keystate, ALLEGRO_KEY_W) && l->player.can_jump ) {
@@ -139,6 +142,12 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
         if (check_entity_tile_collision(&l->guard2, l->map, l->tileset, 4)){
             l->guard2.life -= 30;
         }
+        if (check_entity_tile_collision(&l->guard3, l->map, l->tileset, 4)){
+            l->guard3.life -= 30;
+        }
+        if (check_entity_tile_collision(&l->guard4, l->map, l->tileset, 4)){
+            l->guard4.life -= 30;
+        }
 
         if (!check_entity_tile_collision(&l->guard1, l->map, l->tileset, 1) && !l->guard1.isDead) {    
             l->guard1.vY += PLAYER_GRAVIDADE;
@@ -149,10 +158,36 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
             l->guard1.vY = 0;
         }
 
+        if (!check_entity_tile_collision(&l->guard2, l->map, l->tileset, 1) && !l->guard2.isDead) {    
+            l->guard2.vY += PLAYER_GRAVIDADE;
+            l->guard2.y += l->guard2.vY;
+        }
+        if ((check_entity_tile_collision(&l->guard2, l->map, l->tileset, 1)|| check_entity_tile_collision(&l->guard2, l->map, l->tileset, 3) || check_entity_tile_collision(&l->guard2, l->map, l->tileset, 7))&& !l->guard2.isDead){
+            l->guard2.y -= l->guard2.vY;
+            l->guard2.vY = 0;
+        }
+        if (!check_entity_tile_collision(&l->guard3, l->map, l->tileset, 1) && !l->guard3.isDead) {    
+            l->guard3.vY += PLAYER_GRAVIDADE;
+            l->guard3.y += l->guard3.vY;
+        }
+        if ((check_entity_tile_collision(&l->guard3, l->map, l->tileset, 1)|| check_entity_tile_collision(&l->guard3, l->map, l->tileset, 3) || check_entity_tile_collision(&l->guard3, l->map, l->tileset, 7))&& !l->guard3.isDead){
+            l->guard3.y -= l->guard3.vY;
+            l->guard3.vY = 0;
+        }
+
+        if (!check_entity_tile_collision(&l->guard4, l->map, l->tileset, 1) && !l->guard4.isDead) {    
+            l->guard4.vY += PLAYER_GRAVIDADE;
+            l->guard4.y += l->guard4.vY;
+        }
+        if ((check_entity_tile_collision(&l->guard4, l->map, l->tileset, 1)|| check_entity_tile_collision(&l->guard4, l->map, l->tileset, 3) || check_entity_tile_collision(&l->guard4, l->map, l->tileset, 7))&& !l->guard4.isDead){
+            l->guard4.y -= l->guard4.vY;
+            l->guard4.vY = 0;
+        }
 
         if(l->player.x >= 750) l->guard1_Folowing = true;
 
         if(l->guard1_Folowing){
+            
             if (!collisionEntityWithEntity(&l->player, &l->guard1)) {
 		        if (l->guard1.x > l->player.x) {
                     l->guard1flip = ALLEGRO_FLIP_HORIZONTAL;
@@ -170,16 +205,9 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
 
         if(l->player.x >= 1550) l->guard2_Folowing = true;
 
-        if(l->guard2_Folowing){
+        if(l->guard2_Folowing ){
 
-            if (!check_entity_tile_collision(&l->guard2, l->map, l->tileset, 1) && !l->guard2.isDead) {    
-                l->guard2.vY += PLAYER_GRAVIDADE;
-                l->guard2.y += l->guard2.vY;
-            }
-            if ((check_entity_tile_collision(&l->guard2, l->map, l->tileset, 1)|| check_entity_tile_collision(&l->guard2, l->map, l->tileset, 3) || check_entity_tile_collision(&l->guard2, l->map, l->tileset, 7))&& !l->guard2.isDead){
-                l->guard2.y -= l->guard2.vY;
-                l->guard2.vY = 0;
-            }
+            
             if (!collisionEntityWithEntity(&l->player, &l->guard2)) {
 		        if (l->guard2.x > l->player.x) {
                     l->guard2flip = ALLEGRO_FLIP_HORIZONTAL;
@@ -190,7 +218,12 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
                         l->guard2flip = 0;
                         movEntity(&l->guard2, 1);//direita
                     } 
+                    
 	            }
+            
+            }
+            if (check_entity_tile_collision(&l->guard2, l->map, l->tileset, 3)) {
+                l->guard2.y += 10;
             }
         }
 
@@ -199,6 +232,7 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
             l->guard4_Folowing = true;
         } 
         if(l->guard3_Folowing){
+            
             if (!collisionEntityWithEntity(&l->player, &l->guard3)) {
 		        if (l->guard3.x > l->player.x) {
                     l->guard3flip = ALLEGRO_FLIP_HORIZONTAL;
@@ -241,11 +275,24 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
 		    {
 			    l->guard1.x += 10;
 			    l->player.x -= 10;
+                if(check_entity_tile_collision(&l->player, l->map, l->tileset, 3)){
+                    l->player.y = 320;
+                }
+                if(check_entity_tile_collision(&l->guard1, l->map, l->tileset, 3)){
+                    l->guard1.y = 320;
+                }
+                
 		    }
 		    else {
 			    if (!(l->player.y > l->guard1.y)) {
 				    l->guard1.x -= 10;
 				    l->player.x += 10;
+                    if(check_entity_tile_collision(&l->player, l->map, l->tileset, 3)){
+                        l->player.y = 320;
+                    }
+                    if(check_entity_tile_collision(&l->guard1, l->map, l->tileset, 3))
+                        l->guard1.y = 320;
+                        
 			    }
 			    else
 				    l->guard1.x += 10;
@@ -266,11 +313,15 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
 		    {
 			    l->guard2.x += 10;
 			    l->player.x -= 10;
+                if(check_entity_tile_collision(&l->player, l->map, l->tileset, 3))
+                l->player.y += 10;
 		    }
 		    else {
 			    if (!(l->player.y > l->guard2.y)) {
 				    l->guard2.x -= 10;
 				    l->player.x += 10;
+                    if(check_entity_tile_collision(&l->player, l->map, l->tileset, 3))
+                        l->player.y += 10;
 			    }
 			    else
 				    l->guard2.x += 10;
@@ -340,7 +391,7 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
     //Camera segindo o player no eixo X
     l->cameraX = -(l->player.x - SCREEN_WIDTH / 2);
 
-    if(al_key_down(keystate, ALLEGRO_KEY_B)) l->isDone = true;
+    //if(al_key_down(keystate, ALLEGRO_KEY_B)) l->isDone = true;
 
 }
 
@@ -348,7 +399,7 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
 void Level_II_Draw(levelII l, ALLEGRO_FONT* Font){
     al_clear_to_color(al_map_rgb(9, 155, 255));
     draw_tilemap(l.map, l.tileset, l.cameraX, l.cameraY);
-    drawHud(&l.hud);
+    drawHud(&l.hud, Font);
     if (collisionEntityWithEntity(&l.player, &l.npc1)|| collisionEntityWithEntity(&l.player, &l.npc2))al_draw_text(Font, TEXT_COLOR, (l.npc1.x + l.cameraX)-l.npc1.width/2, l.npc1.y - 25, 0, "[E] Falar");
     draw_Enity_camera_andImage(&l.npc1, l.cameraX, 0);
     draw_Enity_camera_andImage(&l.npc2, l.cameraX, ALLEGRO_FLIP_HORIZONTAL);
