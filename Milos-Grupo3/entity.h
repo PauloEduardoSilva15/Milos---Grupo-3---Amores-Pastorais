@@ -4,6 +4,7 @@
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_image.h>
+#include <stdio.h>
 #include <stdbool.h>
 #include "gameConstants.h"
 
@@ -27,7 +28,7 @@ typedef struct {
 }entity;
 
 
-//fun��es da entity
+//funções da entity
 entity newEntity(int x, int y, int v, float vY, ALLEGRO_COLOR color, const char* filename, bool can_jump);
 void movEntity(entity* e, int dir);
 void drawEntity(entity* e);

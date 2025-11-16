@@ -7,6 +7,9 @@
 entity newEntity(int x, int y, int v, float vY,ALLEGRO_COLOR color, const char* filename, bool can_jump) {
 	entity e;
 	e.sprite= al_load_bitmap(filename);
+	if(!e.sprite){
+		printf("Erro ao carregar a imagem %s\n", filename);
+	}
 	e.x = x;
 	e.y = y;
 	e.v = v;
