@@ -231,6 +231,7 @@ void level_I_Update(levelI* l, ALLEGRO_KEYBOARD_STATE* keystate) {
         if (l->player.x > 1988) {
             l->guard3_Folowing = true;
             l->guard4_Folowing = true;
+           
         }
         if (l->guard3_Folowing) {
             if (!collisionEntityWithEntity(&l->player, &l->guard3) && !collisionEntityObstacle(&l->guard4, &l->door)) {
@@ -268,7 +269,7 @@ void level_I_Update(levelI* l, ALLEGRO_KEYBOARD_STATE* keystate) {
         if (collisionEntityWithEntity(&l->guard1, &l->player) && l->player.life > 0) {
             if (!l->player.modoAtaque) {
                 if (!l->player.modoDefesa)
-                    if (!l->guard1.isDead)l->player.life -= 0.5; //tira vida do player
+                    if (!l->guard1.isDead)l->player.life -= 1; //tira vida do player
             }
             else {
                 if (!l->player.modoDefesa)
@@ -280,7 +281,7 @@ void level_I_Update(levelI* l, ALLEGRO_KEYBOARD_STATE* keystate) {
         if (collisionEntityWithEntity(&l->guard2, &l->player) && l->player.life > 0) {
             if (!l->player.modoAtaque) {
                 if (!l->player.modoDefesa)
-                    if (!l->guard2.isDead)l->player.life -= 0.5; //tira vida do player
+                    if (!l->guard2.isDead)l->player.life -= 1.5; //tira vida do player
             }
             else {
                 if (!l->player.modoDefesa)
@@ -295,7 +296,7 @@ void level_I_Update(levelI* l, ALLEGRO_KEYBOARD_STATE* keystate) {
             }
             else {
                 if (!l->player.modoDefesa)
-                    if (l->guard3.life > 0) l->guard3.life -= 3; //tira vida do inimigo
+                    if (l->guard3.life > 0) l->guard3.life -= 5; //tira vida do inimigo
             }
         }
 
@@ -308,7 +309,7 @@ void level_I_Update(levelI* l, ALLEGRO_KEYBOARD_STATE* keystate) {
             }
             else {
                 if (!l->player.modoDefesa)
-                    if (l->guard4.life > 0) l->guard4.life -= 3; //tira vida do inimigo
+                    if (l->guard4.life > 0) l->guard4.life -= 5; //tira vida do inimigo
             }
         }
 

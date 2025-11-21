@@ -55,7 +55,7 @@
 #define ENEMY_VELOCITY_0 3
 #define ENEMY_COLOR  al_map_rgb(255, 0, 0)
 #define ENEMY_ATACK_DAMAGE 1
-#define ENEMY_PUSHBACK 30
+#define ENEMY_PUSHBACK 25
 
 
 #define KEY_ITEM_X (SCREEN_WIDTH - 700)//(SCREEN_WIDTH - 700)

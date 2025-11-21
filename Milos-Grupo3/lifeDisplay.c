@@ -13,6 +13,7 @@ DisplayLife displayLifeLoad(int life){
 
 
 void displayLifeDraw(DisplayLife * displayLife){
-    al_draw_filled_rectangle(displayLife->x, displayLife->y,
-        displayLife->x + displayLife->width, displayLife->y + displayLife->height, displayLife->color);
+    al_draw_filled_rectangle(displayLife->x, displayLife->y, displayLife->x + MAXLIFE_0, displayLife->y + displayLife->height, al_map_rgb(255,0,0));
+    al_draw_filled_rectangle(displayLife->x, displayLife->y,displayLife->x + displayLife->width, displayLife->y + displayLife->height, displayLife->color);
+    
 }
