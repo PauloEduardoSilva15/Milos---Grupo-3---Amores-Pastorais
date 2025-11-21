@@ -6,7 +6,7 @@
 
 
 #define TITLE "Pastoral Loves" // Titulo da Janela
-#define VERSION "Betha 1.4"// versão do jogo
+#define VERSION "Betha 1.5"// versão do jogo
 #define SCREEN_WIDTH 800 // Largura da Janela
 #define SCREEN_HEIGHT 600 // Altura da Janela
 #define FPS 60
@@ -55,6 +55,7 @@
 #define ENEMY_VELOCITY_0 3
 #define ENEMY_COLOR  al_map_rgb(255, 0, 0)
 #define ENEMY_ATACK_DAMAGE 1
+#define ENEMY_PUSHBACK 30
 
 
 #define KEY_ITEM_X (SCREEN_WIDTH - 700)//(SCREEN_WIDTH - 700)
@@ -72,7 +73,7 @@
 #define DOR_Y_0 (SCREEN_HEIGHT / 2) 
 #define DOOR_HEIGHT 200
 #define DOR_VELOCITY_0 50
-#define DOR_COLOR  al_map_rgb(150, 50, 0)
+
 
 #define MARKER_X 1633
 #define MARKER_Y 185
@@ -82,8 +83,8 @@
 #define GRID_COLS 5
 
 #define BUTTON_X 200
-#define BUTTON_COLOR_NORMAL al_map_rgb(26, 81, 115) 
-#define BUTTON_COLOR_HOVER al_map_rgb(36, 91, 125) 
+#define BUTTON_COLOR_NORMAL al_map_rgb(100, 50, 0)
+#define BUTTON_COLOR_HOVER al_map_rgb(150, 100, 10) 
 //#define BUTTON_COLOR_CLICKED al_map_rgb(150, 150, 0)
 
 

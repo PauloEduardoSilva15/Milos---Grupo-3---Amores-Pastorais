@@ -86,8 +86,17 @@ void level_I_Update(levelI* l, ALLEGRO_KEYBOARD_STATE* keystate) {
         if (al_key_down(keystate, ALLEGRO_KEY_A))l->PlayerFlip = ALLEGRO_FLIP_HORIZONTAL;
         if (al_key_down(keystate, ALLEGRO_KEY_D)) l->PlayerFlip = 0;
 
-        if (al_key_down(keystate, ALLEGRO_KEY_J)&&!l->player.modoDefesa) l->player.modoAtaque = true;
-		else l->player.modoAtaque = false;
+        if(l->player.modoAtaque && l->player.attack_cooldown == 0.0f) {
+            l->player.attack_cooldown = 1.0f; // Set cooldown duration
+        }
+
+        if(l->player.attack_cooldown > 0.0f) {
+            l->player.attack_cooldown -= 0.1f; // Decrease cooldown
+            if(l->player.attack_cooldown < 0.0f){
+                l->player.attack_cooldown = 0.0f; // Clamp to 0
+                l->player.modoAtaque = false; // Reset attack mode
+            } 
+        }
 		if (al_key_down(keystate, ALLEGRO_KEY_K)&&!l->player.modoAtaque) l->player.modoDefesa = true;
 		else l->player.modoDefesa = false;
 
@@ -104,6 +113,7 @@ void level_I_Update(levelI* l, ALLEGRO_KEYBOARD_STATE* keystate) {
             l->playerSpritepositionY = 0;
         }
 
+        
 
 
         //Colisões
@@ -258,7 +268,7 @@ void level_I_Update(levelI* l, ALLEGRO_KEYBOARD_STATE* keystate) {
         if (collisionEntityWithEntity(&l->guard1, &l->player) && l->player.life > 0) {
             if (!l->player.modoAtaque) {
                 if (!l->player.modoDefesa)
-                    if (!l->guard1.isDead)l->player.life -= 3; //tira vida do player
+                    if (!l->guard1.isDead)l->player.life -= 0.5; //tira vida do player
             }
             else {
                 if (!l->player.modoDefesa)
@@ -270,7 +280,7 @@ void level_I_Update(levelI* l, ALLEGRO_KEYBOARD_STATE* keystate) {
         if (collisionEntityWithEntity(&l->guard2, &l->player) && l->player.life > 0) {
             if (!l->player.modoAtaque) {
                 if (!l->player.modoDefesa)
-                    if (!l->guard2.isDead)l->player.life -= 3; //tira vida do player
+                    if (!l->guard2.isDead)l->player.life -= 0.5; //tira vida do player
             }
             else {
                 if (!l->player.modoDefesa)
@@ -306,19 +316,19 @@ void level_I_Update(levelI* l, ALLEGRO_KEYBOARD_STATE* keystate) {
         if (collisionEntityWithEntity(&l->player, &l->guard1)) {
             if (l->guard1.x > l->player.x)
             {
-                l->guard1.x += 10;
-                l->player.x -= 10;
+                l->guard1.x += ENEMY_PUSHBACK ;
+                l->player.x -= ENEMY_PUSHBACK ;
                 if(check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD)||check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WALL_2))
-                l->player.y += 10; 
+                l->player.y += ENEMY_PUSHBACK ; 
             }
             else {
                 if (!(l->player.y > l->guard1.y)) {
-                    l->guard1.x -= 10;
-                    l->player.x += 10;
+                    l->guard1.x -= ENEMY_PUSHBACK ;
+                    l->player.x += ENEMY_PUSHBACK ;
                     if(check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD)||check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WALL_2))l->player.y += 10; 
                 }
                 else
-                    l->guard1.x += 10;
+                    l->guard1.x += ENEMY_PUSHBACK ;
             }
             
         }
@@ -326,57 +336,57 @@ void level_I_Update(levelI* l, ALLEGRO_KEYBOARD_STATE* keystate) {
         if (collisionEntityWithEntity(&l->player, &l->guard2)) {
             if (l->guard2.x > l->player.x)
             {
-                l->guard2.x += 10;
-                l->player.x -= 10;
+                l->guard2.x += ENEMY_PUSHBACK ;
+                l->player.x -= ENEMY_PUSHBACK ;
                 if(check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD))
-                l->player.y += 10;
+                l->player.y += ENEMY_PUSHBACK ;
             }
             else {
                 if (!(l->player.y > l->guard2.y)) {
-                    l->guard2.x -= 10;
-                    l->player.x += 10;
+                    l->guard2.x -= ENEMY_PUSHBACK ;
+                    l->player.x += ENEMY_PUSHBACK ;
                     if(check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD))l->player.y += 10;
                 }
                 else
-                    l->guard2.x += 10;
+                    l->guard2.x += ENEMY_PUSHBACK ;
             }
         }
 
         if (collisionEntityWithEntity(&l->player, &l->guard3)) {
             if (l->guard3.x > l->player.x)
             {
-                l->guard3.x += 10;
-                l->player.x -= 10;
+                l->guard3.x += ENEMY_PUSHBACK ;
+                l->player.x -= ENEMY_PUSHBACK ;
                 if(check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD))
-                l->player.y += 10;
+                l->player.y += ENEMY_PUSHBACK ;
             }
             else {
                 if (!(l->player.y > l->guard3.y)) {
-                    l->guard3.x -= 10;
-                    l->player.x += 10;
+                    l->guard3.x -= ENEMY_PUSHBACK ;
+                    l->player.x += ENEMY_PUSHBACK ;
                     if(check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD))l->player.y += 10; 
                 }
                 else
-                    l->guard3.x += 10;
+                    l->guard3.x += ENEMY_PUSHBACK ;
             }
         }
 
         if (collisionEntityWithEntity(&l->player, &l->guard4)) {
             if (l->guard4.x > l->player.x)
             {
-                l->guard4.x += 10;
-                l->player.x -= 10;
+                l->guard4.x += ENEMY_PUSHBACK ;
+                l->player.x -= ENEMY_PUSHBACK ;
                 if(check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD))
-                l->player.y += 10;
+                l->player.y += ENEMY_PUSHBACK ;
             }
             else {
                 if (!(l->player.y > l->guard4.y)) {
-                    l->guard4.x -= 10;
-                    l->player.x += 10;
+                    l->guard4.x -= ENEMY_PUSHBACK;
+                    l->player.x += ENEMY_PUSHBACK;
                     if(check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD))l->player.y += 10; 
                 }
                 else
-                    l->guard4.x += 10;
+                    l->guard4.x += ENEMY_PUSHBACK;
             }
         }
 

@@ -22,6 +22,7 @@ entity newEntity(int x, int y, int v, float vY,ALLEGRO_COLOR color, const char* 
 	e.modoAtaque = false;
 	e.modoDefesa = false;
 	e.isDead = false;
+	e.attack_cooldown = 0.0f;
 	return e;
 }
 

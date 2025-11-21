@@ -24,6 +24,7 @@ typedef struct {
 	bool modoAtaque; 
 	bool modoDefesa;
 	bool isDead;
+	float attack_cooldown;
 
 }entity;
 
