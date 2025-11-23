@@ -144,6 +144,12 @@ void level_I_Update(levelI* l, ALLEGRO_KEYBOARD_STATE* keystate) {
             l->player.vY = 0;
             l->player.can_jump = true;
         }
+        if(check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD)) {
+            l->player.y += ENEMY_PUSHBACK;
+        }
+        if(check_entity_tile_collision(&l->guard2, l->map, l->tileset, MAP1_TILE_WOOD)) {
+            l->guard2.y += ENEMY_PUSHBACK;
+        }
 
         // ----- Guard1 gravidade / chão (corrigido: agrupamento lógico) -----
         if (!check_entity_tile_collision(&l->guard1, l->map, l->tileset, MAP1_TILE_FLOOR) && !l->guard1.isDead) {
@@ -168,6 +174,7 @@ void level_I_Update(levelI* l, ALLEGRO_KEYBOARD_STATE* keystate) {
             l->guard2.vY = 0;
             l->guard2.can_jump = true;
         }
+        
 
         if (check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_SPIN)) {
             l->player.life -= 30;
@@ -319,8 +326,7 @@ void level_I_Update(levelI* l, ALLEGRO_KEYBOARD_STATE* keystate) {
             {
                 l->guard1.x += ENEMY_PUSHBACK ;
                 l->player.x -= ENEMY_PUSHBACK ;
-                if(check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD)||check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WALL_2))
-                l->player.y += ENEMY_PUSHBACK ; 
+                if(check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD)||check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WALL_2)) l->player.y += ENEMY_PUSHBACK ; 
             }
             else {
                 if (!(l->player.y > l->guard1.y)) {
@@ -339,8 +345,7 @@ void level_I_Update(levelI* l, ALLEGRO_KEYBOARD_STATE* keystate) {
             {
                 l->guard2.x += ENEMY_PUSHBACK ;
                 l->player.x -= ENEMY_PUSHBACK ;
-                if(check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD))
-                l->player.y += ENEMY_PUSHBACK ;
+                if(check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD)) l->player.y += ENEMY_PUSHBACK ;
             }
             else {
                 if (!(l->player.y > l->guard2.y)) {
@@ -358,8 +363,7 @@ void level_I_Update(levelI* l, ALLEGRO_KEYBOARD_STATE* keystate) {
             {
                 l->guard3.x += ENEMY_PUSHBACK ;
                 l->player.x -= ENEMY_PUSHBACK ;
-                if(check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD))
-                l->player.y += ENEMY_PUSHBACK ;
+                if(check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD)) l->player.y += ENEMY_PUSHBACK ;
             }
             else {
                 if (!(l->player.y > l->guard3.y)) {
@@ -377,8 +381,7 @@ void level_I_Update(levelI* l, ALLEGRO_KEYBOARD_STATE* keystate) {
             {
                 l->guard4.x += ENEMY_PUSHBACK ;
                 l->player.x -= ENEMY_PUSHBACK ;
-                if(check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD))
-                l->player.y += ENEMY_PUSHBACK ;
+                if(check_entity_tile_collision(&l->player, l->map, l->tileset, MAP1_TILE_WOOD))l->player.y += ENEMY_PUSHBACK ;
             }
             else {
                 if (!(l->player.y > l->guard4.y)) {
@@ -484,7 +487,7 @@ void Level_I_Draw(levelI  l, ALLEGRO_FONT* Font) {
     playerDraw(&l.player, l.cameraX, l.PlayerFlip, l.playerSpritepositionX, l.playerSpritepositionY);
 
 
-    if (l.player.x >= l.door.x - 64 && !l.getKey)al_draw_text(Font, ENEMY_COLOR, SCREEN_WIDTH / 2 - 50, 530, 0, "Você precisa de uma chave");
+    if (l.player.x >= l.door.x - 64 && !l.getKey)al_draw_text(Font, ENEMY_COLOR, SCREEN_WIDTH / 2, 530, ALLEGRO_ALIGN_CENTER, "Você precisa de uma chave");
 
 
 

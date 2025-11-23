@@ -37,17 +37,12 @@ int main() {
 
 
 	bool done = false, draw = true; // Verifica se o jogo está rodando e declara se pode desenhar na tela
-
+	ALLEGRO_FONT* Font = al_create_builtin_font();
 	puzzle_init();
 
 	levelI level1 = Level_I_load();
 	levelII level2 = Level_II_load();
 	levelIII level3 = Level_III_load();
-
-	ALLEGRO_FONT* Font = al_create_builtin_font();
-
-
-
 	TitleMenu titleMenu = createTitleMenu(Font);
 	GameOver gameOver = createGameOver(Font);
 	minigame minigame = loadMinigame(Font);
