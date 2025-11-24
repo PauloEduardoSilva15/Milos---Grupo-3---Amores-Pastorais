@@ -5,6 +5,7 @@
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
 #include "gameConstants.h"
+#include <stdio.h>
 #include <stdbool.h>
 
 typedef struct {

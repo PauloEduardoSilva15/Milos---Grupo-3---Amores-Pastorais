@@ -4,6 +4,9 @@
 item newItem(const char * filepath, int x, int y, bool get) {
 	item i;
 	i.sprite = al_load_bitmap(filepath);
+	if (!i.sprite) {
+		printf("Erro ao carregar a imagem %s\n", filepath);
+	}
 	i.x = x;
 	i.y = y;
 	i.size = ITENS_QUAD_SIZE;

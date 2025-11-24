@@ -37,17 +37,12 @@ int main() {
 
 
 	bool done = false, draw = true; // Verifica se o jogo está rodando e declara se pode desenhar na tela
-
+	ALLEGRO_FONT* Font = al_create_builtin_font();
 	puzzle_init();
 
 	levelI level1 = Level_I_load();
 	levelII level2 = Level_II_load();
 	levelIII level3 = Level_III_load();
-
-	ALLEGRO_FONT* Font = al_create_builtin_font();
-
-
-
 	TitleMenu titleMenu = createTitleMenu(Font);
 	GameOver gameOver = createGameOver(Font);
 	minigame minigame = loadMinigame(Font);
@@ -147,7 +142,9 @@ int main() {
 					al_destroy_bitmap(level2.npc2.sprite);
 
 					al_destroy_bitmap(level1.hud.key.sprite);
+					al_destroy_bitmap(level1.hud.AtacarDefender);
 					al_destroy_bitmap(level2.hud.key.sprite);
+					al_destroy_bitmap(level2.hud.AtacarDefender);
 	
 					al_destroy_bitmap(level1.door.sprite);
 	
@@ -244,7 +241,9 @@ int main() {
 				
 
 				al_destroy_bitmap(level1.hud.key.sprite);
+				al_destroy_bitmap(level1.hud.AtacarDefender);
 				al_destroy_bitmap(level2.hud.key.sprite);
+				al_destroy_bitmap(level2.hud.AtacarDefender);
 	
 				al_destroy_bitmap(level1.door.sprite);
 
@@ -308,7 +307,9 @@ int main() {
 				
 
 				al_destroy_bitmap(level1.hud.key.sprite);
+				al_destroy_bitmap(level1.hud.AtacarDefender);
 				al_destroy_bitmap(level2.hud.key.sprite);
+				al_destroy_bitmap(level2.hud.AtacarDefender);
 	
 				al_destroy_bitmap(level1.door.sprite);
 	
@@ -367,6 +368,11 @@ int main() {
 					level1.puzzle_open = false;
 				}
 				//done = true; // Sai do jogo com ESC
+			}
+
+			if(ev.keyboard.keycode == ALLEGRO_KEY_J) {
+				if (!level1.isDone && !level1.player.isDead) level1.player.modoAtaque = true;
+				if (level1.isDone && !level2.isDone && !level2.player.isDead) level2.player.modoAtaque = true;
 			}
 
 			if ((level1.inDialogue || level2.inDialogue || level3.inDialogue) && ev.keyboard.keycode == ALLEGRO_KEY_T && (level1.dialogueOption != 5 || level1.dialogueOption != 9 || level2.dialogueOption != 14 || level3.dialogueOption != 19)) {
@@ -429,7 +435,9 @@ int main() {
 	al_destroy_bitmap(level2.npc2.sprite);
 
 	al_destroy_bitmap(level1.hud.key.sprite);
+	al_destroy_bitmap(level1.hud.AtacarDefender);
 	al_destroy_bitmap(level2.hud.key.sprite);
+	al_destroy_bitmap(level2.hud.AtacarDefender);
 	
 	al_destroy_bitmap(level1.door.sprite);
 	

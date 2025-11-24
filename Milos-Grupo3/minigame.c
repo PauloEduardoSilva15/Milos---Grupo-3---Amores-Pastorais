@@ -7,8 +7,8 @@ minigame loadMinigame(ALLEGRO_FONT* font){
     m.respostaMarcada = 0;
     m.marcou = false;
     m.resposta1 = newButton(((SCREEN_WIDTH / 2)-100)-200, (SCREEN_HEIGHT / 2)+200, "prendada", font);
-    m.resposta2 = newButton(((SCREEN_WIDTH / 2)-100), (SCREEN_HEIGHT / 2)+200, "chão", font);
-    m.resposta3 = newButton(((SCREEN_WIDTH / 2)-100)+200, (SCREEN_HEIGHT / 2)+200, "semblante", font);
+    m.resposta2 = newButton(((SCREEN_WIDTH / 2)-100), (SCREEN_HEIGHT / 2)+200, "louvada", font);
+    m.resposta3 = newButton(((SCREEN_WIDTH / 2)-100)+200, (SCREEN_HEIGHT / 2)+200, "esbelta", font);
     return m;
 }
 void drawMinigame(minigame * menu,  ALLEGRO_MOUSE_STATE* mouseState){

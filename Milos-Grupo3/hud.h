@@ -6,6 +6,7 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
+#include <allegro5/allegro_image.h>
 #include <stdbool.h>
 #include "gameConstants.h"
 #include "lifeDisplay.h"
@@ -13,6 +14,7 @@
 
 typedef struct{
     DisplayLife displayLife;
+    ALLEGRO_BITMAP * AtacarDefender;
     bool getKey;
     item key;
    
