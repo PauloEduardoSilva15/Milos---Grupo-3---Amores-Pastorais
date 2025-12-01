@@ -449,7 +449,7 @@ void level_I_Update(levelI* l, ALLEGRO_KEYBOARD_STATE* keystate) {
     //if (al_key_down(keystate, ALLEGRO_KEY_X)) printf("x = %d, y = %d \n", l->player.x, l->player.y);
     //if (al_key_down(keystate, ALLEGRO_KEY_B)) l->isDone = true;
 
-    
+
     //Camera segindo o player no eixo X
     l->cameraX = -(l->player.x - SCREEN_WIDTH / 2);
 
@@ -469,8 +469,7 @@ void Level_I_Draw(levelI  l, ALLEGRO_FONT* Font) {
 
 
 
-    //desenha o dialogo;
-    if (l.inDialogue) drawDialogue(&l.dialogue, Font, l.dialogueOption);
+   
     //desenha o maker
     draw_maker_with_camera(&l.maker, l.cameraX);
     //desenha o npc
@@ -494,4 +493,7 @@ void Level_I_Draw(levelI  l, ALLEGRO_FONT* Font) {
 
     //desenha a hud
     drawHud(&l.hud, Font);
+
+     //desenha o dialogo;
+    if (l.inDialogue) drawDialogue(&l.dialogue, Font, l.dialogueOption);
 }

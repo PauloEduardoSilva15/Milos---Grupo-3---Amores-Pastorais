@@ -411,15 +411,16 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
 void Level_II_Draw(levelII l, ALLEGRO_FONT* Font){
     al_clear_to_color(al_map_rgb(9, 155, 255));
     draw_tilemap(l.map, l.tileset, l.cameraX, l.cameraY);
-    drawHud(&l.hud, Font);
+    
     if (collisionEntityWithEntity(&l.player, &l.npc1)|| collisionEntityWithEntity(&l.player, &l.npc2))al_draw_text(Font, TEXT_COLOR, (l.npc1.x + l.cameraX)-l.npc1.width/2, l.npc1.y - 25, 0, "[E] Falar");
     draw_Enity_camera_andImage(&l.npc1, l.cameraX, 0);
     draw_Enity_camera_andImage(&l.npc2, l.cameraX, ALLEGRO_FLIP_HORIZONTAL);
-    if (l.inDialogue) drawDialogue(&l.dialogue, Font, l.dialogueOption);
     if(check_entity_tile_collision(&l.player, l.map, l.tileset, 8)) al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH/2-50, 530, 0, "A cidade é logo ali ->->");
     if(!l.guard1.isDead)enemyDraw(&l.guard1, l.cameraX, l.guard1flip, 0, 0);
     if(!l.guard2.isDead)enemyDraw(&l.guard2, l.cameraX, l.guard2flip, 0, 0);
     if(!l.guard3.isDead)enemyDraw(&l.guard3, l.cameraX, l.guard3flip, 0, 0);
     if(!l.guard4.isDead)enemyDraw(&l.guard4, l.cameraX, l.guard4flip, 0, 0);
     playerDraw(&l.player, l.cameraX, l.playerflip, l.playerSpritepositionX, l.playerSpritepositionY);
+    drawHud(&l.hud, Font);
+    if (l.inDialogue) drawDialogue(&l.dialogue, Font, l.dialogueOption);
 }

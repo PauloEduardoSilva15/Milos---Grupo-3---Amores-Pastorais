@@ -72,8 +72,8 @@ void level_III_Update(levelIII* l, ALLEGRO_KEYBOARD_STATE* keystate){
 void Level_III_Draw(levelIII l, ALLEGRO_FONT* Font){
     draw_tilemap(l.map, l.tileset, l.cameraX, l.cameraY);
     draw_Enity_camera_andImage(&l.npc1, l.cameraX, 0);
-    if (l.inDialogue) drawDialogue(&l.dialogue, Font, l.dialogueOption);
     draw_Enity_camera_andImage_region(&l.npc2, l.cameraX, 0, 0, 0);
     if (collisionEntityWithEntity(&l.player, &l.npc1))al_draw_text(Font, TEXT_COLOR, (l.npc1.x + l.cameraX)-l.npc1.width/2, l.npc1.y - 25, 0, "[E] Falar");
     playerDraw(&l.player, l.cameraX, l.playerflip, l.playerSpritepositionX, l.playerSpritepositionY);
+    if (l.inDialogue) drawDialogue(&l.dialogue, Font, l.dialogueOption);
 }

@@ -23,10 +23,18 @@ void drawHud(hud * hud, ALLEGRO_FONT * Font){
 	al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 120, 120, 0, "K - Defesa");*/
     al_draw_bitmap_region(hud->AtacarDefender, 0, 0, QUAD_SIZE*2, QUAD_SIZE*2, SCREEN_WIDTH - 200, 50, 0);
     al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 168, 105, ALLEGRO_ALIGN_CENTER, "[J]");
+    al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 168, 115, ALLEGRO_ALIGN_CENTER, "ATACAR");
 
     al_draw_bitmap_region(hud->AtacarDefender, QUAD_SIZE*2, 0, QUAD_SIZE*2, QUAD_SIZE*2, SCREEN_WIDTH - 100, 50, 0);
     al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 68, 105, ALLEGRO_ALIGN_CENTER, "[K]");
-    
+    al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 68, 115, ALLEGRO_ALIGN_CENTER, "DEFENDER");
+
+    al_draw_text(Font, TEXT_COLOR, 50, SCREEN_HEIGHT - 50, ALLEGRO_ALIGN_CENTER, "[A]");
+    al_draw_text(Font, TEXT_COLOR, 50, SCREEN_HEIGHT - 40, ALLEGRO_ALIGN_CENTER, "ESQUERDA");
+    al_draw_text(Font, TEXT_COLOR, 90, SCREEN_HEIGHT - 70, ALLEGRO_ALIGN_CENTER, "[W]");
+    al_draw_text(Font, TEXT_COLOR, 90, SCREEN_HEIGHT - 60, ALLEGRO_ALIGN_CENTER, "PULAR");
+    al_draw_text(Font, TEXT_COLOR, 120, SCREEN_HEIGHT - 50, ALLEGRO_ALIGN_CENTER, "[D]");
+    al_draw_text(Font, TEXT_COLOR, 120, SCREEN_HEIGHT - 40, ALLEGRO_ALIGN_CENTER, "DIREITA");
     displayLifeDraw(&hud->displayLife);
     if(hud->getKey) itemDraw(&hud->key);
 }
