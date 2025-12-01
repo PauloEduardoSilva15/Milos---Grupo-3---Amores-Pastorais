@@ -10,7 +10,7 @@ levelI Level_I_load() {
     l.guard1 = enemyLoad(1088, 128);
     l.guard2 = enemyLoad(1348, 128);
     l.guard3 = enemyLoad(2398, 354);
-    l.guard4 = enemyLoad(2588, 354);
+    l.guard4 = enemyLoad(2430, 354);
     //l.pauseMenu = createPauseMenu();
     l.inDialogue = false;
     l.dialogueOption = 0;

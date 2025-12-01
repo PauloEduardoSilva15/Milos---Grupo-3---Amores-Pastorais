@@ -26,6 +26,7 @@ int main() {
 
 	ALLEGRO_DISPLAY* window = al_create_display(SCREEN_WIDTH, SCREEN_HEIGHT); // Cria a janela do jogo
 	al_set_window_title(window, TITLE);
+	
 	if (!window) return -1; // Verifica se criou uma janela
 
 	al_init_image_addon(); // inicializa o addon de imagens
@@ -34,8 +35,10 @@ int main() {
 	al_install_mouse(); // inicia o mouse
 	al_init_font_addon(); // inicializa o addon de fontes
 	al_init_ttf_addon(); // inicializa o addon de fontes ttf
+	
+	ALLEGRO_BITMAP* icon = al_load_bitmap("./imgs/icon.png");
 
-
+	al_set_display_icon(window, icon);
 	bool done = false, draw = true; // Verifica se o jogo está rodando e declara se pode desenhar na tela
 	ALLEGRO_FONT* Font = al_create_builtin_font();
 	puzzle_init();
@@ -443,6 +446,7 @@ int main() {
 	
 	al_destroy_bitmap(titleMenu.bg);
 	al_destroy_bitmap(titleMenu.logo);
+	al_destroy_bitmap(icon);
 	
 
 	al_destroy_font(Font);
