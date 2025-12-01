@@ -397,15 +397,14 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
 
     l->hud.displayLife.width = l->player.life;
     //Isso é só para debug;
-    if(al_key_down(keystate, ALLEGRO_KEY_X))
-        printf("x = %d, y = %d \n", l->player.x, l->player.y);
+    //if(al_key_down(keystate, ALLEGRO_KEY_X))printf("x = %d, y = %d \n", l->player.x, l->player.y);
+    //if(al_key_down(keystate, ALLEGRO_KEY_B)) l->isDone = true;
 
     
     //Camera segindo o player no eixo X
     l->cameraX = -(l->player.x - SCREEN_WIDTH / 2);
 
-    if(al_key_down(keystate, ALLEGRO_KEY_B)) l->isDone = true;
-
+    
 }
 
 

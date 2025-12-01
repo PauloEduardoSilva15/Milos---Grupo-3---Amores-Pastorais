@@ -59,12 +59,14 @@ void level_III_Update(levelIII* l, ALLEGRO_KEYBOARD_STATE* keystate){
         }
     }
 
-    if(al_key_down(keystate, ALLEGRO_KEY_X))
-        printf("x = %d, y = %d \n", l->player.x, l->player.y);
+    //iSSO É sÓ pARA dEBUG;
+    //if(al_key_down(keystate, ALLEGRO_KEY_X)) printf("x = %d, y = %d \n", l->player.x, l->player.y);
+    //if(al_key_down(keystate, ALLEGRO_KEY_B)) l->isDone = true;
+    
     //Camera segindo o player no eixo X
     l->cameraX = -(l->player.x - SCREEN_WIDTH / 2);
 
-    //if(al_key_down(keystate, ALLEGRO_KEY_B)) l->isDone = true;
+    
 
 }
 void Level_III_Draw(levelIII l, ALLEGRO_FONT* Font){
