@@ -42,11 +42,9 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
         l->inPause = false;
         l->dialogueOption = 10;
 	}
-    if(l->inDialogue){
-        l->inPause = true;
-    }
+    //if(l->inDialogue)l->inPause = true;
 
-    if(!l->inPause){
+    if(!l->inPause && !l->inDialogue){
         if(l->player.life <= 0) l->player.isDead = true; 
 
         if (l->guard1.life <= 0) l->guard1.isDead = true;

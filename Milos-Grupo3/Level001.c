@@ -52,14 +52,13 @@ void level_I_Update(levelI* l, ALLEGRO_KEYBOARD_STATE* keystate) {
         l->npc.x = 2988;
         l->dialogueOption = 6;
     }
-    if (l->inDialogue) {
-        l->inPause = true;
-    }
+    //if (l->inDialogue)l->inPause = true;
+
 
     if (l->player.x == 3063)l->isDone = true;
 
 
-    if (!l->inPause) {
+    if (!l->inPause && !l->inDialogue) {
         if (l->player.life <= 0) l->player.isDead = true;
         if (l->guard1.life <= 0) l->guard1.isDead = true;
         if (l->guard1.isDead) {

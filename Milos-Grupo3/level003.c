@@ -28,11 +28,9 @@ void level_III_Update(levelIII* l, ALLEGRO_KEYBOARD_STATE* keystate){
         l->dialogueOption = 15;*/
         l->isDone = true;
 	}
-    if(l->inDialogue){
-        l->inPause = true;
-    }
+    //if(l->inDialogue)l->inPause = true;
 
-    if(!l->inPause){
+    if(!l->inPause && !l->inDialogue){
         if(l->player.life <= 0) l->player.isDead = true; 
 
         if (!check_entity_tile_collision(&l->player, l->map, l->tileset, 1)) {    

@@ -202,14 +202,18 @@ int main() {
 
 
 		if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
-			if (button_contains_point(&titleMenu.startGameButton, mouseState.x, mouseState.y)) {
-				titleMenu.runningLevel = true;
-				titleMenu.selectedOption = 1; // Start Game
-			}
-			else {
-				if (button_contains_point(&titleMenu.exitButton, mouseState.x, mouseState.y))
+			if(!titleMenu.runningLevel){
+				if (button_contains_point(&titleMenu.startGameButton, mouseState.x, mouseState.y)) { 
+					titleMenu.runningLevel = true;
+				
+					titleMenu.selectedOption = 1; // Start Game
+				}
+				else {
+					if (button_contains_point(&titleMenu.exitButton, mouseState.x, mouseState.y))
 					titleMenu.selectedOption = 2; // Exit
+				}
 			}
+			
 
 			if (button_contains_point(&gameOver.retryButton, mouseState.x, mouseState.y) && gameOver.active) {
 
@@ -272,6 +276,7 @@ int main() {
 				if (button_contains_point(&gameOver.exitButton, mouseState.x, mouseState.y) && gameOver.active)
 					done = true;
 			}
+
 
 			if (button_contains_point(&pauseMenu.retriviedbutton, mouseState.x, mouseState.y) && level1.inPause && !level1.puzzle_open) {
 
@@ -339,6 +344,7 @@ int main() {
 				if (button_contains_point(&pauseMenu.ContinuePlaybutton, mouseState.x, mouseState.y) && level1.inPause && !level1.puzzle_open) {
 					level1.inPause = false;
 					level2.inPause = false;
+					level3.inPause = false;
 				}
 				if (button_contains_point(&pauseMenu.exitButton, mouseState.x, mouseState.y) && level1.inPause && !level1.puzzle_open)
 					done = true;
@@ -454,6 +460,8 @@ int main() {
 	al_destroy_display(window);
 	al_destroy_timer(timer);
 	al_destroy_event_queue(events);
+
+	printf("Jogo finalizado com sucesso!\n");
 
 	return 0;
 }
