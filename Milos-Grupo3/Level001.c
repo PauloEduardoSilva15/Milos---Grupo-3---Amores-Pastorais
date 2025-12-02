@@ -36,6 +36,8 @@ levelI Level_I_load() {
     l.inPause = false;
     l.cameraX = 0;
     l.cameraY = 0;
+    l.storyPopUp = true;
+    l.storyPopUpImage = al_load_bitmap("./imgs/fase1Contexto.png");
 
     return l;
 }
@@ -54,11 +56,14 @@ void level_I_Update(levelI* l, ALLEGRO_KEYBOARD_STATE* keystate) {
     }
     //if (l->inDialogue)l->inPause = true;
 
+    if(al_key_down(keystate, ALLEGRO_KEY_E) && l->storyPopUp) {
+        l->storyPopUp = false;
+    }
 
     if (l->player.x == 3063)l->isDone = true;
 
 
-    if (!l->inPause && !l->inDialogue) {
+    if (!l->inPause && !l->inDialogue && !l->storyPopUp) {
         if (l->player.life <= 0) l->player.isDead = true;
         if (l->guard1.life <= 0) l->guard1.isDead = true;
         if (l->guard1.isDead) {
@@ -496,4 +501,11 @@ void Level_I_Draw(levelI  l, ALLEGRO_FONT* Font) {
 
      //desenha o dialogo;
     if (l.inDialogue) drawDialogue(&l.dialogue, Font, l.dialogueOption);
+
+    if(l.storyPopUp){
+        al_draw_filled_rectangle(100, 100, SCREEN_WIDTH - 100, SCREEN_HEIGHT - 100, al_map_rgba(0, 0, 0, 200));
+        al_draw_bitmap(l.storyPopUpImage, (SCREEN_WIDTH - al_get_bitmap_width(l.storyPopUpImage)) / 2, (SCREEN_HEIGHT - al_get_bitmap_height(l.storyPopUpImage)) / 2, 0);
+
+        al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 200, SCREEN_HEIGHT - 125, ALLEGRO_ALIGN_CENTER, "Clique E para fechar");
+    }
 }

@@ -55,6 +55,8 @@ typedef struct {
     bool inPause;
     int cameraX;
     int cameraY;
+    bool storyPopUp;
+    ALLEGRO_BITMAP* storyPopUpImage;
 
 }levelI;
 
