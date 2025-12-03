@@ -450,7 +450,7 @@ void level_I_Update(levelI* l, ALLEGRO_KEYBOARD_STATE* keystate) {
 
     //Isso é só para debug;
     //if (al_key_down(keystate, ALLEGRO_KEY_X)) printf("x = %d, y = %d \n", l->player.x, l->player.y);
-    //if (al_key_down(keystate, ALLEGRO_KEY_B)) l->isDone = true;
+    if (al_key_down(keystate, ALLEGRO_KEY_B)) l->isDone = true;
 
 
     //Camera segindo o player no eixo X

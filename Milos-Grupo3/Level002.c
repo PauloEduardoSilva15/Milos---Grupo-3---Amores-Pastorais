@@ -195,11 +195,13 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
             l->guard4.vY = 0;
         }
 
+        
+
         if(l->player.x >= 750) l->guard1_Folowing = true;
 
         if(l->guard1_Folowing){
             
-            if (!collisionEntityWithEntity(&l->player, &l->guard1)) {
+            if (!collisionEntityWithEntity(&l->player, &l->guard1)&& !check_entity_tile_collision(&l->guard1, l->map, l->tileset, 3)) {
 		        if (l->guard1.x > l->player.x) {
                     l->guard1flip = ALLEGRO_FLIP_HORIZONTAL;
 			            movEntity(&l->guard1, 0);//esquerda
@@ -210,6 +212,11 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
                         movEntity(&l->guard1, 1);//direita
                     } 
 	            }
+                if(check_entity_tile_collision(&l->guard1, l->map, l->tileset, 3)) {
+                    l->guard1.y += l->guard1.vY;
+                    l->guard1.x += l->guard1.v;
+                    
+                }
             }
         }
 
@@ -233,9 +240,11 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
 	            }
             
             }
-            if (check_entity_tile_collision(&l->guard2, l->map, l->tileset, 3)) {
-                l->guard2.y += 10;
-            }
+            if(check_entity_tile_collision(&l->guard2, l->map, l->tileset, 3)) {
+                    l->guard2.y += l->guard2.vY;
+                    l->guard2.x += l->guard2.v;
+                    
+                }
         }
 
         if(l->player.x >= 1953){
