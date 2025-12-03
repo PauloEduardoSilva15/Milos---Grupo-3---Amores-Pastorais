@@ -26,6 +26,7 @@ int main() {
 
 	ALLEGRO_DISPLAY* window = al_create_display(SCREEN_WIDTH, SCREEN_HEIGHT); // Cria a janela do jogo
 	al_set_window_title(window, TITLE);
+	
 	if (!window) return -1; // Verifica se criou uma janela
 
 	al_init_image_addon(); // inicializa o addon de imagens
@@ -34,8 +35,10 @@ int main() {
 	al_install_mouse(); // inicia o mouse
 	al_init_font_addon(); // inicializa o addon de fontes
 	al_init_ttf_addon(); // inicializa o addon de fontes ttf
+	
+	ALLEGRO_BITMAP* icon = al_load_bitmap("./imgs/icon.png");
 
-
+	al_set_display_icon(window, icon);
 	bool done = false, draw = true; // Verifica se o jogo está rodando e declara se pode desenhar na tela
 	ALLEGRO_FONT* Font = al_create_builtin_font();
 	puzzle_init();
@@ -87,7 +90,7 @@ int main() {
 				draw = true;
 			}
 			if (draw) {
-				if (!puzzle_is_solved())puzzle_draw(SCREEN_WIDTH, SCREEN_HEIGHT);
+				if (!puzzle_is_solved())puzzle_draw(SCREEN_WIDTH, SCREEN_HEIGHT, Font);
 				al_draw_text(Font, TEXT_COLOR, 50, SCREEN_HEIGHT - 100, 0, "Controles:");
 				al_draw_text(Font, TEXT_COLOR, 50, SCREEN_HEIGHT - 80, 0, "R - Sair do Puzzle");
 				al_flip_display();
@@ -120,7 +123,11 @@ int main() {
 					destroy_tilemap(level2.map);
 					destroy_tileset(level3.tileset);
 					destroy_tilemap(level3.map);
+					
 					al_destroy_bitmap(minigame.poema);
+					al_destroy_bitmap(level1.storyPopUpImage);
+					al_destroy_bitmap(level2.storyPopUpImage);
+					al_destroy_bitmap(level3.storyPopUpImage);
 					
 					al_destroy_bitmap(level1.player.sprite);
 					al_destroy_bitmap(level2.player.sprite);
@@ -199,14 +206,18 @@ int main() {
 
 
 		if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
-			if (button_contains_point(&titleMenu.startGameButton, mouseState.x, mouseState.y)) {
-				titleMenu.runningLevel = true;
-				titleMenu.selectedOption = 1; // Start Game
-			}
-			else {
-				if (button_contains_point(&titleMenu.exitButton, mouseState.x, mouseState.y))
+			if(!titleMenu.runningLevel){
+				if (button_contains_point(&titleMenu.startGameButton, mouseState.x, mouseState.y)) { 
+					titleMenu.runningLevel = true;
+				
+					titleMenu.selectedOption = 1; // Start Game
+				}
+				else {
+					if (button_contains_point(&titleMenu.exitButton, mouseState.x, mouseState.y))
 					titleMenu.selectedOption = 2; // Exit
+				}
 			}
+			
 
 			if (button_contains_point(&gameOver.retryButton, mouseState.x, mouseState.y) && gameOver.active) {
 
@@ -219,6 +230,9 @@ int main() {
 				destroy_tilemap(level3.map);
 
 				al_destroy_bitmap(minigame.poema);
+				al_destroy_bitmap(level1.storyPopUpImage);
+				al_destroy_bitmap(level2.storyPopUpImage);
+				al_destroy_bitmap(level3.storyPopUpImage);
 				
 				al_destroy_bitmap(level1.player.sprite);
 				al_destroy_bitmap(level2.player.sprite);
@@ -270,6 +284,7 @@ int main() {
 					done = true;
 			}
 
+
 			if (button_contains_point(&pauseMenu.retriviedbutton, mouseState.x, mouseState.y) && level1.inPause && !level1.puzzle_open) {
 
 				// Reinicia o jogo completamente
@@ -285,6 +300,9 @@ int main() {
 				destroy_tilemap(level3.map);
 
 				al_destroy_bitmap(minigame.poema);
+				al_destroy_bitmap(level1.storyPopUpImage);
+				al_destroy_bitmap(level2.storyPopUpImage);
+				al_destroy_bitmap(level3.storyPopUpImage);
 				
 				al_destroy_bitmap(level1.player.sprite);
 				al_destroy_bitmap(level2.player.sprite);
@@ -336,6 +354,7 @@ int main() {
 				if (button_contains_point(&pauseMenu.ContinuePlaybutton, mouseState.x, mouseState.y) && level1.inPause && !level1.puzzle_open) {
 					level1.inPause = false;
 					level2.inPause = false;
+					level3.inPause = false;
 				}
 				if (button_contains_point(&pauseMenu.exitButton, mouseState.x, mouseState.y) && level1.inPause && !level1.puzzle_open)
 					done = true;
@@ -414,6 +433,9 @@ int main() {
 	destroy_tilemap(level3.map);
 
 	al_destroy_bitmap(minigame.poema);
+	al_destroy_bitmap(level1.storyPopUpImage);
+	al_destroy_bitmap(level2.storyPopUpImage);
+	al_destroy_bitmap(level3.storyPopUpImage);
 
 	al_destroy_bitmap(level1.player.sprite);
 	al_destroy_bitmap(level2.player.sprite);
@@ -443,6 +465,7 @@ int main() {
 	
 	al_destroy_bitmap(titleMenu.bg);
 	al_destroy_bitmap(titleMenu.logo);
+	al_destroy_bitmap(icon);
 	
 
 	al_destroy_font(Font);

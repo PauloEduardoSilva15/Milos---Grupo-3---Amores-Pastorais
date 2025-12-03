@@ -36,6 +36,8 @@ typedef struct {
     textBox dialogue;
     bool isDone;
     bool inPause;
+    bool storyPopUp;
+	ALLEGRO_BITMAP* storyPopUpImage;
     //hud hud;
 
 }levelIII;

@@ -32,6 +32,8 @@ levelII Level_II_load(){
     l.cameraY = 0;
     l.inPause = false;
     l.hud = newHud(l.player.life, false);
+    l.storyPopUp = true;
+    l.storyPopUpImage = al_load_bitmap("./imgs/fase2Contexto.png");
     return l;
 
 }
@@ -42,11 +44,11 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
         l->inPause = false;
         l->dialogueOption = 10;
 	}
-    if(l->inDialogue){
-        l->inPause = true;
-    }
 
-    if(!l->inPause){
+    if(al_key_down(keystate, ALLEGRO_KEY_E) && l->storyPopUp) l->storyPopUp = false;
+    //if(l->inDialogue)l->inPause = true;
+
+    if(!l->inPause && !l->inDialogue && !l->storyPopUp){
         if(l->player.life <= 0) l->player.isDead = true; 
 
         if (l->guard1.life <= 0) l->guard1.isDead = true;
@@ -143,7 +145,7 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
         if(l->player.x > 2800-l->player.width) l->isDone = true;
 
         if (check_entity_tile_collision(&l->player, l->map, l->tileset, 4)){
-            l->player.life -= 30;
+            l->player.life -= 50;
         }
         if (check_entity_tile_collision(&l->guard1, l->map, l->tileset, 4)){
             l->guard1.life -= 30;
@@ -193,11 +195,13 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
             l->guard4.vY = 0;
         }
 
+        
+
         if(l->player.x >= 750) l->guard1_Folowing = true;
 
         if(l->guard1_Folowing){
             
-            if (!collisionEntityWithEntity(&l->player, &l->guard1)) {
+            if (!collisionEntityWithEntity(&l->player, &l->guard1)&& !check_entity_tile_collision(&l->guard1, l->map, l->tileset, 3)) {
 		        if (l->guard1.x > l->player.x) {
                     l->guard1flip = ALLEGRO_FLIP_HORIZONTAL;
 			            movEntity(&l->guard1, 0);//esquerda
@@ -208,6 +212,12 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
                         movEntity(&l->guard1, 1);//direita
                     } 
 	            }
+                if(check_entity_tile_collision(&l->guard1, l->map, l->tileset, 3)) {
+                    l->guard1.y += l->guard1.vY;
+                    if(l->guard1.x > l->player.x) l->guard1.x += l->guard1.v;
+                    else l->guard1.x -= l->guard1.v;
+                    
+                }
             }
         }
 
@@ -229,11 +239,14 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
                     } 
                     
 	            }
+                if(check_entity_tile_collision(&l->guard2, l->map, l->tileset, 3)) {
+                    if(l->guard2.x > l->player.x) l->guard2.x += l->guard2.v;
+                    else l->guard2.x -= l->guard2.v;
+                    
+                }
             
             }
-            if (check_entity_tile_collision(&l->guard2, l->map, l->tileset, 3)) {
-                l->guard2.y += 10;
-            }
+            
         }
 
         if(l->player.x >= 1953){
@@ -399,30 +412,36 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
 
     l->hud.displayLife.width = l->player.life;
     //Isso é só para debug;
-    if(al_key_down(keystate, ALLEGRO_KEY_X))
-        printf("x = %d, y = %d \n", l->player.x, l->player.y);
+    //if(al_key_down(keystate, ALLEGRO_KEY_X))printf("x = %d, y = %d \n", l->player.x, l->player.y);
+    //if(al_key_down(keystate, ALLEGRO_KEY_B)) l->isDone = true;
 
     
     //Camera segindo o player no eixo X
     l->cameraX = -(l->player.x - SCREEN_WIDTH / 2);
 
-    if(al_key_down(keystate, ALLEGRO_KEY_B)) l->isDone = true;
-
+    
 }
 
 
 void Level_II_Draw(levelII l, ALLEGRO_FONT* Font){
     al_clear_to_color(al_map_rgb(9, 155, 255));
     draw_tilemap(l.map, l.tileset, l.cameraX, l.cameraY);
-    drawHud(&l.hud, Font);
+    
     if (collisionEntityWithEntity(&l.player, &l.npc1)|| collisionEntityWithEntity(&l.player, &l.npc2))al_draw_text(Font, TEXT_COLOR, (l.npc1.x + l.cameraX)-l.npc1.width/2, l.npc1.y - 25, 0, "[E] Falar");
     draw_Enity_camera_andImage(&l.npc1, l.cameraX, 0);
     draw_Enity_camera_andImage(&l.npc2, l.cameraX, ALLEGRO_FLIP_HORIZONTAL);
-    if (l.inDialogue) drawDialogue(&l.dialogue, Font, l.dialogueOption);
     if(check_entity_tile_collision(&l.player, l.map, l.tileset, 8)) al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH/2-50, 530, 0, "A cidade é logo ali ->->");
     if(!l.guard1.isDead)enemyDraw(&l.guard1, l.cameraX, l.guard1flip, 0, 0);
     if(!l.guard2.isDead)enemyDraw(&l.guard2, l.cameraX, l.guard2flip, 0, 0);
     if(!l.guard3.isDead)enemyDraw(&l.guard3, l.cameraX, l.guard3flip, 0, 0);
     if(!l.guard4.isDead)enemyDraw(&l.guard4, l.cameraX, l.guard4flip, 0, 0);
     playerDraw(&l.player, l.cameraX, l.playerflip, l.playerSpritepositionX, l.playerSpritepositionY);
+    drawHud(&l.hud, Font);
+    if (l.inDialogue) drawDialogue(&l.dialogue, Font, l.dialogueOption);
+    if(l.storyPopUp){
+        al_draw_filled_rectangle(100, 100, SCREEN_WIDTH - 100, SCREEN_HEIGHT - 100, al_map_rgba(0, 0, 0, 200));
+        al_draw_bitmap(l.storyPopUpImage, (SCREEN_WIDTH - al_get_bitmap_width(l.storyPopUpImage)) / 2, (SCREEN_HEIGHT - al_get_bitmap_height(l.storyPopUpImage)) / 2, 0);
+
+        al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 200, SCREEN_HEIGHT - 125, ALLEGRO_ALIGN_CENTER, "Clique E para fechar");
+    }
 }

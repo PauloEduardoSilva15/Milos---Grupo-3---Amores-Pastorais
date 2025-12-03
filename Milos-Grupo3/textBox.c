@@ -44,43 +44,43 @@ void drawDialogue(textBox * text, ALLEGRO_FONT* font, int textOption) {
 		break;
 	case 7:
 		strcpy(text->personagem, "Homem Velho");
-		strcpy(text->texto, "Graças a sua ajuda, poderei sair em jornada para encontrar meu cajado");
+		strcpy(text->texto, "Com teu generoso auxílio, poderei enfim partir em serena jornada para reaver meu cajado.");
 		break;
 	case 8:
 		strcpy(text->personagem, "Dirceu");
-		strcpy(text->texto, "Como você chegou aqui?");
+		strcpy(text->texto, "Como tu chegastes aqui?");
 		break;
 	case 10:
 		strcpy(text->personagem, "Audine");
-		strcpy(text->texto, "Você ficou sabendo daquele homen que decaptaram em praça pública?");
+		strcpy(text->texto, "Ouviste falar, Araminta, do homem que foi decapitado na praça pública?");
 		break;
 	case 11:
 		strcpy(text->personagem, "Araminta");
-		strcpy(text->texto, "Sim fiquei, sabe quem é sabe o nome dele?");
+		strcpy(text->texto, "Sim, ouvi. Sabes acaso qual era o seu nome?");
 		break;
 	case 12:
 		strcpy(text->personagem, "Audine");
-		strcpy(text->texto, "Acho que era Tiradendes o apelido dele.");
+		strcpy(text->texto, "Chamavam-no Tiradentes, se bem me recordo.");
 		break;
 	case 13:
 		strcpy(text->personagem, "Dirceu-Pensamentos");
-		strcpy(text->texto, "Descanse em paz amigo.");
+		strcpy(text->texto, "Repousa em paz, nobre amigo. Tu que tanto lutaste pela liberdade do nosso povo...");
 		break;
 	case 15:
-		strcpy(text->personagem, "Marcelos");
-		strcpy(text->texto, "Pelo visto você não desiste mesmo da minha filha...");
+		strcpy(text->personagem, "Baltazar");
+		strcpy(text->texto, "Ao que tudo indica, não desistes mesmo de minha filha…");
 		break;
 	case 16:
-		strcpy(text->personagem, "Marcelos");
-		strcpy(text->texto, "Mas dessa vês eu lhe darei uma chance...");
+		strcpy(text->personagem, "Baltazar");
+		strcpy(text->texto, "Contudo, desta feita, conceder-te-ei uma oportunidade.");
 		break;
 	case 17:
-		strcpy(text->personagem, "Marcelos");
-		strcpy(text->texto, "Eu te deixo casar com minha filha!!!");
+		strcpy(text->personagem, "Baltazar");
+		strcpy(text->texto, "Permito que a desposes!");
 		break;
 	case 18:
-		strcpy(text->personagem, "Marcelos");
-		strcpy(text->texto, "Mas apenas se você completar esse poema");
+		strcpy(text->personagem, "Baltazar");
+		strcpy(text->texto, "Mas somente se fores capaz de completar este soneto.");
 		break;
 	}
 

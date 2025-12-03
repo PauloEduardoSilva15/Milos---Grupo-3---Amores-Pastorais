@@ -10,7 +10,7 @@ levelI Level_I_load() {
     l.guard1 = enemyLoad(1088, 128);
     l.guard2 = enemyLoad(1348, 128);
     l.guard3 = enemyLoad(2398, 354);
-    l.guard4 = enemyLoad(2588, 354);
+    l.guard4 = enemyLoad(2430, 354);
     //l.pauseMenu = createPauseMenu();
     l.inDialogue = false;
     l.dialogueOption = 0;
@@ -36,6 +36,8 @@ levelI Level_I_load() {
     l.inPause = false;
     l.cameraX = 0;
     l.cameraY = 0;
+    l.storyPopUp = true;
+    l.storyPopUpImage = al_load_bitmap("./imgs/fase1Contexto.png");
 
     return l;
 }
@@ -52,14 +54,14 @@ void level_I_Update(levelI* l, ALLEGRO_KEYBOARD_STATE* keystate) {
         l->npc.x = 2988;
         l->dialogueOption = 6;
     }
-    if (l->inDialogue) {
-        l->inPause = true;
-    }
+    //if (l->inDialogue)l->inPause = true;
+
+    if(al_key_down(keystate, ALLEGRO_KEY_E) && l->storyPopUp) l->storyPopUp = false;
 
     if (l->player.x == 3063)l->isDone = true;
 
 
-    if (!l->inPause) {
+    if (!l->inPause && !l->inDialogue && !l->storyPopUp) {
         if (l->player.life <= 0) l->player.isDead = true;
         if (l->guard1.life <= 0) l->guard1.isDead = true;
         if (l->guard1.isDead) {
@@ -447,12 +449,14 @@ void level_I_Update(levelI* l, ALLEGRO_KEYBOARD_STATE* keystate) {
     l->hud.getKey = l->getKey;
 
     //Isso é só para debug;
-    if (al_key_down(keystate, ALLEGRO_KEY_X))
-        printf("x = %d, y = %d \n", l->player.x, l->player.y);
+    //if (al_key_down(keystate, ALLEGRO_KEY_X)) printf("x = %d, y = %d \n", l->player.x, l->player.y);
+    //if (al_key_down(keystate, ALLEGRO_KEY_B)) l->isDone = true;
+
+
     //Camera segindo o player no eixo X
     l->cameraX = -(l->player.x - SCREEN_WIDTH / 2);
 
-    if (al_key_down(keystate, ALLEGRO_KEY_B)) l->isDone = true;
+    
 }
 
 
@@ -468,8 +472,7 @@ void Level_I_Draw(levelI  l, ALLEGRO_FONT* Font) {
 
 
 
-    //desenha o dialogo;
-    if (l.inDialogue) drawDialogue(&l.dialogue, Font, l.dialogueOption);
+   
     //desenha o maker
     draw_maker_with_camera(&l.maker, l.cameraX);
     //desenha o npc
@@ -493,4 +496,14 @@ void Level_I_Draw(levelI  l, ALLEGRO_FONT* Font) {
 
     //desenha a hud
     drawHud(&l.hud, Font);
+
+     //desenha o dialogo;
+    if (l.inDialogue) drawDialogue(&l.dialogue, Font, l.dialogueOption);
+
+    if(l.storyPopUp){
+        al_draw_filled_rectangle(100, 100, SCREEN_WIDTH - 100, SCREEN_HEIGHT - 100, al_map_rgba(0, 0, 0, 200));
+        al_draw_bitmap(l.storyPopUpImage, (SCREEN_WIDTH - al_get_bitmap_width(l.storyPopUpImage)) / 2, (SCREEN_HEIGHT - al_get_bitmap_height(l.storyPopUpImage)) / 2, 0);
+
+        al_draw_text(Font, TEXT_COLOR, SCREEN_WIDTH - 200, SCREEN_HEIGHT - 125, ALLEGRO_ALIGN_CENTER, "Clique E para fechar");
+    }
 }
