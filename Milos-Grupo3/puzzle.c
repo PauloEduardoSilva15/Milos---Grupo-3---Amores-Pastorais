@@ -1,7 +1,4 @@
 #include "puzzle.h"
-#include <allegro5/allegro_primitives.h>
-#include <allegro5/allegro_font.h>
-#include "gameConstants.h"
 #include <string.h>
 
 static Piece pieces[GRID_ROWS][GRID_COLS];
@@ -120,7 +117,7 @@ void puzzle_handle_event(ALLEGRO_EVENT* ev) {
 }
 
 // ----- Desenho -----
-void puzzle_draw(int screen_w, int screen_h) {
+void puzzle_draw(int screen_w, int screen_h, ALLEGRO_FONT* font) {
     al_draw_filled_rectangle(0, 0, screen_w, screen_h, al_map_rgba(40, 40, 40, 220));
 
     int gridW = GRID_COLS * tileSize;
@@ -160,13 +157,8 @@ void puzzle_draw(int screen_w, int screen_h) {
         }
     }
 
-    ALLEGRO_FONT* f = al_create_builtin_font();
-    if (f) {
-        const char* msg = solved ? "Puzzle resolvido!" : "Conecte o início ao final! Clique para girar";
-        al_draw_text(f, al_map_rgb(255, 255, 255), screen_w / 2, startY - 36,
-            ALLEGRO_ALIGN_CENTRE, msg);
-        al_destroy_font(f);
-    }
+    al_draw_text(font, al_map_rgb(255, 255, 255), screen_w / 2, startY - 36,
+    ALLEGRO_ALIGN_CENTRE, "Conecte o início ao final! Clique para girar");
 }
 
 // ----- Estado -----

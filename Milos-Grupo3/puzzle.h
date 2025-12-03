@@ -3,6 +3,8 @@
 
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_image.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
 #include "gameConstants.h"
 
 typedef enum {
@@ -25,7 +27,7 @@ typedef struct {
 
 void puzzle_init(void);
 void puzzle_handle_event(ALLEGRO_EVENT* ev);
-void puzzle_draw(int screen_w, int screen_h);
+void puzzle_draw(int screen_w, int screen_h, ALLEGRO_FONT* font);
 int puzzle_is_solved(void);
 void puzzle_destroy(void);
 

@@ -90,7 +90,7 @@ int main() {
 				draw = true;
 			}
 			if (draw) {
-				if (!puzzle_is_solved())puzzle_draw(SCREEN_WIDTH, SCREEN_HEIGHT);
+				if (!puzzle_is_solved())puzzle_draw(SCREEN_WIDTH, SCREEN_HEIGHT, Font);
 				al_draw_text(Font, TEXT_COLOR, 50, SCREEN_HEIGHT - 100, 0, "Controles:");
 				al_draw_text(Font, TEXT_COLOR, 50, SCREEN_HEIGHT - 80, 0, "R - Sair do Puzzle");
 				al_flip_display();

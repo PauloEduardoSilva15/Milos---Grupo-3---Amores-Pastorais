@@ -145,7 +145,7 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
         if(l->player.x > 2800-l->player.width) l->isDone = true;
 
         if (check_entity_tile_collision(&l->player, l->map, l->tileset, 4)){
-            l->player.life -= 30;
+            l->player.life -= 50;
         }
         if (check_entity_tile_collision(&l->guard1, l->map, l->tileset, 4)){
             l->guard1.life -= 30;
@@ -214,7 +214,8 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
 	            }
                 if(check_entity_tile_collision(&l->guard1, l->map, l->tileset, 3)) {
                     l->guard1.y += l->guard1.vY;
-                    l->guard1.x += l->guard1.v;
+                    if(l->guard1.x > l->player.x) l->guard1.x += l->guard1.v;
+                    else l->guard1.x -= l->guard1.v;
                     
                 }
             }
@@ -238,13 +239,14 @@ void level_II_Update(levelII* l, ALLEGRO_KEYBOARD_STATE* keystate){
                     } 
                     
 	            }
-            
-            }
-            if(check_entity_tile_collision(&l->guard2, l->map, l->tileset, 3)) {
-                    l->guard2.y += l->guard2.vY;
-                    l->guard2.x += l->guard2.v;
+                if(check_entity_tile_collision(&l->guard2, l->map, l->tileset, 3)) {
+                    if(l->guard2.x > l->player.x) l->guard2.x += l->guard2.v;
+                    else l->guard2.x -= l->guard2.v;
                     
                 }
+            
+            }
+            
         }
 
         if(l->player.x >= 1953){
