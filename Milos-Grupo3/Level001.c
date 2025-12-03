@@ -56,9 +56,7 @@ void level_I_Update(levelI* l, ALLEGRO_KEYBOARD_STATE* keystate) {
     }
     //if (l->inDialogue)l->inPause = true;
 
-    if(al_key_down(keystate, ALLEGRO_KEY_E) && l->storyPopUp) {
-        l->storyPopUp = false;
-    }
+    if(al_key_down(keystate, ALLEGRO_KEY_E) && l->storyPopUp) l->storyPopUp = false;
 
     if (l->player.x == 3063)l->isDone = true;
 

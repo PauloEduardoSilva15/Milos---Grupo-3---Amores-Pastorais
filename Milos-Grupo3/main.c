@@ -123,8 +123,11 @@ int main() {
 					destroy_tilemap(level2.map);
 					destroy_tileset(level3.tileset);
 					destroy_tilemap(level3.map);
+					
 					al_destroy_bitmap(minigame.poema);
 					al_destroy_bitmap(level1.storyPopUpImage);
+					al_destroy_bitmap(level2.storyPopUpImage);
+					al_destroy_bitmap(level3.storyPopUpImage);
 					
 					al_destroy_bitmap(level1.player.sprite);
 					al_destroy_bitmap(level2.player.sprite);
@@ -228,6 +231,8 @@ int main() {
 
 				al_destroy_bitmap(minigame.poema);
 				al_destroy_bitmap(level1.storyPopUpImage);
+				al_destroy_bitmap(level2.storyPopUpImage);
+				al_destroy_bitmap(level3.storyPopUpImage);
 				
 				al_destroy_bitmap(level1.player.sprite);
 				al_destroy_bitmap(level2.player.sprite);
@@ -296,6 +301,8 @@ int main() {
 
 				al_destroy_bitmap(minigame.poema);
 				al_destroy_bitmap(level1.storyPopUpImage);
+				al_destroy_bitmap(level2.storyPopUpImage);
+				al_destroy_bitmap(level3.storyPopUpImage);
 				
 				al_destroy_bitmap(level1.player.sprite);
 				al_destroy_bitmap(level2.player.sprite);
@@ -427,6 +434,8 @@ int main() {
 
 	al_destroy_bitmap(minigame.poema);
 	al_destroy_bitmap(level1.storyPopUpImage);
+	al_destroy_bitmap(level2.storyPopUpImage);
+	al_destroy_bitmap(level3.storyPopUpImage);
 
 	al_destroy_bitmap(level1.player.sprite);
 	al_destroy_bitmap(level2.player.sprite);

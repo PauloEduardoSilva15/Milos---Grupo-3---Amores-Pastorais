@@ -48,6 +48,8 @@ typedef struct {
 	int playerflip;
 	bool inPause;
 	hud hud;
+	bool storyPopUp;
+	ALLEGRO_BITMAP* storyPopUpImage;
 }levelII;
 
 levelII Level_II_load();
